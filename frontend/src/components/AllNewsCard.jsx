@@ -1,5 +1,10 @@
+import { Link } from 'react-router-dom'
+
+const DIFFICULTY_LABEL = { accessible: 'Accessible', intermediate: 'Intermediate', advanced: 'Advanced' }
+
 export default function AllNewsCard({ article }) {
-  const { headline, digest, tags = [], source, published, source_url, image_url } = article
+  const { id, headline, tags = [], source, published, source_url, image_url, summary = {} } = article
+  const { hook, tldr, difficulty = 'intermediate' } = summary
 
   const date = published
     ? new Date(published).toLocaleDateString('en-US', {
@@ -17,21 +22,24 @@ export default function AllNewsCard({ article }) {
           src={image_url}
           alt={headline}
           loading="lazy"
-          onError={e => {
-            e.target.src = 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800'
-          }}
         />
       </div>
-      <p className="allcard__category">{primaryTag}</p>
-      <a
-        className="allcard__headline"
-        href={source_url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+
+      <div className="allcard__header">
+        <p className="allcard__category">{primaryTag}</p>
+        <span className={`difficulty-badge difficulty-badge--${difficulty}`}>
+          {DIFFICULTY_LABEL[difficulty] ?? difficulty}
+        </span>
+      </div>
+
+      <Link className="allcard__headline" to={`/article/${id}`}>
         {headline}
-      </a>
-      <p className="allcard__digest">{digest}</p>
+      </Link>
+
+      {hook && <p className="allcard__digest">{hook}</p>}
+
+      {tldr && <p className="allcard__tldr"><em>TL;DR: {tldr}</em></p>}
+
       <p className="allcard__footer">{source}{date ? ` · ${date}` : ''}</p>
     </div>
   )

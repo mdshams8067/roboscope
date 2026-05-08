@@ -16,7 +16,6 @@ export default function NewsCard({ article }) {
           src={image_url}
           alt={headline}
           loading="lazy"
-          onError={e => { e.target.src = 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800' }}
         />
         {image_is_fallback && (
           <span className="card__fallback-badge">stock photo</span>

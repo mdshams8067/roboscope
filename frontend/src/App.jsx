@@ -1,56 +1,41 @@
 import { useEffect, useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header.jsx'
 import FeaturedCard from './components/FeaturedCard.jsx'
 import PickCard from './components/PickCard.jsx'
 import TrendingCard from './components/TrendingCard.jsx'
 import AllNewsCard from './components/AllNewsCard.jsx'
+import ArticlePage from './components/ArticlePage.jsx'
 
 const ALLNEWS_INITIAL = 3
 
-export default function App() {
-  const [feed, setFeed] = useState(null)
-  const [selectedTag, setSelectedTag] = useState(null)
-  const [error, setError] = useState(null)
+function Feed({ feed, selectedTag, onTagChange, selectedDifficulty, onDifficultyChange }) {
   const [showAllNews, setShowAllNews] = useState(false)
-
-  useEffect(() => {
-    fetch('/feed.json')
-      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
-      .then(setFeed)
-      .catch(err => setError(err.message))
-  }, [])
-
-  // Reset "read more" when tag changes
-  useEffect(() => { setShowAllNews(false) }, [selectedTag])
-
-  if (error) return (
-    <div className="state"><h2>Could not load feed</h2><p>{error}</p></div>
-  )
-  if (!feed) return (
-    <div className="state"><div className="spinner" /><p>Loading…</p></div>
-  )
+  useEffect(() => { setShowAllNews(false) }, [selectedTag, selectedDifficulty])
 
   const all = feed.articles ?? []
-  const articles = selectedTag
-    ? all.filter(a => a.tags?.includes(selectedTag))
-    : all
+  const articles = all.filter(a => {
+    const tagMatch = !selectedTag || a.tags?.includes(selectedTag)
+    const diffMatch = !selectedDifficulty || a.summary?.difficulty === selectedDifficulty
+    return tagMatch && diffMatch
+  })
 
   const featured = articles[0] ?? null
   const picks    = articles.slice(1, 5)
   const trending = articles.slice(5)
-
-  // All News shows every article; first N hidden behind "Read More"
   const visibleAllNews = showAllNews ? articles : articles.slice(0, ALLNEWS_INITIAL)
   const hasMore = articles.length > ALLNEWS_INITIAL && !showAllNews
 
   return (
     <>
       <Header
+        articles={all}
         selectedTag={selectedTag}
-        onTagChange={setSelectedTag}
+        onTagChange={onTagChange}
+        selectedDifficulty={selectedDifficulty}
+        onDifficultyChange={onDifficultyChange}
         generatedAt={feed.generated_at}
       />
-
       <div className="page">
         {!featured ? (
           <div className="state">
@@ -59,7 +44,6 @@ export default function App() {
           </div>
         ) : (
           <>
-            {/* ── 3-column editorial layout ── */}
             <div className="columns">
               <aside className="col-picks">
                 <div className="section-label">Latest News</div>
@@ -82,22 +66,16 @@ export default function App() {
               </aside>
             </div>
 
-            {/* ── All News section ── */}
             <div className="all-news">
               <div className="section-label">All News</div>
-
               <div className="all-news__grid">
                 {visibleAllNews.map(a => (
                   <AllNewsCard key={a.id} article={a} />
                 ))}
               </div>
-
               {hasMore && (
                 <div className="all-news__more">
-                  <button
-                    className="read-more-btn"
-                    onClick={() => setShowAllNews(true)}
-                  >
+                  <button className="read-more-btn" onClick={() => setShowAllNews(true)}>
                     Read More ({articles.length - ALLNEWS_INITIAL} more)
                   </button>
                 </div>
@@ -107,5 +85,43 @@ export default function App() {
         )}
       </div>
     </>
+  )
+}
+
+export default function App() {
+  const [feed, setFeed] = useState(null)
+  const [selectedTag, setSelectedTag] = useState(null)
+  const [selectedDifficulty, setSelectedDifficulty] = useState(null)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    fetch('/feed.json')
+      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
+      .then(setFeed)
+      .catch(err => setError(err.message))
+  }, [])
+
+  if (error) return <div className="state"><h2>Could not load feed</h2><p>{error}</p></div>
+  if (!feed)  return <div className="state"><div className="spinner" /><p>Loading…</p></div>
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Feed
+            feed={feed}
+            selectedTag={selectedTag}
+            onTagChange={setSelectedTag}
+            selectedDifficulty={selectedDifficulty}
+            onDifficultyChange={setSelectedDifficulty}
+          />
+        }
+      />
+      <Route
+        path="/article/:id"
+        element={<ArticlePage articles={feed.articles ?? []} />}
+      />
+    </Routes>
   )
 }

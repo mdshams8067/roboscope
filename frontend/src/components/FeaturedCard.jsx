@@ -1,8 +1,21 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+const DIFFICULTY_LABEL = { accessible: 'Accessible', intermediate: 'Intermediate', advanced: 'Advanced' }
+
 export default function FeaturedCard({ article }) {
+  const [expanded, setExpanded] = useState(false)
+
   const {
-    headline, digest, tags = [], source,
-    published, source_url, image_url,
+    id, headline, tags = [], source,
+    published, source_url, image_url, summary = {},
   } = article
+
+  const {
+    hook, what_it_does, result,
+    key_idea, why_it_matters, student_note,
+    difficulty = 'intermediate', tldr,
+  } = summary
 
   const date = published
     ? new Date(published).toLocaleDateString('en-US', {
@@ -14,15 +27,27 @@ export default function FeaturedCard({ article }) {
 
   return (
     <article>
-      <p className="featured__category">{primaryTag}</p>
+      <div className="featured__meta">
+        <p className="featured__category">{primaryTag}</p>
+        <span className={`difficulty-badge difficulty-badge--${difficulty}`}>
+          {DIFFICULTY_LABEL[difficulty] ?? difficulty}
+        </span>
+      </div>
 
       <h1 className="featured__headline">
-        <a href={source_url} target="_blank" rel="noopener noreferrer">
-          {headline}
-        </a>
+        <Link to={`/article/${id}`}>{headline}</Link>
       </h1>
 
-      <p className="featured__digest">{digest}</p>
+      {hook && <p className="featured__hook">{hook}</p>}
+
+      {what_it_does && <p className="featured__digest">{what_it_does}</p>}
+
+      {result && (
+        <div className="featured__result">
+          <span className="featured__result-label">Key result</span>
+          {result}
+        </div>
+      )}
 
       <div className="featured__img-wrap">
         <img
@@ -30,11 +55,44 @@ export default function FeaturedCard({ article }) {
           src={image_url}
           alt={headline}
           loading="eager"
-          onError={e => {
-            e.target.src = 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800'
-          }}
         />
       </div>
+
+      {(key_idea || why_it_matters || student_note) && (
+        <div className="featured__expandable">
+          <button
+            className="expand-btn"
+            onClick={() => setExpanded(v => !v)}
+            aria-expanded={expanded}
+          >
+            {expanded ? 'Show less ↑' : 'Dig deeper ↓'}
+          </button>
+          {expanded && (
+            <div className="expand-content">
+              {key_idea && (
+                <div className="expand-section">
+                  <p className="expand-label">How it works</p>
+                  <p>{key_idea}</p>
+                </div>
+              )}
+              {why_it_matters && (
+                <div className="expand-section">
+                  <p className="expand-label">Why it matters</p>
+                  <p>{why_it_matters}</p>
+                </div>
+              )}
+              {student_note && (
+                <div className="expand-section">
+                  <p className="expand-label">Student note</p>
+                  <p>{student_note}</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {tldr && <p className="featured__tldr"><em>TL;DR: {tldr}</em></p>}
 
       <div className="featured__footer">
         <span className="featured__source">
