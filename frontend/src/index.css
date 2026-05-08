@@ -1,0 +1,488 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Fonts — Copper Hewitt for display only, Inter for body */
+  --font-display: 'Cooper Hewitt', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Palette */
+  --black:    #0a0a0a;
+  --white:    #ffffff;
+  --blue:     #1a56ff;   /* RoboScope brand accent */
+  --blue-dim: #e8eeff;
+  --gray-100: #f5f5f5;
+  --gray-200: #e0e0e0;
+  --gray-400: #999999;
+  --gray-700: #333333;
+
+  /* Layout */
+  --col-side: 255px;
+  --max-w:    1240px;
+  --border:   1px solid var(--gray-200);
+}
+
+/* ── Reset & base ──────────────────────────────────────────── */
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+a:hover { text-decoration: underline; }
+
+img { display: block; width: 100%; }
+
+/* ── Brand stripe — 4px electric blue at very top ─────────── */
+body::before {
+  content: '';
+  display: block;
+  height: 4px;
+  background: var(--blue);
+}
+
+/* ── Top bar ───────────────────────────────────────────────── */
+.topbar {
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  border-bottom: 2px solid var(--black);
+}
+
+/* ROBO in black, SCOPE in blue — set via two spans in JSX */
+.topbar__logo {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--black);
+}
+
+.topbar__logo-accent { color: var(--blue); }
+
+.topbar__date {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+
+/* ── Nav ───────────────────────────────────────────────────── */
+.nav {
+  border-bottom: var(--border);
+  background: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav__inner::-webkit-scrollbar { display: none; }
+
+.nav__item {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-700);
+  padding: 0.55rem 0.75rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background 0.13s, color 0.13s;
+}
+
+.nav__item:hover {
+  background: var(--blue-dim);
+  color: var(--blue);
+}
+
+/* Active = filled blue pill — distinct from Wired's underline */
+.nav__item--active {
+  background: var(--blue);
+  color: var(--white) !important;
+}
+
+/* ── Section label — left accent border style ──────────────── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+
+/* Blue square dot before the label — replaces the black box */
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: var(--blue);
+  flex-shrink: 0;
+}
+
+/* ── 3-column layout ───────────────────────────────────────── */
+.page {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: var(--col-side) 1fr var(--col-side);
+  border-top: 2px solid var(--black);
+  min-height: 600px;
+}
+
+.col-picks   { padding: 1.5rem 1rem 1.5rem 0; border-right: var(--border); }
+.col-featured{ padding: 1.5rem 1.75rem; border-right: var(--border); }
+.col-trending{ padding: 1.5rem 0 1.5rem 1rem; }
+
+/* ── Pick card ─────────────────────────────────────────────── */
+.pick {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 0.65rem;
+  padding: 0.9rem 0;
+  border-bottom: var(--border);
+  align-items: start;
+}
+
+.pick:last-child { border-bottom: none; }
+
+.pick__img {
+  width: 68px;
+  height: 51px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.pick__category {
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.2rem;
+}
+
+.pick__headline {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--black) !important;
+  display: block;
+}
+
+.pick__headline:hover { text-decoration: underline; }
+
+.pick__source {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  color: var(--gray-400);
+  margin-top: 0.3rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Featured card ─────────────────────────────────────────── */
+.featured__category {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.5rem;
+}
+
+.featured__headline {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.08;
+  color: var(--black);
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.02em;
+}
+
+.featured__headline a { color: var(--black) !important; }
+.featured__headline a:hover { text-decoration: underline; }
+
+/* Body text: Inter at 1rem — fully legible */
+.featured__digest {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+
+.featured__img-wrap {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin: 1rem 0;
+  background: var(--gray-100);
+}
+
+.featured__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.featured__img:hover { transform: scale(1.02); }
+
+.featured__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: var(--border);
+  padding-top: 0.75rem;
+}
+
+.featured__source {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+
+/* Blue underline CTA — not the plain black Wired style */
+.featured__link {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--blue) !important;
+  border-bottom: 2px solid var(--blue);
+  padding-bottom: 1px;
+}
+
+/* ── Trending card ─────────────────────────────────────────── */
+.trending {
+  padding: 0.9rem 0;
+  border-bottom: var(--border);
+}
+
+.trending:last-child { border-bottom: none; }
+
+.trending__category {
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.2rem;
+}
+
+.trending__headline {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--black) !important;
+  display: block;
+}
+
+.trending__headline:hover { text-decoration: underline; }
+
+.trending__source {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  color: var(--gray-400);
+  margin-top: 0.3rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── All News section ─────────────────────────────────────── */
+.all-news {
+  border-top: 2px solid var(--black);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.all-news__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 0.5rem;
+}
+
+.allcard {
+  padding: 1.1rem;
+  border-right: var(--border);
+  border-bottom: var(--border);
+}
+
+.allcard:nth-child(3n) { border-right: none; }
+
+.allcard__img-wrap {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--gray-100);
+  margin-bottom: 0.75rem;
+}
+
+.allcard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.allcard__category {
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.3rem;
+}
+
+.allcard__headline {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--black) !important;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.allcard__headline:hover { text-decoration: underline; }
+
+.allcard__digest {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--black);
+  margin-bottom: 0.6rem;
+}
+
+.allcard__footer {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+
+.all-news__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+
+.read-more-btn {
+  background: none;
+  border: 2px solid var(--blue);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.65rem 2.25rem;
+  color: var(--blue);
+  border-radius: 2px;
+  transition: background 0.13s, color 0.13s;
+}
+
+.read-more-btn:hover {
+  background: var(--blue);
+  color: var(--white);
+}
+
+/* ── States ───────────────────────────────────────────────── */
+.state {
+  text-align: center;
+  padding: 5rem 2rem;
+  font-family: var(--font-body);
+  color: var(--gray-400);
+}
+
+.state h2 {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--black);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--gray-200);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .columns { grid-template-columns: 1fr; }
+  .col-picks, .col-featured, .col-trending {
+    border-right: none;
+    padding: 1rem 0;
+    border-bottom: var(--border);
+  }
+  .col-trending { border-bottom: none; }
+  .all-news__grid { grid-template-columns: 1fr; }
+  .allcard { border-right: none; }
+}
