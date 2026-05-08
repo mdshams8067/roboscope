@@ -8,7 +8,7 @@ name: Run RoboScope Pipeline
 #   so you can trigger it manually anytime without waiting for the schedule
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 0 * * *'   # daily at midnight UTC
   workflow_dispatch:
 
 jobs:
@@ -40,10 +40,12 @@ jobs:
       - name: Run pipeline
         run: python run.py
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
 
       # Step 5: Commit the updated feed.json back to the repo
       # git diff --staged --quiet exits 0 if nothing changed, 1 if there are changes
@@ -53,6 +55,6 @@ jobs:
         run: |
           git config user.name "RoboScope Bot"
           git config user.email "bot@roboscope.dev"
-          git add feed.json runs/
+          git add frontend/public/feed.json runs/
           git diff --staged --quiet || git commit -m "chore: update feed $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push

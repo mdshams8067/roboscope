@@ -2,6 +2,9 @@
 RoboScope pipeline entry point.
 Run with: python run.py
 """
+import logging
+logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
+
 import core.database as db
 from core.logger import RunLogger
 
@@ -35,8 +38,9 @@ def main():
     logger.log("ImageAgent", "generated", {"count": len(images), "fallbacks": fallbacks})
     print(f"[ImageAgent] {len(images)} images ({fallbacks} fallbacks)")
 
-    assemble(curated, summaries, images)
-    logger.log("DeliveryAgent", "assembled", {"output": "feed.json"})
+    flow_count = assemble(curated, summaries, images)
+    logger.log("DeliveryAgent", "assembled", {"output": "feed.json", "flow_diagrams": flow_count})
+    print(f"[FlowAgent] {flow_count}/{len(summaries)} flow diagrams generated")
     print("[DeliveryAgent] feed.json written")
 
     logger.finalize({"total_articles": len(curated), "fallback_images": fallbacks})

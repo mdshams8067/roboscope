@@ -39,12 +39,22 @@ _RSS_SOURCES = [
 ]
 
 _HF_PAPERS_RSS = "https://papers.takara.ai/api/feed"
-_PWC_API_URL   = "https://paperswithcode.com/api/v1/papers/?task=robot-manipulation&ordering=-published"
 
 # Robotics relevance terms used to filter HF Daily Papers (covers all of ML)
 _ROBOTICS_TERMS = [
-    "robot", "manipulation", "locomotion", "humanoid", "reinforcement",
-    "slam", "grasp", "legged", "actuator", "end-effector", "dexterous",
+    # Sub-fields and hardware
+    "robot", "humanoid", "bipedal", "legged", "quadruped", "wheeled",
+    "drone", "uav", "quadrotor", "aerial", "exoskeleton", "prosthetic",
+    "surgical robot", "soft robot", "gripper", "actuator", "end-effector",
+    # Tasks and skills
+    "manipulation", "grasping", "grasp", "dexterous", "locomotion",
+    "navigation", "trajectory", "planning", "teleoperation",
+    # Sensing and perception
+    "tactile", "haptic", "lidar", "point cloud", "pose estimation",
+    "slam",
+    # Learning paradigms
+    "imitation learning", "reinforcement", "sim-to-real", "policy",
+    "embodied", "physical intelligence", "world model",
 ]
 
 
@@ -105,7 +115,7 @@ def detect_conference_acceptance(paper) -> str | None:
 
 # ── Source fetchers ───────────────────────────────────────────────────────────
 
-def _fetch_arxiv(max_results: int = 30) -> list[dict]:
+def _fetch_arxiv(max_results: int = 20) -> list[dict]:
     client = arxiv.Client()
     search = arxiv.Search(
         query="cat:cs.RO",
@@ -137,10 +147,10 @@ def _fetch_arxiv(max_results: int = 30) -> list[dict]:
     return articles
 
 
-def _fetch_rss(source_name: str, feed_url: str, source_key: str) -> list[dict]:
+def _fetch_rss(source_name: str, feed_url: str, source_key: str, max_entries: int = 5) -> list[dict]:
     feed = feedparser.parse(feed_url)
     articles = []
-    for entry in feed.entries:
+    for entry in feed.entries[:max_entries]:
         url     = getattr(entry, "link", "")
         title   = getattr(entry, "title", "Untitled")
         snippet = _strip_html(getattr(entry, "summary", "") or getattr(entry, "description", ""))[:500]
@@ -166,6 +176,7 @@ def _fetch_hf_papers() -> list[dict]:
 
         # Keep only if robotics-related
         if not any(term in combined for term in _ROBOTICS_TERMS):
+            logger.debug(f"HF dropped (no term match): {title[:80]}")
             continue
 
         url = getattr(entry, "link", "")
@@ -177,29 +188,6 @@ def _fetch_hf_papers() -> list[dict]:
         articles.append(article)
     return articles
 
-
-def _fetch_pwc() -> list[dict]:
-    """Papers With Code REST API — top 5 robot-manipulation papers by recency."""
-    try:
-        resp = requests.get(_PWC_API_URL, timeout=10, params={"limit": 5})
-        resp.raise_for_status()
-        results = resp.json().get("results", [])
-    except requests.RequestException as e:
-        logger.warning(f"[SourceWatcher] Papers With Code fetch failed: {e}")
-        return []
-
-    articles = []
-    for paper in results[:5]:
-        url   = paper.get("url_abs") or paper.get("url_pdf", "")
-        title = paper.get("title", "")
-        snippet = (paper.get("abstract", "") or "")[:500]
-        published = paper.get("published", _now_iso())
-        if not url or not title:
-            continue
-        article = _make_article(url, title, "Papers With Code", published, snippet, "papers_with_code")
-        logger.info(f"Queued [{article['_tier']}] papers_with_code: {title[:60]}")
-        articles.append(article)
-    return articles
 
 
 def _fetch_hn() -> list[dict]:
@@ -241,18 +229,58 @@ def _deduplicate(articles: list[dict]) -> list[dict]:
     return new_articles
 
 
+# Research sources get a higher cap — this is a research portal.
+# News/editorial sources are capped lower to prevent crowding out papers.
+_MAX_ARXIV_PER_RUN   = 10   # arXiv cs.RO papers
+_MAX_HF_PER_RUN      = 3    # HuggingFace Daily Papers (already filtered to robotics)
+_MAX_NEWS_PER_SOURCE = 2    # IEEE Spectrum, TechCrunch, etc.
+
+
 # ── Public API ────────────────────────────────────────────────────────────────
 
-def fetch() -> list[dict]:
+def fetch(curator_limit: int = 20) -> list[dict]:
     """
-    Collects from all sources → deduplicates → returns clean article queue.
-    To add a new source: write a _fetch_xxx() function and extend `raw` below.
+    Collects from all sources → deduplicates → per-source cap → tier sort → top N.
+
+    Per-source cap ensures every source gets representation even when arXiv or
+    HuggingFace Papers have many matching articles. Tier sort within the capped
+    pool still surfaces the highest-quality articles across all sources.
     """
+    from collections import defaultdict
+
     raw = []
     raw.extend(_fetch_arxiv())
     for src in _RSS_SOURCES:
         raw.extend(_fetch_rss(src["name"], src["url"], src["key"]))
     raw.extend(_fetch_hf_papers())
-    raw.extend(_fetch_pwc())
     raw.extend(_fetch_hn())
-    return _deduplicate(raw)
+
+    deduped = _deduplicate(raw)
+    logger.info(f"[SourceWatcher] {len(deduped)} unique articles after dedup")
+
+    # Group by human-readable source name so "arXiv" conference-accepted and
+    # preprints share one budget, not two separate ones.
+    by_source: dict[str, list] = defaultdict(list)
+    for article in deduped:
+        by_source[article["source"]].append(article)
+
+    # Within each source prefer higher tier (lower number), then cap.
+    _source_cap = {"arXiv": _MAX_ARXIV_PER_RUN, "HuggingFace Papers": _MAX_HF_PER_RUN}
+    capped = []
+    for source_name, articles in by_source.items():
+        cap = _source_cap.get(source_name, _MAX_NEWS_PER_SOURCE)
+        articles.sort(key=lambda a: a.get("_tier", 2))
+        kept = articles[:cap]
+        capped.extend(kept)
+        if len(articles) > cap:
+            logger.info(f"[SourceWatcher] {source_name}: capped at {cap}/{len(articles)}")
+
+    # Final tier sort across all sources, take top N
+    capped.sort(key=lambda a: a.get("_tier", 2))
+    selected = capped[:curator_limit]
+
+    source_counts: dict[str, int] = defaultdict(int)
+    for a in selected:
+        source_counts[a["source"]] += 1
+    logger.info(f"[SourceWatcher] {len(selected)} articles selected: {dict(source_counts)}")
+    return selected

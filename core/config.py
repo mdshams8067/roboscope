@@ -3,14 +3,31 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ANTHROPIC_API_KEY = os.environ["ANTHROPIC_API_KEY"]
-GOOGLE_API_KEY = os.environ["GOOGLE_API_KEY"]
-SUPABASE_URL = os.environ["SUPABASE_URL"]
-SUPABASE_KEY = os.environ["SUPABASE_KEY"]
+# ── Provider selection ────────────────────────────────────────────────────────
+# Set LLM_PROVIDER=gemini or LLM_PROVIDER=anthropic in your .env
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini")
 
-CLAUDE_MODEL = "claude-sonnet-4-5"
-IMAGEN_MODEL = "imagen-3.0-fast-generate-001"
-TOP_N_ARTICLES = 8
+# ── API keys ──────────────────────────────────────────────────────────────────
+GOOGLE_API_KEY    = os.environ["GOOGLE_API_KEY"]
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")  # required if LLM_PROVIDER=anthropic
+
+SUPABASE_URL         = os.environ["SUPABASE_URL"]
+SUPABASE_KEY         = os.environ["SUPABASE_KEY"]
+SUPABASE_SERVICE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
+
+# ── Model names ───────────────────────────────────────────────────────────────
+# Used by core/llm.py — agents never import these directly
+GEMINI_TEXT_MODEL    = os.getenv("GEMINI_TEXT_MODEL",    "gemini-2.5-flash")
+ANTHROPIC_TEXT_MODEL = os.getenv("ANTHROPIC_TEXT_MODEL", "claude-sonnet-4-5")
+
+# ── Graphical abstract (optional) ─────────────────────────────────────────────
+# Requires Gemini billing enabled (Imagen is a paid API).
+# Primary image source is always og:image — this only adds generated abstracts.
+USE_GRAPHICAL_ABSTRACT = os.getenv("USE_GRAPHICAL_ABSTRACT", "false").lower() == "true"
+GEMINI_IMAGEN_MODEL    = os.getenv("GEMINI_IMAGEN_MODEL", "imagen-3.0-fast-generate-001")
+
+# ── Pipeline constants ────────────────────────────────────────────────────────
+TOP_N_ARTICLES = 20
 
 TOPIC_TAGS = [
     "Humanoid", "Manipulation", "SLAM", "Legged", "Surgical",
@@ -38,7 +55,7 @@ FALLBACK_IMAGES = [
     "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
 ]
 
-# --- Credibility Filter Config ---
+# ── Credibility filter ────────────────────────────────────────────────────────
 
 CREDIBLE_INSTITUTIONS = [
     "MIT", "Carnegie Mellon", "CMU", "Stanford", "ETH Zurich",
@@ -49,27 +66,21 @@ CREDIBLE_INSTITUTIONS = [
     "KAIST", "TU Delft", "Imperial College", "Toronto",
 ]
 
-# Applies to arXiv only — RSS sources are trusted at the source level
 ARXIV_REQUIRES_INSTITUTION_MATCH = True
-
-# Claude relevance score threshold — articles below this are dropped before summarization
 MINIMUM_RELEVANCE_SCORE = 7
-
-# arXiv content types to deprioritize in CuratorAgent novelty scoring
 LOW_SIGNAL_KEYWORDS = ["workshop", "survey", "extended abstract", "technical report"]
 
-# --- Source Credibility Tiers ---
-# Tier 1: Peer-reviewed, conference-accepted, or highest-signal curated sources
-# Tier 2: Reputable editorial and industry sources
-# Tier 3: Community/aggregator — supplementary signal
+# ── Source credibility tiers ──────────────────────────────────────────────────
 
 SOURCE_TIERS = {
-    "arxiv_conference_accepted": 1,
+    # Tier 1: peer-reviewed or primary lab output
+    "arxiv_conference_accepted": 1,  # arXiv paper with ICRA/IROS/etc. acceptance in comments
     "science_robotics":          1,
     "ieee_transactions_robotics":1,
     "ieee_ral":                  1,
     "google_deepmind_blog":      1,
-    "huggingface_daily_papers":  1,
+    # Tier 2: reputable editorial, industry, or community-curated but not peer-reviewed
+    "huggingface_daily_papers":  2,  # community upvotes ≠ peer review; almost all are preprints
     "ieee_spectrum":             2,
     "mit_news":                  2,
     "the_robot_report":          2,
@@ -80,17 +91,17 @@ SOURCE_TIERS = {
     "boston_dynamics_blog":      2,
     "papers_with_code":          2,
     "arxiv_preprint":            2,
+    # Tier 3: community aggregator, high noise
     "hacker_news":               3,
 }
 
-# Conference names whose appearance in arXiv comments elevates a paper to Tier 1
 TIER1_CONFERENCES = [
     "ICRA", "IROS", "RSS", "CoRL", "HRI", "HUMANOIDS",
     "NeurIPS", "ICLR", "ICML", "CVPR", "ICCV", "ECCV",
     "CORL", "RA-L", "T-RO", "Science Robotics",
 ]
 
-# --- Breakthrough Detection Config ---
+# ── Breakthrough detection ────────────────────────────────────────────────────
 
 BREAKTHROUGH_SIGNALS = [
     "state-of-the-art", "state of the art", "outperforms",
@@ -100,16 +111,19 @@ BREAKTHROUGH_SIGNALS = [
     "VLA", "humanoid", "legged", "manipulation",
 ]
 
-# Tier 3 sources are never eligible for breakthrough labeling
-BREAKTHROUGH_MIN_TIER = 2
-
-# Claude composite score required for breakthrough eligibility
+BREAKTHROUGH_MIN_TIER  = 2
 BREAKTHROUGH_MIN_SCORE = 8.5
 
-# --- Graphical Abstract Config ---
+# ── Graphical abstract verification ──────────────────────────────────────────
 
-# Maximum regeneration attempts before accepting best result
 GRAPHICAL_ABSTRACT_MAX_ATTEMPTS = 3
+GRAPHICAL_ABSTRACT_MIN_SCORE    = 8
 
-# Minimum accuracy score (out of 10) Claude must give before accepting
-GRAPHICAL_ABSTRACT_MIN_SCORE = 8
+# ── Flow agent ────────────────────────────────────────────────────────────────
+
+BLOCK_TYPES = [
+    "problem", "limitation", "idea", "method", "data",
+    "experiment", "result", "insight", "deployment",
+    "impact", "context", "announcement", "next",
+]
+FLOW_AGENT_MAX_BLOCKS = 12
