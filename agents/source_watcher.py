@@ -116,7 +116,7 @@ def detect_conference_acceptance(paper) -> str | None:
 # ── Source fetchers ───────────────────────────────────────────────────────────
 
 def _fetch_arxiv(max_results: int = 20) -> list[dict]:
-    client = arxiv.Client()
+    client = arxiv.Client(page_size=max_results, delay_seconds=3, num_retries=2)
     search = arxiv.Search(
         query="cat:cs.RO",
         max_results=max_results,
