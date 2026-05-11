@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 
 export default function PickCard({ article }) {
-  const { id, headline, tags = [], source, source_url, image_url } = article
-  const primaryTag = tags[0] ?? source
+  const { id, headline, tags = [], source, research_theme, image_url } = article
+  const themeLabel = (research_theme || tags[0] || source).split(',')[0].trim()
 
   return (
     <div className="pick">
@@ -11,9 +11,11 @@ export default function PickCard({ article }) {
         src={image_url}
         alt={headline}
         loading="lazy"
+        width="160"
+        height="90"
       />
       <div className="pick__body">
-        <p className="pick__category">{primaryTag}</p>
+        <p className="pick__category">{themeLabel}</p>
         <Link className="pick__headline" to={`/article/${id}`}>
           {headline}
         </Link>

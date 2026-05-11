@@ -9,16 +9,12 @@ import ArticlePage from './components/ArticlePage.jsx'
 
 const ALLNEWS_INITIAL = 3
 
-function Feed({ feed, selectedTag, onTagChange, selectedDifficulty, onDifficultyChange }) {
+function Feed({ feed, selectedConference, onConferenceChange }) {
   const [showAllNews, setShowAllNews] = useState(false)
-  useEffect(() => { setShowAllNews(false) }, [selectedTag, selectedDifficulty])
+  useEffect(() => { setShowAllNews(false) }, [selectedConference])
 
   const all = feed.articles ?? []
-  const articles = all.filter(a => {
-    const tagMatch = !selectedTag || a.tags?.includes(selectedTag)
-    const diffMatch = !selectedDifficulty || a.summary?.difficulty === selectedDifficulty
-    return tagMatch && diffMatch
-  })
+  const articles = all.filter(a => !selectedConference || a.source === selectedConference)
 
   const featured = articles[0] ?? null
   const picks    = articles.slice(1, 5)
@@ -30,25 +26,23 @@ function Feed({ feed, selectedTag, onTagChange, selectedDifficulty, onDifficulty
     <>
       <Header
         articles={all}
-        selectedTag={selectedTag}
-        onTagChange={onTagChange}
-        selectedDifficulty={selectedDifficulty}
-        onDifficultyChange={onDifficultyChange}
+        selectedConference={selectedConference}
+        onConferenceChange={onConferenceChange}
         generatedAt={feed.generated_at}
       />
       <div className="page">
         {!featured ? (
           <div className="state">
-            <h2>No articles</h2>
+            <h2>No papers</h2>
             <p>Try a different tag, or check back after the next pipeline run.</p>
           </div>
         ) : (
           <>
             <div className="columns">
               <aside className="col-picks">
-                <div className="section-label">Latest News</div>
+                <div className="section-label">Also Notable</div>
                 {picks.length === 0
-                  ? <p style={{ fontSize: '0.78rem', color: '#aaa' }}>No other articles.</p>
+                  ? <p style={{ fontSize: '0.78rem', color: '#aaa' }}>No other papers.</p>
                   : picks.map(a => <PickCard key={a.id} article={a} />)
                 }
               </aside>
@@ -58,16 +52,16 @@ function Feed({ feed, selectedTag, onTagChange, selectedDifficulty, onDifficulty
               </section>
 
               <aside className="col-trending">
-                <div className="section-label">Trending News</div>
+                <div className="section-label">More Papers</div>
                 {trending.length === 0
-                  ? <p style={{ fontSize: '0.78rem', color: '#aaa' }}>More news soon.</p>
+                  ? <p style={{ fontSize: '0.78rem', color: '#aaa' }}>More papers soon.</p>
                   : trending.map(a => <TrendingCard key={a.id} article={a} />)
                 }
               </aside>
             </div>
 
             <div className="all-news">
-              <div className="section-label">All News</div>
+              <div className="section-label">All Papers</div>
               <div className="all-news__grid">
                 {visibleAllNews.map(a => (
                   <AllNewsCard key={a.id} article={a} />
@@ -90,8 +84,7 @@ function Feed({ feed, selectedTag, onTagChange, selectedDifficulty, onDifficulty
 
 export default function App() {
   const [feed, setFeed] = useState(null)
-  const [selectedTag, setSelectedTag] = useState(null)
-  const [selectedDifficulty, setSelectedDifficulty] = useState(null)
+  const [selectedConference, setSelectedConference] = useState(null)
   const [error, setError] = useState(null)
 
   useEffect(() => {
@@ -111,10 +104,8 @@ export default function App() {
         element={
           <Feed
             feed={feed}
-            selectedTag={selectedTag}
-            onTagChange={setSelectedTag}
-            selectedDifficulty={selectedDifficulty}
-            onDifficultyChange={setSelectedDifficulty}
+            selectedConference={selectedConference}
+            onConferenceChange={setSelectedConference}
           />
         }
       />

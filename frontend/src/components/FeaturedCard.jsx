@@ -1,42 +1,36 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
-const DIFFICULTY_LABEL = { accessible: 'Accessible', intermediate: 'Intermediate', advanced: 'Advanced' }
+import { formatDate } from '../utils.js'
 
 export default function FeaturedCard({ article }) {
   const [expanded, setExpanded] = useState(false)
 
   const {
-    id, headline, tags = [], source,
+    id, headline, tags = [], source, research_theme, why_this_matters,
     published, source_url, image_url, summary = {},
   } = article
 
   const {
-    hook, what_it_does, result,
-    key_idea, why_it_matters, student_note,
-    difficulty = 'intermediate', tldr,
+    hook, what_it_does, key_idea,
+    core_challenge, key_assumption,
+    result, what_it_enables, open_source, tldr,
   } = summary
 
-  const date = published
-    ? new Date(published).toLocaleDateString('en-US', {
-        month: 'long', day: 'numeric', year: 'numeric',
-      })
-    : ''
+  const date = formatDate(published)
 
-  const primaryTag = tags[0] ?? source
+  const themeLabel = (research_theme || tags[0] || source).split(',')[0].trim()
 
   return (
     <article>
       <div className="featured__meta">
-        <p className="featured__category">{primaryTag}</p>
-        <span className={`difficulty-badge difficulty-badge--${difficulty}`}>
-          {DIFFICULTY_LABEL[difficulty] ?? difficulty}
-        </span>
+        <p className="featured__category">{themeLabel}</p>
       </div>
 
       <h1 className="featured__headline">
         <Link to={`/article/${id}`}>{headline}</Link>
       </h1>
+
+      {why_this_matters && <p className="why-matters">{why_this_matters}</p>}
 
       {hook && <p className="featured__hook">{hook}</p>}
 
@@ -49,16 +43,26 @@ export default function FeaturedCard({ article }) {
         </div>
       )}
 
+      {what_it_enables && (
+        <div className="featured__enables">
+          <span className="featured__enables-label">What this opens up</span>
+          {what_it_enables}
+        </div>
+      )}
+
       <div className="featured__img-wrap">
         <img
           className="featured__img"
           src={image_url}
           alt={headline}
           loading="eager"
+          fetchpriority="high"
+          width="800"
+          height="450"
         />
       </div>
 
-      {(key_idea || why_it_matters || student_note) && (
+      {(key_idea || core_challenge || key_assumption) && (
         <div className="featured__expandable">
           <button
             className="expand-btn"
@@ -75,16 +79,21 @@ export default function FeaturedCard({ article }) {
                   <p>{key_idea}</p>
                 </div>
               )}
-              {why_it_matters && (
+              {(core_challenge || key_assumption) && (
                 <div className="expand-section">
-                  <p className="expand-label">Why it matters</p>
-                  <p>{why_it_matters}</p>
+                  <p className="expand-label">Research context</p>
+                  {core_challenge && <p>{core_challenge}</p>}
+                  {key_assumption && <p>{key_assumption}</p>}
                 </div>
               )}
-              {student_note && (
+              {open_source && (
                 <div className="expand-section">
-                  <p className="expand-label">Student note</p>
-                  <p>{student_note}</p>
+                  <p className="expand-label">Open source</p>
+                  <a href={open_source.startsWith('http') ? open_source : `https://${open_source}`}
+                     target="_blank" rel="noopener noreferrer"
+                     className="featured__opensource-link">
+                    {open_source}
+                  </a>
                 </div>
               )}
             </div>

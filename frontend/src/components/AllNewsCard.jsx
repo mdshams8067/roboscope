@@ -1,18 +1,13 @@
 import { Link } from 'react-router-dom'
-
-const DIFFICULTY_LABEL = { accessible: 'Accessible', intermediate: 'Intermediate', advanced: 'Advanced' }
+import { formatDate } from '../utils.js'
 
 export default function AllNewsCard({ article }) {
-  const { id, headline, tags = [], source, published, source_url, image_url, summary = {} } = article
-  const { hook, tldr, difficulty = 'intermediate' } = summary
+  const { id, headline, tags = [], source, research_theme, why_this_matters, published, source_url, image_url, summary = {} } = article
+  const { hook, tldr } = summary
 
-  const date = published
-    ? new Date(published).toLocaleDateString('en-US', {
-        month: 'short', day: 'numeric', year: 'numeric',
-      })
-    : ''
+  const date = formatDate(published, { month: 'short', day: 'numeric', year: 'numeric' })
 
-  const primaryTag = tags[0] ?? source
+  const themeLabel = (research_theme || tags[0] || source).split(',')[0].trim()
 
   return (
     <div className="allcard">
@@ -22,20 +17,20 @@ export default function AllNewsCard({ article }) {
           src={image_url}
           alt={headline}
           loading="lazy"
+          width="400"
+          height="225"
         />
       </div>
 
       <div className="allcard__header">
-        <p className="allcard__category">{primaryTag}</p>
-        <span className={`difficulty-badge difficulty-badge--${difficulty}`}>
-          {DIFFICULTY_LABEL[difficulty] ?? difficulty}
-        </span>
+        <p className="allcard__category">{themeLabel}</p>
       </div>
 
       <Link className="allcard__headline" to={`/article/${id}`}>
         {headline}
       </Link>
 
+      {why_this_matters && <p className="why-matters">{why_this_matters}</p>}
       {hook && <p className="allcard__digest">{hook}</p>}
 
       {tldr && <p className="allcard__tldr"><em>TL;DR: {tldr}</em></p>}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { formatDate } from '../utils.js'
 
 const BLOCK_COLORS = {
   problem:      { bg: '#FEF2F2', border: '#FCA5A5', icon: '⚠️' },
@@ -30,7 +31,6 @@ function FlowBlock({ block, isLast }) {
         style={{ background: color.bg, borderColor: color.border }}
       >
         <div className="flow-block__type">
-          <span className="flow-block__icon">{color.icon}</span>
           <span className="flow-block__type-label">{block.type}</span>
         </div>
 
@@ -78,9 +78,7 @@ export default function ArticlePage({ articles }) {
 
   const { headline, tags = [], source, published, source_url, image_url, flow } = article
 
-  const date = published
-    ? new Date(published).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-    : ''
+  const date = formatDate(published)
 
   const readingTime = flow
     ? `~${Math.round(flow.reading_time_seconds / 60) || 1} min read`
@@ -96,7 +94,7 @@ export default function ArticlePage({ articles }) {
         {/* Hero image */}
         {image_url && (
           <div className="article-page__hero">
-            <img src={image_url} alt={headline} />
+            <img src={image_url} alt={headline} width="800" height="450" fetchpriority="high" />
           </div>
         )}
 

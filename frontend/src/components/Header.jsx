@@ -1,7 +1,6 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 
 const MAX_VISIBLE = 6
-const DIFFICULTIES = ['Accessible', 'Intermediate', 'Advanced']
 
 function useClickOutside(ref, onClose) {
   useEffect(() => {
@@ -16,7 +15,8 @@ function useClickOutside(ref, onClose) {
 function MoreDropdown({ tags, selectedTag, onTagChange }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
-  useClickOutside(ref, () => setOpen(false))
+  const close = useCallback(() => setOpen(false), [])
+  useClickOutside(ref, close)
 
   const hasActive = tags.some(t => t === selectedTag)
 
@@ -45,43 +45,7 @@ function MoreDropdown({ tags, selectedTag, onTagChange }) {
   )
 }
 
-function DifficultyDropdown({ selected, onChange }) {
-  const [open, setOpen] = useState(false)
-  const ref = useRef(null)
-  useClickOutside(ref, () => setOpen(false))
-
-  return (
-    <div className="nav__dropdown nav__dropdown--right" ref={ref}>
-      <button
-        className={`nav__item nav__item--dropdown ${selected ? 'nav__item--active' : ''}`}
-        onClick={() => setOpen(v => !v)}
-      >
-        {selected || 'All levels'} ▾
-      </button>
-      {open && (
-        <div className="nav__dropdown-menu nav__dropdown-menu--right">
-          <button
-            className={`nav__dropdown-item ${!selected ? 'nav__dropdown-item--active' : ''}`}
-            onClick={() => { onChange(null); setOpen(false) }}
-          >
-            All levels
-          </button>
-          {DIFFICULTIES.map(d => (
-            <button
-              key={d}
-              className={`nav__dropdown-item ${selected === d.toLowerCase() ? 'nav__dropdown-item--active' : ''}`}
-              onClick={() => { onChange(d.toLowerCase()); setOpen(false) }}
-            >
-              {d}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-export default function Header({ articles = [], selectedTag, onTagChange, selectedDifficulty, onDifficultyChange, generatedAt }) {
+export default function Header({ articles = [], selectedConference, onConferenceChange, generatedAt }) {
   const date = generatedAt
     ? new Date(generatedAt).toLocaleDateString('en-US', {
         weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
@@ -90,19 +54,16 @@ export default function Header({ articles = [], selectedTag, onTagChange, select
         weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
       })
 
-  // Derive tags from actual articles, sorted by frequency (most articles = most trendy)
-  const tagCounts = {}
-  for (const a of articles) {
-    for (const t of (a.tags ?? [])) {
-      tagCounts[t] = (tagCounts[t] ?? 0) + 1
+  const sortedConfs = useMemo(() => {
+    const counts = {}
+    for (const a of articles) {
+      if (a.source) counts[a.source] = (counts[a.source] ?? 0) + 1
     }
-  }
-  const sortedTags = Object.entries(tagCounts)
-    .sort((a, b) => b[1] - a[1])
-    .map(([tag]) => tag)
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([conf]) => conf)
+  }, [articles])
 
-  const visibleTags = sortedTags.slice(0, MAX_VISIBLE)
-  const overflowTags = sortedTags.slice(MAX_VISIBLE)
+  const visibleConfs = sortedConfs.slice(0, MAX_VISIBLE)
+  const overflowConfs = sortedConfs.slice(MAX_VISIBLE)
 
   return (
     <header>
@@ -115,37 +76,32 @@ export default function Header({ articles = [], selectedTag, onTagChange, select
 
       <nav className="nav">
         <div className="nav__inner">
-          {/* All + visible tags */}
+          {/* All + visible conferences */}
           <div className="nav__tags">
             <button
-              className={`nav__item ${!selectedTag ? 'nav__item--active' : ''}`}
-              onClick={() => onTagChange(null)}
+              className={`nav__item ${!selectedConference ? 'nav__item--active' : ''}`}
+              onClick={() => onConferenceChange(null)}
             >
               All
             </button>
-            {visibleTags.map(tag => (
+            {visibleConfs.map(conf => (
               <button
-                key={tag}
-                className={`nav__item ${selectedTag === tag ? 'nav__item--active' : ''}`}
-                onClick={() => onTagChange(tag)}
+                key={conf}
+                className={`nav__item ${selectedConference === conf ? 'nav__item--active' : ''}`}
+                onClick={() => onConferenceChange(conf)}
               >
-                {tag}
+                {conf}
               </button>
             ))}
-            {overflowTags.length > 0 && (
+            {overflowConfs.length > 0 && (
               <MoreDropdown
-                tags={overflowTags}
-                selectedTag={selectedTag}
-                onTagChange={onTagChange}
+                tags={overflowConfs}
+                selectedTag={selectedConference}
+                onTagChange={onConferenceChange}
               />
             )}
           </div>
 
-          {/* Difficulty filter — pushed to the right */}
-          <DifficultyDropdown
-            selected={selectedDifficulty}
-            onChange={onDifficultyChange}
-          />
         </div>
       </nav>
     </header>

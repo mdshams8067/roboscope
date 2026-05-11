@@ -1,12 +1,12 @@
+import { formatDate } from '../utils.js'
+
 export default function NewsCard({ article }) {
   const {
     headline, digest, tags = [], source, published,
     source_url, image_url, image_is_fallback,
   } = article
 
-  const date = published
-    ? new Date(published).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
-    : ''
+  const date = formatDate(published, { month: 'short', day: 'numeric', year: 'numeric' })
 
   return (
     <article className="card">
