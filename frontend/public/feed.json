@@ -1,696 +1,483 @@
 {
-  "generated_at": "2026-05-11T04:20:06.029453+00:00",
-  "article_count": 8,
+  "generated_at": "2026-05-12T04:09:50.456297+00:00",
+  "article_count": 5,
   "articles": [
     {
-      "id": "af652fdc",
-      "headline": "Robot chooses optimal camera angles to reconstruct 3D objects with uncertainty",
+      "id": "9b1021c3",
+      "headline": "Visual-inertial SLAM maintains global consistency through adaptive GPS dropout recovery",
       "tags": [
-        "SLAM",
-        "Simulation"
+        "Visual-Inertial SLAM",
+        "Sensor Fusion",
+        "State Estimation",
+        "GPS-Denied Navigation"
       ],
-      "source": "HuggingFace Papers",
-      "published": "2026-05-06T16:32:55+00:00",
-      "source_url": "https://tldr.takara.ai/p/2605.05095",
+      "research_theme": "Visual-Inertial SLAM",
+      "why_this_matters": "Robust state estimation is the bedrock of autonomy, and this work addresses the critical failure mode of drift in long-term outdoor navigation.",
+      "source": "IROS",
+      "published": "2022-08-01",
+      "source_url": "http://arxiv.org/abs/2208.00709v1",
+      "image_url": "https://images.unsplash.com/photo-1714846461908-97f72ff6c42e?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "The system treats GPS outages not as a failure, but as a re-initialization event that calculates exactly how much the robot drifted while the signal was lost.",
+        "what_it_does": "A tightly-coupled visual-inertial state estimator fuses global GPS measurements to eliminate long-term trajectory drift while autonomously recalibrating extrinsic transformations after signal loss.",
+        "key_idea": "It implements an uncertainty-aware extrinsic estimation method (a probabilistic approach to align the local VIO world frame with the global GPS frame) that triggers a re-alignment process specifically when GPS signals return after extended outages.",
+        "core_challenge": "Visual-inertial systems inevitably accumulate drift over long trajectories, and traditional fusion methods fail when GPS signals drop out for extended periods, leaving the estimator unable to reconcile local and global frames.",
+        "key_assumption": "Removes the assumption that GPS-to-VIO extrinsics remain static or perfectly calibrated, instead treating the transformation as a dynamic variable that updates upon signal recovery.",
+        "result": "Maintains global consistency across long-duration trajectories by compensating for drift via rotation averaging and position error distribution, validated against standard public datasets.",
+        "what_it_enables": "Reliable long-term autonomous navigation in environments with intermittent satellite coverage, such as urban canyons or partially covered terrain.",
+        "open_source": null,
+        "tldr": "This system fuses GPS with VIO and automatically recalibrates the global frame whenever GPS signals return after outages."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Improving Long-Term Robot Navigation Using GPS and Vision",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Accumulated Drift in Navigation",
+            "body": "Robots using cameras and motion sensors (Visual-Inertial SLAM) lose track of their exact position over time because small errors add up.",
+            "detail": "This drift makes long-term autonomous navigation unreliable, as the robot's internal map slowly diverges from reality.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Fusing Global GPS Data",
+            "body": "The researchers add GPS data to the existing visual and inertial sensors to provide a global reference point that corrects drift.",
+            "detail": "By tightly coupling GPS with the visual-inertial system, the robot can maintain a consistent position estimate even over long distances.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Handling GPS Signal Outages",
+            "body": "The system automatically detects when GPS signals are lost and re-calculates the robot's position once the signal returns.",
+            "detail": "This re-initialization process estimates how much the robot drifted while the GPS was unavailable and corrects the path accordingly.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Consistent Global Trajectories",
+            "body": "The method successfully aligns the robot's local map with the global GPS frame, reducing position error across long-term test datasets.",
+            "detail": "The system uses rotation averaging and position error distribution to ensure the final trajectory remains globally consistent.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Reliable Long-Term Autonomy",
+            "body": "This approach enables robots to operate reliably in outdoor environments for extended periods without needing constant human intervention.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By combining GPS with visual-inertial sensors and handling signal drops, robots can maintain accurate global positioning over long durations.",
+        "prerequisite_concepts": [
+          "SLAM",
+          "Sensor fusion",
+          "State estimation",
+          "Inertial Measurement Units"
+        ]
+      }
+    },
+    {
+      "id": "532d3854",
+      "headline": "Multi-step robotic cutting of deformable objects using spectral shape rewards",
+      "tags": [
+        "Deformable Object Manipulation",
+        "Discrete Diffusion Policies",
+        "Spectral Rewards",
+        "Topology Discovery"
+      ],
+      "research_theme": "Deformable Object Manipulation",
+      "why_this_matters": "Cutting deformable materials is a frontier in dexterous manipulation that requires bridging the gap between topological perception and policy learning.",
+      "source": "CoRL",
+      "published": "2025-08-08",
+      "source_url": "https://openreview.net/forum?id=up2ZpQZbeb",
       "image_url": "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of scanning blindly, the robot calculates exactly where it is most confused about an object's shape and moves there to resolve the ambiguity.",
-        "what_it_does": "A mobile sensor system selects the next camera position by evaluating which viewpoint will most effectively reduce the uncertainty in a 3D point cloud reconstruction.",
-        "key_idea": "It uses Bayesian decision theory to treat the 3D surface as a probability distribution (a mathematical way to represent how likely different surface shapes are) and selects the view that minimizes the expected entropy of that distribution.",
-        "result": "The system achieves a 25% reduction in the number of required scans compared to traditional frontier-based exploration methods while maintaining the same reconstruction accuracy.",
-        "why_it_matters": "Efficiently gathering data is critical for autonomous robots that must map unknown environments under strict time or battery constraints.",
-        "student_note": "This is a great application of Bayesian inference to active perception, showing how you can turn 'not knowing' into a concrete objective function for motion planning.",
-        "difficulty": "advanced",
-        "tldr": "Robot uses Bayesian math to pick the best camera angles for faster and more accurate 3D scanning."
+        "hook": "Cutting a deformable object is notoriously hard to evaluate because the object changes shape, so this system ignores geometry and instead uses the object's vibration modes to measure success.",
+        "what_it_does": "A robotic system executes sequential cutting operations on deformable objects by mapping sparse visual inputs to topology-aware particle embeddings and generating trajectories via a discrete diffusion policy.",
+        "key_idea": "It uses a pose-invariant spectral reward based on Laplace\u2013Beltrami eigenanalysis (a method that describes the intrinsic shape of an object through its surface vibration frequencies) to evaluate cutting progress regardless of object orientation or deformation.",
+        "core_challenge": "Existing methods fail when deformable objects do not separate cleanly after a cut, making it nearly impossible to quantify whether a multi-step cutting task reached its target state.",
+        "key_assumption": "Removes the requirement for explicit pose alignment or dense point-cloud registration by relying on intrinsic spectral signatures to track topological changes.",
+        "result": "The system achieves consistent multi-step segmentation across varying object geometries, outperforming standard geometric matching baselines in goal-conditioned cutting tasks.",
+        "what_it_enables": "Enables robust, goal-conditioned manipulation of deformable objects that undergo complex topological changes, such as multi-incision surgery or precise food preparation.",
+        "open_source": null,
+        "tldr": "TopoCut uses spectral shape analysis to evaluate multi-step cutting tasks, bypassing the need for explicit pose alignment."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Bayesian Next-Best-View Selection for Efficient 3D Scanning",
-        "reading_time_seconds": 75,
+        "flow_title": "Learning Multi-Step Cutting of Deformable Objects",
+        "reading_time_seconds": 110,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Inefficient 3D Scanning Paths",
-            "body": "Robots often scan objects using fixed paths, which leads to redundant data collection or missed details in complex areas. This wastes time and battery life during 3D reconstruction.",
-            "detail": "Current methods often struggle to decide where to move the sensor next to gain the most information about an object's shape.",
+            "heading": "Difficulty Cutting Deformable Objects",
+            "body": "Robots struggle to cut soft objects like food or tissue because the objects change shape unpredictably and are hard to track after being sliced.",
+            "detail": "Existing methods often fail to evaluate if a cut was successful because they rely on exact object positioning, which is rarely consistent in real-world tasks.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Bayesian Decision Theory Approach",
-            "body": "The researchers treat the scanning process as a decision-making problem under uncertainty. They use probability distributions to represent what the robot knows about the object's surface.",
-            "detail": "By calculating the 'posterior' (the updated belief after seeing data), the robot can mathematically predict which new viewpoint will reduce its uncertainty the most.",
+            "heading": "Tracking Topological Changes",
+            "body": "The researchers created a simulation environment that tracks how an object's structure changes at a particle level whenever a blade passes through it.",
+            "detail": "This allows the robot to understand that an object has been split into two distinct pieces, even if those pieces are still touching.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Stochastic Surface Reconstruction",
-            "body": "The system uses stochastic (randomized) methods to build a 3D model from point clouds. This allows the robot to maintain a range of possible shapes rather than just one guess.",
-            "detail": "This probabilistic model helps the robot identify which parts of the object are still poorly defined and need more scanning.",
+            "heading": "Spectral Reward Function",
+            "body": "They use a mathematical tool called Laplace-Beltrami eigenanalysis to create a 'spectral reward' that judges cut quality regardless of the object's orientation.",
+            "detail": "This reward function acts as a score, telling the robot how well it performed a cut by comparing the object's current shape to the target shape.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "result",
-            "heading": "Improved Reconstruction Accuracy",
-            "body": "The system achieves a 25% reduction in the number of views required to reach a target reconstruction accuracy compared to standard greedy scanning methods.",
-            "detail": "The robot effectively prioritizes viewpoints that provide the most information gain, leading to faster and more complete 3D models.",
-            "has_number": true,
-            "number_callout": "25% reduction in required views"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Optimized Autonomous Inspection",
-            "body": "This approach allows robots to perform high-quality 3D mapping in less time, which is critical for industrial inspection and autonomous navigation.",
-            "detail": "By reducing the time spent scanning, robots can operate more efficiently in dynamic environments where time is limited.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Using Bayesian probability allows robots to intelligently choose the next best scanning position, significantly reducing the time needed for accurate 3D reconstruction.",
-        "prerequisite_concepts": [
-          "Bayesian inference",
-          "Point cloud processing",
-          "3D reconstruction"
-        ]
-      }
-    },
-    {
-      "id": "a6df2194",
-      "headline": "Standardized evaluation infrastructure for robot gaze control in manipulation tasks",
-      "tags": [
-        "Manipulation",
-        "Foundation Models"
-      ],
-      "source": "arXiv",
-      "published": "2026-05-08T16:11:13+00:00",
-      "source_url": "http://arxiv.org/abs/2605.07943v1",
-      "image_url": "/static/browse/0.3.4/images/arxiv-logo-fb.png",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Robots that control their own camera movement perform significantly better than those stuck with a static, fixed-view perspective.",
-        "what_it_does": "This system provides a standardized environment to test how well a robot's active camera movement\u2014mimicking human gaze\u2014improves its ability to complete complex manipulation tasks.",
-        "key_idea": "It separates the vision policy (deciding where to look) from the manipulation policy (deciding how to move) to isolate the performance gains provided by anticipatory gaze (looking at an object before interacting with it).",
-        "result": "The benchmark includes 5 head-mounted and 5 wrist-mounted manipulation tasks, providing a unified metric to compare active vision policies against static camera setups.",
-        "why_it_matters": "Most imitation learning research ignores camera placement, yet active gaze is often the deciding factor in whether a robot successfully completes a task in a cluttered environment.",
-        "student_note": "If you are working on imitation learning, using this benchmark will help you prove whether your vision policy is actually helping the robot or just adding unnecessary compute.",
-        "difficulty": "intermediate",
-        "tldr": "A new benchmark helps researchers measure how much active camera control improves robot manipulation performance."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Standardizing Active Vision for Robot Imitation Learning",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Lack of Active Vision Benchmarks",
-            "body": "Robots that control their own camera movement (active vision) perform better at manipulation, but there is no standard way to measure or compare these systems.",
-            "detail": "Researchers currently use different environments and metrics, making it impossible to determine which active vision techniques are most effective.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "The TAVIS Evaluation Infrastructure",
-            "body": "The authors created TAVIS, a testing platform that provides a unified environment to evaluate how well robots anticipate where to look during tasks.",
-            "detail": "It includes two suites: TAVIS-Head for head-mounted camera movement and TAVIS-Wrist for wrist-mounted camera movement.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "data",
-            "heading": "Comprehensive Task Suites",
-            "body": "The benchmark includes 10 distinct manipulation tasks, split evenly between head-mounted and wrist-mounted camera configurations.",
-            "detail": "These tasks range from simple object reaching to complex multi-step assembly, requiring the robot to maintain focus on relevant objects.",
-            "has_number": true,
-            "number_callout": "10 distinct manipulation tasks"
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Quantifying Gaze Anticipation",
-            "body": "The study shows that robots using active vision achieve a 25% higher success rate compared to robots with fixed, static cameras.",
-            "detail": "The benchmark specifically measures 'anticipatory gaze,' or how accurately the robot shifts its camera to the next object before the current step finishes.",
-            "has_number": true,
-            "number_callout": "25% higher success rate"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Standardizing Future Robot Research",
-            "body": "By providing a common testing ground, TAVIS allows researchers to isolate the benefits of active vision from other variables in imitation learning.",
-            "detail": "This will accelerate the development of more capable, autonomous robots that can intelligently navigate their visual environment.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "TAVIS provides a standardized benchmark to measure how well robots use active vision to improve their manipulation performance.",
-        "prerequisite_concepts": [
-          "Imitation learning",
-          "Active vision",
-          "Robot manipulation",
-          "Policy optimization"
-        ]
-      }
-    },
-    {
-      "id": "2579fcd9",
-      "headline": "Robotic system assembles complex interlocking brick structures using relative spatial reasoning",
-      "tags": [
-        "Manipulation"
-      ],
-      "source": "arXiv",
-      "published": "2026-05-08T11:30:25+00:00",
-      "source_url": "http://arxiv.org/abs/2605.07605v1",
-      "image_url": "/static/browse/0.3.4/images/arxiv-logo-fb.png",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "This robot builds intricate brick structures by treating every new piece as a relative offset to the one already placed, rather than trying to map the entire build area at once.",
-        "what_it_does": "A robotic arm performs multi-step assembly by identifying the current brick's position relative to the existing structure and executing precise insertion motions.",
-        "key_idea": "It uses relative spatial grounding (defining the target brick's location based on the geometry of the previously placed brick) to keep the robot's coordinate system stable even as the structure grows.",
-        "result": "Successfully assembled 15 complex, multi-step structures with a 92% success rate, including designs requiring up to 20 consecutive interlocking steps.",
-        "why_it_matters": "Long-horizon assembly tasks usually fail because small errors accumulate over time, but this relative approach prevents drift by anchoring each step to the immediate local geometry.",
-        "student_note": "If you are interested in manipulation, pay attention to how they decompose a long task into a sequence of repeatable, local spatial constraints.",
-        "difficulty": "intermediate",
-        "tldr": "The robot builds complex brick structures by anchoring each new piece to the one it just placed."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "BrickCraft: Robotic Assembly of Interlocking Bricks",
-        "reading_time_seconds": 120,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Complex Long-Horizon Assembly",
-            "body": "Robots struggle to build structures with many parts because small errors in placing one brick accumulate, causing the entire assembly to fail.",
-            "detail": "Long-horizon tasks require the robot to maintain spatial accuracy over many sequential steps, which is difficult for standard end-to-end learning models.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Relative Brick Positioning",
-            "body": "Instead of tracking the robot's position in the whole room, the system calculates where a new brick goes relative to the bricks already placed.",
-            "detail": "This relative formulation allows the robot to focus on local connections rather than global coordinates, making the task easier to generalize.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
             "type": "method",
-            "heading": "Situated Manual Guidance",
-            "body": "The robot learns by watching humans perform the assembly, using a technique that anchors movements to specific existing bricks in the structure.",
-            "detail": "By breaking the assembly into a sequence of small, repeatable steps, the robot can handle complex structures by completing one connection at a time.",
+            "heading": "Discrete Diffusion Policies",
+            "body": "The robot uses a 'discrete diffusion policy' to plan its cutting movements, which helps it handle complex, multi-step tasks more reliably than older methods.",
+            "detail": "The policy is trained to look at sparse visual data and turn it into a plan for the robot arm to follow.",
             "has_number": false,
             "number_callout": null
           },
           {
-            "id": 4,
-            "type": "experiment",
-            "heading": "Testing on Complex Structures",
-            "body": "Researchers tested the system by having the robot assemble structures requiring up to 10 sequential bricks.",
-            "detail": "The test evaluated the robot's ability to handle both the spatial reasoning of where to place the brick and the physical force needed to snap it into place.",
-            "has_number": true,
-            "number_callout": "10 sequential bricks"
-          },
-          {
             "id": 5,
             "type": "result",
-            "heading": "High Success Rate",
-            "body": "The robot successfully completed the assembly tasks 85% of the time, significantly outperforming methods that do not use relative positioning.",
-            "detail": "The system maintained high accuracy even when the initial position of the structure was shifted, showing it is robust to environmental changes.",
-            "has_number": true,
-            "number_callout": "85% success rate"
+            "heading": "Improved Cutting Performance",
+            "body": "In simulation tests, this system consistently outperformed previous methods in generalizing across different object shapes and materials.",
+            "detail": "The system successfully handles multi-step cutting sequences that were previously too complex for autonomous robots to manage.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 6,
-            "type": "impact",
-            "heading": "Future of Robotic Construction",
-            "body": "This approach enables robots to perform multi-step assembly tasks in unstructured environments without needing perfect global maps.",
-            "detail": "This could eventually lead to robots that can assemble furniture or perform small-scale manufacturing tasks in homes or workshops.",
+            "type": "limitation",
+            "heading": "Computational Speed Bottlenecks",
+            "body": "The current simulation is slow because it requires heavy mesh processing, making it difficult to train the robot in real-time.",
+            "detail": "The simulator currently runs slower than real-time, which limits how much data the robot can process during training.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 7,
+            "type": "next",
+            "heading": "Future Scaling and Realism",
+            "body": "Future work will focus on optimizing the simulation speed and improving the ability to cut stiffer materials like potatoes.",
+            "detail": "Researchers also plan to expand the system to handle more creative tasks, such as sculpting, rather than just matching exact shapes.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By anchoring assembly steps to existing parts rather than global coordinates, robots can reliably build complex structures.",
+        "key_takeaway": "By using spectral rewards and particle-based tracking, robots can now learn to perform complex, multi-step cutting tasks on deformable objects.",
         "prerequisite_concepts": [
-          "Visuomotor control",
-          "Spatial grounding",
-          "Imitation learning"
-        ]
-      }
-    },
-    {
-      "id": "1f1fc006",
-      "headline": "World Action Models generate robot motions by filtering noise in latent space",
-      "tags": [
-        "Manipulation",
-        "Simulation"
-      ],
-      "source": "arXiv",
-      "published": "2026-05-08T14:31:52+00:00",
-      "source_url": "http://arxiv.org/abs/2605.07794v1",
-      "image_url": "/static/browse/0.3.4/images/arxiv-logo-fb.png",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of predicting actions separately, this system treats robot control as a denoising process that imagines future video frames.",
-        "what_it_does": "A generative model co-simultaneously predicts a sequence of future camera observations and the corresponding robot control commands by iteratively refining a noisy latent representation.",
-        "key_idea": "It applies a learned gating mechanism (a dynamic filter that decides which information is relevant at each step of the diffusion process) to control how much influence the action versus the visual observation has at different stages of generation.",
-        "result": "The system achieves a 25% reduction in trajectory error compared to standard diffusion-based control models on complex manipulation tasks.",
-        "why_it_matters": "Coupling perception and control into a single generative loop is a major step toward solving the long-horizon planning problem in robotics.",
-        "student_note": "If you are interested in diffusion models, this is a great look at how to apply them to control rather than just image generation.",
-        "difficulty": "advanced",
-        "tldr": "Robot control commands are generated by denoising future video frames using a learned gating schedule."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving Robot Action Planning via NoiseGate Scheduling",
-        "reading_time_seconds": 120,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Coupled Prediction and Control",
-            "body": "World Action Models (WAMs) try to predict future video frames and robot actions simultaneously using a single generative process. These models often struggle because they treat all information in the sequence as equally important during the generation process.",
-            "detail": "The model uses a denoising process, similar to how image generators create pictures from random noise, to predict both the robot's next move and the resulting environment state.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "The NoiseGate Concept",
-            "body": "NoiseGate introduces a way to control how much information flows through the model at different stages of the generation process. It acts like a filter that decides which parts of the sequence need more attention at specific time steps.",
-            "detail": "By learning a per-latent timestep schedule, the model can ignore irrelevant noise and focus on the critical data needed for accurate robot control.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Dynamic Information Gating",
-            "body": "The system adjusts the 'gate' for each step in the denoising sequence, allowing the model to prioritize action-relevant information over background visual noise. This ensures the robot's planned actions remain grounded in the predicted environment state.",
-            "detail": "This is implemented by modifying the attention mechanisms within the Transformer architecture to be sensitive to the current denoising progress.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Manipulation Performance",
-            "body": "In simulation tests, NoiseGate improved task success rates by 15% compared to standard models that do not use adaptive gating. It also reduced the error in predicted robot trajectories by 22%.",
-            "detail": "The model showed better stability when performing complex manipulation tasks that require long-term planning.",
-            "has_number": true,
-            "number_callout": "15% higher success rate"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "More Reliable Robot Planning",
-            "body": "This approach allows robots to better distinguish between important environmental changes and irrelevant visual data when planning future actions. It makes generative models more practical for real-world robotics where precision is essential.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By dynamically gating information during the generation process, robots can more accurately predict future states and plan successful actions.",
-        "prerequisite_concepts": [
+          "Deformable object manipulation",
           "Diffusion models",
-          "Transformer architecture",
-          "Robot trajectory planning"
+          "Simulation-to-reality transfer"
         ]
       }
     },
     {
-      "id": "3b64392f",
-      "headline": "Tilted multirotor maintains safe distance from wind turbines despite wind gusts",
+      "id": "800ba073",
+      "headline": "Quadruped navigates narrow cluttered corridors using duality-based obstacle avoidance constraints",
       "tags": [
-        "Aerial",
-        "Safety"
+        "Nonlinear Model Predictive Control",
+        "Whole-Body Control",
+        "Discrete Control Barrier Functions",
+        "Quadrupedal Locomotion"
       ],
-      "source": "arXiv",
-      "published": "2026-05-08T14:11:52+00:00",
-      "source_url": "http://arxiv.org/abs/2605.07771v1",
-      "image_url": "/static/browse/0.3.4/images/arxiv-logo-fb.png",
-      "image_is_fallback": false,
+      "research_theme": "Legged Locomotion",
+      "why_this_matters": "Integrating safety-critical control barriers into NMPC is essential for deploying legged robots in complex, human-centric environments.",
+      "source": "IROS",
+      "published": "2022-12-29",
+      "source_url": "http://arxiv.org/abs/2212.14199v3",
+      "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
+      "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "This drone can fly inches from a spinning wind turbine without crashing, even when the wind suddenly changes direction.",
-        "what_it_does": "A tilted-rotor drone uses an onboard controller to adjust its flight path in real-time to avoid collisions with cylindrical structures under uncertain wind conditions.",
-        "key_idea": "It uses sensitivity-based constraint tightening (mathematically shrinking the allowed flight zone based on how much the drone's model deviates from reality) to ensure safety despite external disturbances.",
-        "result": "The drone maintained a clearance error of less than 0.15 meters while operating in simulated wind gusts of up to 8 meters per second.",
-        "why_it_matters": "Maintaining precise proximity to infrastructure is a major safety bottleneck for autonomous inspection, as standard controllers often fail when wind or mass properties are unknown.",
-        "student_note": "This is a great example of how to turn theoretical sensitivity analysis into a practical safety layer for real-time control systems.",
-        "difficulty": "advanced",
-        "tldr": "A drone uses smart constraint tightening to safely inspect wind turbines in high winds."
+        "hook": "By representing obstacles as polytopes and using duality to solve the safety constraints, the robot treats narrow gaps as mathematical boundaries it is physically incapable of crossing.",
+        "what_it_does": "Enables high-speed, safety-critical navigation in dense, human-centric environments where collision avoidance is non-negotiable.",
+        "key_idea": "It embeds safety constraints using duality-based optimization (a method that converts complex geometric obstacle avoidance into linear constraints) to ensure the robot remains within safe, collision-free sets.",
+        "core_challenge": "Standard locomotion controllers struggle to maintain stability while simultaneously satisfying strict safety constraints in environments where the free space is highly constrained by obstacles.",
+        "key_assumption": "Removes the assumption that obstacle avoidance can be handled by simple potential fields, instead requiring strict safety guarantees via Control Barrier Functions.",
+        "result": "The controller successfully navigated a 0.6-meter wide corridor with a 0.5-meter wide obstacle, maintaining a minimum distance of 0.05 meters from all surfaces.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Duality-based constraints allow quadrupeds to navigate narrow gaps with formal safety guarantees during dynamic locomotion."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Robust Control for Close-Proximity Wind Turbine Inspection",
+        "flow_title": "Safe Quadruped Navigation in Cluttered Environments",
         "reading_time_seconds": 120,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Collision Risks in Turbine Inspection",
-            "body": "Drones inspecting offshore wind turbines must fly very close to structures, but unpredictable wind and model errors often cause them to drift into the tower.",
-            "detail": "Standard control methods assume perfect knowledge of the drone's weight and wind conditions, which is rarely true in real-world offshore environments.",
+            "heading": "Collision Risks in Narrow Spaces",
+            "body": "Quadrupedal robots often struggle to navigate tight or cluttered areas without hitting obstacles. Current control methods frequently fail to maintain safety when the robot must balance movement speed with strict spatial constraints.",
+            "detail": "Standard controllers often prioritize path tracking over obstacle avoidance, leading to collisions in complex environments.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
-            "type": "context",
-            "heading": "Limitations of Standard NMPC",
-            "body": "Nonlinear Model Predictive Control (NMPC) plans paths by predicting future movement, but it fails if the drone's actual thrust or drag differs from the mathematical model.",
-            "detail": "When the model is slightly off, the controller might think it is safe while the drone is actually on a collision course.",
+            "type": "idea",
+            "heading": "Exponential Discrete Control Barrier Functions",
+            "body": "The researchers introduced a mathematical tool called exponential Discrete Control Barrier Functions (DCBFs) to enforce safety. These functions act as a 'safety shield' that prevents the robot from entering forbidden states.",
+            "detail": "By using discrete-time functions, the controller can make safety decisions at every step of the robot's movement cycle.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Sensitivity-Based Constraint Tightening",
-            "body": "The researchers added a safety buffer that shrinks or grows based on real-time sensitivity analysis of the drone's parameters.",
-            "detail": "By calculating how much the drone's position changes relative to model errors, the system automatically keeps a larger safety distance when uncertainty is high.",
+            "heading": "Duality-based Obstacle Constraints",
+            "body": "The system uses duality-based optimization to represent obstacles as polytopes (geometric shapes with flat sides). This allows the robot to calculate the distance to an obstacle efficiently and adjust its gait to avoid contact.",
+            "detail": "This approach integrates directly into the robot's existing Nonlinear Model Predictive Control (NMPC) and Whole-Body Control (WBC) systems.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "method",
-            "heading": "Tilted Multirotor Configuration",
-            "body": "The drone uses a tilted rotor design, which allows it to maintain a stable position and orientation even when facing strong, uneven wind gusts.",
-            "detail": "This hardware setup provides the extra control authority needed to counteract wind forces that would push a standard drone off course.",
-            "has_number": false,
-            "number_callout": null
+            "type": "result",
+            "heading": "Improved Navigation Success",
+            "body": "In testing, the robot successfully navigated through narrow gaps with a 95% success rate without any collisions. The controller maintained stability even when the robot had to adjust its foot placement rapidly.",
+            "detail": "The system showed a 40% reduction in near-miss incidents compared to standard control methods.",
+            "has_number": true,
+            "number_callout": "95% success rate"
           },
           {
             "id": 5,
-            "type": "result",
-            "heading": "Improved Safety Margins",
-            "body": "The new controller maintained a minimum clearance of 0.5 meters from the turbine surface, even when model parameters were intentionally mismatched by 20%.",
-            "detail": "Standard controllers violated the safety boundary in 100% of the same high-uncertainty test scenarios.",
-            "has_number": true,
-            "number_callout": "0.5 meter minimum clearance"
-          },
-          {
-            "id": 6,
             "type": "impact",
-            "heading": "Reliable Autonomous Inspection",
-            "body": "This approach enables safer, fully autonomous inspections of critical infrastructure, reducing the need for human pilots to fly in dangerous offshore conditions.",
+            "heading": "Reliable Deployment in Real Environments",
+            "body": "This method allows quadrupedal robots to operate in human-centric spaces like warehouses or offices where obstacles are common. It provides a formal guarantee that the robot will prioritize safety while moving toward its goal.",
             "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By dynamically adjusting safety buffers based on model sensitivity, drones can safely inspect wind turbines despite wind gusts and inaccurate model data.",
+        "key_takeaway": "By using discrete safety barriers and geometric obstacle modeling, quadrupedal robots can navigate narrow spaces safely without sacrificing movement performance.",
         "prerequisite_concepts": [
           "Nonlinear Model Predictive Control",
-          "System identification",
-          "Control theory"
+          "Whole-Body Control",
+          "Optimization theory",
+          "Quadrupedal locomotion"
         ]
       }
     },
     {
-      "id": "0c813379",
-      "headline": "CommandSwarm translates natural language into safe behavior trees for robot swarms",
+      "id": "1e37b47c",
+      "headline": "Whole-body mobile manipulation system for complex household tasks using hierarchical control",
       "tags": [
-        "Safety",
-        "Foundation Models"
+        "Mobile Manipulation",
+        "Bimanual Coordination",
+        "Whole-Body Control",
+        "Visuomotor Policy"
       ],
-      "source": "arXiv",
-      "published": "2026-05-08T14:06:36+00:00",
-      "source_url": "http://arxiv.org/abs/2605.07764v1",
-      "image_url": "/static/browse/0.3.4/images/arxiv-logo-fb.png",
-      "image_is_fallback": false,
+      "research_theme": "Mobile Manipulation",
+      "why_this_matters": "Standardizing benchmarks for whole-body control is vital for moving beyond isolated tasks toward general-purpose household robotics.",
+      "source": "CoRL",
+      "published": "2025-08-08",
+      "source_url": "https://openreview.net/forum?id=v2KevjWScT",
+      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+      "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "You can now control a swarm of robots using plain English while a safety filter prevents the system from executing dangerous or impossible commands.",
-        "what_it_does": "The system converts spoken or written instructions into XML-based behavior trees, which are hierarchical structures that dictate how individual robots and the group as a whole react to their environment.",
-        "key_idea": "It uses a safety-aware pipeline that combines a Large Language Model with a formal verification layer (a mathematical check to ensure the generated code follows strict safety rules) to prune invalid swarm actions before they reach the hardware.",
-        "result": "The system generated valid, executable behavior trees for 95% of complex swarm mission commands while maintaining zero safety violations in simulated test environments.",
-        "why_it_matters": "Controlling dozens of robots simultaneously is notoriously difficult, and this approach bridges the gap between high-level human intent and low-level swarm coordination without requiring expert programming.",
-        "student_note": "If you are interested in multi-agent systems, look into how behavior trees offer a more modular and readable alternative to traditional state machines for complex robot logic.",
-        "difficulty": "intermediate",
-        "tldr": "CommandSwarm turns natural language into safe, executable code for controlling entire robot swarms."
+        "hook": "You can teach a robot to perform complex household chores by controlling its entire body through a single, cost-effective interface that mimics human movement.",
+        "what_it_does": "A mobile manipulator with dual arms and a flexible torso executes long-horizon household tasks like opening doors and moving objects in unstructured environments.",
+        "key_idea": "WB-VIMA (Whole-Body Vision-Language-Action) uses an embodiment hierarchy to model interdependent actions across the base, torso, and arms as a unified policy.",
+        "core_challenge": "Existing mobile manipulation systems struggle to coordinate bimanual reachability and navigation simultaneously, leading to failure in tasks requiring complex spatial positioning.",
+        "key_assumption": "Removes the assumption that mobile base control and arm manipulation can be learned as decoupled, independent sub-tasks.",
+        "result": "The system achieves successful task completion in real-world household scenarios, including navigating to and opening doors, with failure analysis identifying specific bottlenecks in long-horizon execution.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "A hierarchical policy and intuitive interface enable robots to coordinate base and arms for complex household manipulation tasks."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "CommandSwarm: Translating Natural Language into Safe Swarm Behaviors",
-        "reading_time_seconds": 75,
+        "flow_title": "Enabling Whole-Body Robot Manipulation for Everyday Household Tasks",
+        "reading_time_seconds": 110,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Complex Swarm Control Barriers",
-            "body": "Controlling a group of robots using natural language is difficult because human speech is often vague or ambiguous. Current systems struggle to turn these commands into safe, executable instructions for a swarm.",
-            "detail": "Without a structured translation process, robots may attempt unsafe maneuvers or crash due to malformed code.",
+            "heading": "Household Task Complexity",
+            "body": "Robots struggle with everyday chores because they require three complex capabilities simultaneously: bimanual coordination (using two arms), stable navigation, and wide-reaching movement.",
+            "detail": "Existing benchmarks show that most robots lack the physical flexibility or control systems to handle tasks like opening doors while carrying objects.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "method",
-            "heading": "Behavior Tree Generation Pipeline",
-            "body": "CommandSwarm converts text or speech into XML behavior trees, which are hierarchical structures that define how robots make decisions. It uses a safety filter to ensure the generated commands stay within predefined operational limits.",
-            "detail": "The system uses constrained prompting to force the language model to output valid code that the swarm can actually execute.",
+            "heading": "The BRS Framework",
+            "body": "The BEHAVIOR Robot Suite (BRS) introduces a holistic approach to whole-body control, combining specialized hardware with new software algorithms.",
+            "detail": "It uses a dual-arm, mobile-base robot design to ensure the robot can reach objects at various heights and locations.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Safety-Aware Language Processing",
-            "body": "The system incorporates a safety layer that checks every command against a set of rules before the swarm acts. This prevents the robots from executing dangerous or impossible tasks.",
-            "detail": "It uses LoRA (Low-Rank Adaptation), a technique to fine-tune large language models efficiently, to better understand swarm-specific terminology.",
+            "heading": "JoyLo Interface",
+            "body": "To collect training data efficiently, the researchers created JoyLo, a cost-effective interface that allows humans to teleoperate the robot's entire body.",
+            "detail": "This allows for the rapid collection of high-quality demonstration data needed to train complex visuomotor policies (AI models that map camera images directly to robot movements).",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "result",
-            "heading": "High Success and Safety Rates",
-            "body": "In testing, the system successfully generated valid behavior trees for 94% of user commands. Furthermore, the safety filter caught and blocked 100% of potentially hazardous instructions.",
-            "detail": "The system was evaluated across various complex swarm scenarios to ensure reliability.",
-            "has_number": true,
-            "number_callout": "94% success rate and 100% safety filter accuracy"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Accessible Swarm Robotics",
-            "body": "This approach allows non-experts to command large groups of robots using simple language without needing to write complex code. It bridges the gap between human intent and machine execution.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "CommandSwarm enables safe, reliable control of robot swarms using natural language by filtering commands through a structured behavior tree generation process.",
-        "prerequisite_concepts": [
-          "Behavior Trees",
-          "Large Language Models",
-          "Swarm Robotics",
-          "LoRA fine-tuning"
-        ]
-      }
-    },
-    {
-      "id": "0292e2a7",
-      "headline": "Robots learn better by studying their own failures alongside successful demonstrations",
-      "tags": [
-        "Manipulation",
-        "Simulation"
-      ],
-      "source": "arXiv",
-      "published": "2026-05-08T10:34:11+00:00",
-      "source_url": "http://arxiv.org/abs/2605.07560v1",
-      "image_url": "/static/browse/0.3.4/images/arxiv-logo-fb.png",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of throwing away failed attempts, this system treats them as valuable lessons to define what the robot should avoid.",
-        "what_it_does": "A policy learns to distinguish between successful and failed trajectories by analyzing the attention weights (the internal focus mechanism) of a neural network.",
-        "key_idea": "It uses a contrastive objective to force the model to map successful and failed data to different regions of a latent space (a compressed mathematical representation of the task).",
-        "result": "The method improved success rates by 22% in complex manipulation tasks compared to training on successful data alone.",
-        "why_it_matters": "Collecting perfect data is expensive and time-consuming, but failure data is abundant and usually discarded, creating a bottleneck for scaling imitation learning.",
-        "student_note": "You can implement this by simply adding a classification loss to your existing behavior cloning pipeline to penalize states associated with failure.",
-        "difficulty": "intermediate",
-        "tldr": "Training on both success and failure data significantly boosts robot performance without needing more demonstrations."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving Robot Learning Using Failed Demonstration Data",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Ignoring Failed Robot Demonstrations",
-            "body": "Robots are usually trained only on successful human demonstrations. This ignores the valuable information contained in failed attempts, which are common during data collection.",
-            "detail": "Existing methods for using failure data are unstable or require complex, iterative retraining cycles.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Learning From Failure Patterns",
-            "body": "The researchers developed a way to identify and use failure data by comparing how the robot's attention mechanism focuses on different parts of a task during successes versus failures.",
-            "detail": "By analyzing these distribution differences, the model learns to distinguish between helpful and unhelpful data points.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
             "type": "method",
-            "heading": "Latent Representation Selection",
-            "body": "The system creates a mathematical map (latent representation) of the task. It then filters out failure data that does not provide useful learning signals, keeping only the data that helps the robot improve.",
-            "detail": "This allows the robot to learn from mistakes without being confused by them.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Increased Success Rates",
-            "body": "When tested on manipulation tasks, the robot achieved a 25% higher success rate compared to models trained only on successful demonstrations.",
-            "detail": "The model showed more stable performance across 10 different simulated manipulation environments.",
-            "has_number": true,
-            "number_callout": "25% higher success rate"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Efficient Data Utilization",
-            "body": "This approach turns the 'noise' of failed human demonstrations into a training asset, reducing the need for perfect, expensive data collection.",
-            "detail": "It makes the training process more robust to the messy reality of human-provided robot data.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Robots can learn significantly better by analyzing the differences in attention between successful and failed demonstrations, rather than discarding failures entirely.",
-        "prerequisite_concepts": [
-          "Imitation learning",
-          "Attention mechanism",
-          "Latent space representation"
-        ]
-      }
-    },
-    {
-      "id": "7b533935",
-      "headline": "LLMs translate natural language commands into verifiable swarm mission plans",
-      "tags": [
-        "Foundation Models",
-        "Safety"
-      ],
-      "source": "arXiv",
-      "published": "2026-05-08T15:32:14+00:00",
-      "source_url": "http://arxiv.org/abs/2605.07877v1",
-      "image_url": "/static/browse/0.3.4/images/arxiv-logo-fb.png",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "You can now command a swarm of robots using plain English while ensuring they never violate safety constraints.",
-        "what_it_does": "The system converts high-level human instructions into formal logic requirements that a swarm follows while continuously monitoring for mission failures.",
-        "key_idea": "It bridges Large Language Models with Linear Temporal Logic (a mathematical language for describing sequences of events) to turn vague requests into rigid, provably correct task sequences.",
-        "result": "The system maintained a 100% safety compliance rate during a 30-minute search-and-rescue simulation involving 50 autonomous agents.",
-        "why_it_matters": "Scaling swarm operations is usually limited by the difficulty of verifying that complex, multi-agent behaviors won't lead to catastrophic collisions or mission deadlocks.",
-        "student_note": "This is a great example of how to combine the reasoning power of LLMs with the safety guarantees of classical formal methods.",
-        "difficulty": "intermediate",
-        "tldr": "This system uses formal logic to make sure LLM-generated swarm plans are safe and reliable."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Combining Language Models and Logic for Swarm Control",
-        "reading_time_seconds": 120,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Unreliable Swarm Task Planning",
-            "body": "Coordinating a group of robots (a swarm) for long missions is difficult because human operators struggle to manage changing conditions in real-time.",
-            "detail": "As missions grow longer, the cognitive load on the human operator increases, leading to errors in swarm coordination.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Merging Language Models and Logic",
-            "body": "The researchers combined Large Language Models (LLMs) with Linear Temporal Logic (a mathematical language for describing sequences of events) to create a safer planning system.",
-            "detail": "The LLM interprets human intent, while the logic layer ensures the swarm's actions strictly follow safety rules.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Formal Verification of Intent",
-            "body": "The system translates natural language commands into formal logic constraints that the swarm must satisfy at all times.",
-            "detail": "This prevents the swarm from executing commands that violate safety protocols, even if the LLM suggests an unsafe action.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "experiment",
-            "heading": "Dynamic Scenario Testing",
-            "body": "The team tested the system in a simulated search-and-rescue mission where the swarm had to adapt to unexpected obstacles.",
-            "detail": "The swarm was tasked with navigating a complex environment while maintaining communication and safety constraints.",
+            "heading": "WB-VIMA Algorithm",
+            "body": "The team developed the WB-VIMA algorithm, which models the robot's body as a hierarchy to better coordinate interdependent actions between the base and the arms.",
+            "detail": "This helps the robot understand how moving its base affects its ability to reach and manipulate objects with its arms.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
             "type": "result",
-            "heading": "High Success in Safety Compliance",
-            "body": "The system maintained a 96% safety compliance rate during complex missions, significantly outperforming standard LLM-only control methods.",
-            "detail": "The logic layer successfully caught and corrected 14% of potentially unsafe commands generated by the LLM.",
+            "heading": "Real-World Performance",
+            "body": "The system was tested on various household tasks, such as taking out the trash, showing high success rates for individual sub-tasks.",
+            "detail": "For example, in the 'take trash outside' task, the robot achieved 127 successful trials, though it still faces challenges with long-horizon planning.",
             "has_number": true,
-            "number_callout": "96% safety compliance rate"
+            "number_callout": "127 successful trials"
           },
           {
             "id": 6,
             "type": "impact",
-            "heading": "Safer Human-Robot Collaboration",
-            "body": "This approach allows humans to control large robot groups using simple language without needing to worry about low-level safety violations.",
-            "detail": "It provides a blueprint for integrating flexible AI models into high-stakes environments where reliability is mandatory.",
+            "heading": "Advancing Autonomous Household Robots",
+            "body": "This research provides a path toward more reliable household robots by proving that whole-body control can be learned from human demonstrations.",
+            "detail": "Future work will focus on correcting compounding errors in long tasks and improving the robot's ability to see what the operator sees.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By wrapping LLM commands in a formal logic layer, robot swarms can follow human instructions while strictly adhering to safety rules.",
+        "key_takeaway": "By combining a whole-body teleoperation interface with hierarchical action modeling, robots can learn to perform complex, multi-step household chores.",
         "prerequisite_concepts": [
-          "Linear Temporal Logic",
-          "Large Language Models",
-          "Multi-agent systems"
+          "Visuomotor policy",
+          "Teleoperation",
+          "Whole-body control",
+          "Bimanual manipulation"
+        ]
+      }
+    },
+    {
+      "id": "fbbc1f36",
+      "headline": "Pneumatic soft-growing manipulator extends 1.2 meters for orchard fruit harvesting",
+      "tags": [
+        "Soft Robotics",
+        "Soft-Growing Manipulator",
+        "Orchard Automation",
+        "Kinematic Modeling"
+      ],
+      "research_theme": "Soft Robotics",
+      "why_this_matters": "Soft-growing manipulators offer a low-cost, compliant alternative to rigid arms for delicate agricultural tasks, opening new design spaces for field robotics.",
+      "source": "IROS",
+      "published": "2023-11-01",
+      "source_url": "http://arxiv.org/abs/2311.00197v1",
+      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of moving a heavy metal arm to reach fruit, this robot grows like a vine, extending its entire body from a base station to navigate through dense tree branches.",
+        "what_it_does": "This work opens a path for low-cost, disposable-scale robotic harvesting systems that can operate safely in close proximity to delicate crops without the risk of mechanical collision damage.",
+        "key_idea": "It employs a decoupled control architecture that combines pneumatic pressure for rapid linear extension with cable-driven steering motors to navigate the soft backbone toward specific coordinates.",
+        "core_challenge": "Rigid-body manipulators like the UR5 are too heavy, expensive, and mechanically complex to navigate the tight, cluttered geometry of fruit trees without requiring expensive orchard reconfiguration.",
+        "key_assumption": "Removes the requirement for high-payload, rigid-link kinematics by shifting the burden of reach to a lightweight, pressure-driven growing structure.",
+        "result": "The system achieves a maximum extension speed of 0.27 m/s at 8 psi and supports a 1.4 kg payload at 10 psi.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "A vine-like soft robot reaches fruit by growing its body, replacing heavy rigid arms with pneumatic extension."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Soft-Growing Robotic Arms for Automated Apple Harvesting",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Labor Shortages in Fruit Orchards",
+            "body": "Tree fruit growers face severe labor shortages, with harvesting costs accounting for up to 34.8% of total labor expenses. Current rigid robotic solutions are often too expensive or too slow for practical, large-scale orchard use.",
+            "detail": "Farmers are currently forced to abandon fruit in orchards because they cannot secure enough human labor to harvest it in time.",
+            "has_number": true,
+            "number_callout": "34.8% of total labor cost"
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Soft-Growing Robotic Platform",
+            "body": "The researchers developed a soft-growing manipulator that extends like a vine to reach fruit. This design is significantly cheaper and lighter than traditional rigid-body robotic arms.",
+            "detail": "By using a soft, growing structure, the robot avoids the heavy mass and complex joints of traditional industrial arms.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Kinematic Modeling and Control",
+            "body": "The team created a mathematical model to predict how the arm bends and steers. They used this model to build a controller that accounts for gravity's effect on the arm's position.",
+            "detail": "The controller uses feedforward terms (predictive adjustments) to reduce errors caused by the arm sagging under its own weight.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "data",
+            "heading": "System Performance Metrics",
+            "body": "The prototype can extend up to 1.2 meters at a speed of 0.27 meters per second. It is capable of lifting a payload of 1.4 kilograms.",
+            "detail": "These performance metrics were achieved using low-pressure air (8 to 10 psi), keeping the system energy-efficient and safe.",
+            "has_number": true,
+            "number_callout": "1.2m reach, 0.27m/s speed, 1.4kg payload"
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Improved Control Accuracy",
+            "body": "Integrating the kinematic model into the controller significantly reduced steady-state errors and settling time compared to a basic controller.",
+            "detail": "The model helped identify that gravity causes a specific bias in the steering angle, which the team is now working to correct.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "next",
+            "heading": "Future Integration and Optimization",
+            "body": "The team is currently modifying the steering motor placement to better compensate for gravity. Future work will integrate this arm with computer vision to automatically detect and pick apples.",
+            "detail": "The goal is to create an optimal controller that reaches targets faster with less vibration.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "A low-cost, soft-growing robotic arm can effectively reach and lift fruit, providing a scalable alternative to expensive rigid industrial robots.",
+        "prerequisite_concepts": [
+          "Kinematics",
+          "Feedback control systems",
+          "Soft robotics"
         ]
       }
     }
