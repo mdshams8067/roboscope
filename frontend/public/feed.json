@@ -1,935 +1,933 @@
 {
-  "generated_at": "2026-05-20T04:26:51.575046+00:00",
+  "generated_at": "2026-05-21T04:32:57.249328+00:00",
   "article_count": 10,
   "articles": [
     {
-      "id": "e30a49eb",
-      "headline": "CoRI generates natural language explanations of robot motions during physical assistance",
+      "id": "d94a9040",
+      "headline": "Robotic pivoting of unseen objects using learned state-action projections",
       "tags": [
-        "Physical Human-Robot Interaction",
-        "Vision-Language Models",
-        "Assistive Robotics",
-        "Intent Communication"
+        "Contact-Rich Manipulation",
+        "Reinforcement Learning",
+        "Sim-to-Real Transfer",
+        "Generalizable Manipulation"
       ],
-      "research_theme": "Human-Robot Interaction",
-      "why_this_matters": "Bridging the gap between motion planning and natural language communication is essential for making collaborative robots more transparent and trustworthy in shared workspaces.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=dBaSaa7qi4",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/e30a49eb.jpg",
+      "research_theme": "Contact-Rich Manipulation",
+      "why_this_matters": "Mastering pivoting is essential for non-prehensile manipulation, and this work helps you understand how to generalize contact-based skills across diverse object geometries.",
+      "source": "ICRA",
+      "published": "2023-05-04",
+      "source_url": "http://arxiv.org/abs/2305.02554v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/d94a9040.jpg",
       "image_is_fallback": false,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Robots can now explain their own physical actions in plain English by simply reading their own motion plans and camera feeds.",
-        "what_it_does": "A pipeline translates a robot's spatial trajectory and visual scene observations into natural language descriptions of task goals, motion details, and required human cooperation during physical assistance tasks.",
-        "key_idea": "It grounds trajectory waypoints and visual features into a Vision-Language Model (VLM) prompt to synthesize human-readable intent without requiring task-specific training data.",
-        "core_challenge": "Autonomous physical assistance tasks often feel unpredictable or alarming to users because robots typically execute motion plans in silence, leaving the human unaware of the robot's next move.",
-        "key_assumption": "Removes the need for hard-coded, task-specific communication templates by relying on the generative capabilities of large vision-language models to interpret arbitrary motion plans.",
-        "result": "User studies show generated statements are semantically equivalent to human-authored oracle descriptions and outperform standard baseline communication methods in clarity.",
-        "what_it_enables": "Real-time, transparent communication in assistive robotics, making complex physical interactions like bathing or feeding more intuitive for non-expert users.",
+        "hook": "The robot masters the physics of pivoting diverse objects by learning to hallucinate that every new item is just a variation of a single, simple 'unitary' object.",
+        "what_it_does": "A robotic gripper pivots objects against external surfaces by transforming the depth-image features of novel objects into a latent space that matches a pre-trained pivoting policy.",
+        "key_idea": "It uses a policy-gradient-based state/action transformation (a learned mapping that aligns the dynamics of unseen objects to the dynamics of a known 'unitary' object) to enable zero-shot transfer of contact-rich manipulation skills.",
+        "core_challenge": "Variations in kinematic and inertial properties across different objects cause standard policies to fail due to unpredictable slipping, rolling, and contact instability.",
+        "key_assumption": "Removes the assumption that a policy must be retrained for every new object geometry by assuming that diverse objects can be mapped to a common, simplified interaction model.",
+        "result": "Achieved zero-shot transfer from simulation to real-world pivoting tasks across multiple objects with varying shapes and inertial properties.",
+        "what_it_enables": "Manipulation pipelines can now reorient objects for downstream tasks without requiring object-specific reinforcement learning or complex analytical contact modeling.",
         "open_source": null,
-        "tldr": "CoRI turns robot motion plans into natural language explanations so users understand exactly what the robot will do."
+        "tldr": "Robot learns to pivot unseen objects by mapping their depth features to a single, pre-trained unitary object policy."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Enabling Natural Language Communication for Assistive Robots",
-        "reading_time_seconds": 85,
+        "flow_title": "Learning Generalizable Robotic Pivoting Skills in Simulation",
+        "reading_time_seconds": 120,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Ambiguous Robot Intent",
-            "body": "In physical assistive tasks like bathing or feeding, robots move in ways that can be confusing or intimidating to human users. Without clear communication, users struggle to understand what the robot is about to do next.",
-            "detail": "Current methods for interpreting robot motion are designed for developers, not for the elderly or patients who need assistance.",
+            "heading": "Difficulty of Contact-Rich Manipulation",
+            "body": "Robots struggle to pivot objects because they must maintain precise contact with surfaces while managing unpredictable forces like slipping and rolling.",
+            "detail": "Pivoting is essential for reorienting objects that are too large or awkwardly shaped for a direct grasp.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "CoRI Intent Pipeline",
-            "body": "CoRI is a system that translates a robot's internal motion plan and camera view into simple, natural language sentences. It tells the user the robot's goal, how it will move, and if the user needs to hold still.",
-            "detail": "The system uses Vision-Language Models to ground the robot's trajectory in the physical environment, creating context-aware descriptions.",
+            "heading": "Simulation-Based Skill Learning",
+            "body": "Instead of training on physical robots, this method learns pivoting skills entirely in a virtual environment and transfers them to the real world.",
+            "detail": "Training in simulation avoids the wear and tear on hardware and allows for thousands of rapid trial-and-error iterations.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Input Processing",
-            "body": "The pipeline takes two inputs: the robot's visual perception of the human and the environment, and the planned path (trajectory) the robot intends to follow.",
-            "detail": "By combining these, the robot can say 'I am moving from your left wrist to your elbow' rather than just describing raw coordinates.",
+            "heading": "Policy Adaptation for New Objects",
+            "body": "The robot learns a base policy on one 'unitary' object and uses depth images to adjust its actions for different, unseen objects.",
+            "detail": "The system extracts low-dimensional features from depth images to map new objects to the learned base policy.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "High Quality Communication",
-            "body": "In user studies, CoRI generated statements that were as accurate and clear as those written by human experts, while outperforming existing baseline communication methods.",
-            "detail": "The system successfully communicated task goals, motion details, and requests for user cooperation across three different assistive tasks.",
-            "has_number": true,
-            "number_callout": "3 assistive tasks"
-          },
-          {
-            "id": 5,
-            "type": "limitation",
-            "heading": "Current Technical Constraints",
-            "body": "The system currently struggles with real-time updates because large language models introduce latency, and it cannot easily recover if the human moves unexpectedly.",
-            "detail": "It is currently limited to pre-planned trajectories and does not yet support reactive, closed-loop control policies.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "next",
-            "heading": "Future Interaction Goals",
-            "body": "Future work will focus on enabling two-way communication, allowing users to verbally correct or modify the robot's motion in real-time.",
-            "detail": "Researchers also aim to study how these verbal cues affect user trust and comfort during long-term assistive care.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "CoRI allows assistive robots to explain their physical actions in natural language, making human-robot interaction safer and more intuitive.",
-        "prerequisite_concepts": [
-          "Vision-Language Models (VLM)",
-          "Trajectory Planning",
-          "Physical Human-Robot Interaction (pHRI)"
-        ]
-      }
-    },
-    {
-      "id": "1a565236",
-      "headline": "AimBot projects crosshairs and trajectory lines onto camera feeds for robots",
-      "tags": [
-        "Visuomotor Policy",
-        "Spatial Grounding",
-        "Vision-Language-Action",
-        "Robotic Manipulation"
-      ],
-      "research_theme": "Visuomotor Policy Learning",
-      "why_this_matters": "Simple auxiliary visual cues can significantly improve spatial reasoning in policies, offering a low-cost alternative to complex architectural changes for better manipulation performance.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=brTSiML1nh",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/1a565236.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Robots struggle to see where their own hands are, so giving them a video-game-style scope reticle makes them significantly more accurate.",
-        "what_it_does": "A system overlays synthetic shooting lines and scope reticles onto RGB camera images to explicitly visualize the end-effector's 3D pose and alignment relative to target objects.",
-        "key_idea": "It injects proprioceptive state into the visual domain by projecting 3D geometric cues (reticles and lines) directly onto the image plane using camera extrinsics and depth data.",
-        "core_challenge": "Visuomotor policies often fail to ground the robot's end-effector position accurately within the visual input, leading to poor spatial alignment in complex manipulation tasks.",
-        "key_assumption": "Relies on the availability of metric depth information, either from hardware sensors or monocular depth estimation models, to perform the projection.",
-        "result": "Consistently improves task success rates across diverse VLA backbones, with the most significant gains observed in long-horizon manipulation tasks requiring precise spatial alignment.",
-        "what_it_enables": "Enables existing vision-language-action models to achieve higher spatial precision without requiring architectural changes or additional training data.",
-        "open_source": null,
-        "tldr": "Projecting crosshairs onto camera feeds gives robots a visual heads-up display that drastically improves their spatial alignment precision."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving Robot Spatial Awareness with Visual Targeting Cues",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Robots Lack Spatial Awareness",
-            "body": "Modern robot control models often struggle to understand the exact 3D relationship between their gripper and target objects when looking at raw camera images.",
-            "detail": "Even advanced vision-language-action models fail to ground the robot's physical position in the visual scene, leading to alignment errors.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Visual Targeting Cues",
-            "body": "AimBot adds 'scope reticles' and 'shooting lines' to camera images, similar to a video game aiming system, to show exactly where the gripper is pointing.",
-            "detail": "These cues are generated using depth data and the robot's known position, making the gripper's state visible directly in the image.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Lightweight Visual Augmentation",
-            "body": "The system overlays these cues onto existing camera feeds without changing the underlying robot control model.",
-            "detail": "The process is extremely fast, adding less than 1ms of computational overhead to the control loop.",
-            "has_number": true,
-            "number_callout": "<1ms overhead"
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Task Success",
-            "body": "Adding these visual cues consistently improves performance across different robot models, especially for complex tasks requiring precise alignment.",
-            "detail": "The method works across various vision-language-action backbones without requiring retraining of the core model architecture.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "limitation",
-            "heading": "Dependency on Depth Data",
-            "body": "The system requires accurate depth information to draw the cues correctly, which can be difficult in open spaces or without depth sensors.",
-            "detail": "It is also currently optimized for simple grippers and may not work well for complex, multi-fingered robotic hands.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Practical Spatial Grounding",
-            "body": "This approach provides a simple, scalable way to help robots 'see' their own position better, making them more reliable in real-world manipulation tasks.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By overlaying simple visual targeting cues onto camera images, robots can better understand their spatial relationship to objects, leading to higher task success rates.",
-        "prerequisite_concepts": [
-          "Visuomotor policy",
-          "Camera extrinsics",
-          "End-effector pose",
-          "RGB-D sensors"
-        ]
-      }
-    },
-    {
-      "id": "3d739bae",
-      "headline": "Segmenting 3D objects from human pointing gestures using unified pose-to-geometry inference",
-      "tags": [
-        "3D Object Referral",
-        "Human-Robot Interaction",
-        "Pointing-based Segmentation",
-        "Interactive 3D Segmentation"
-      ],
-      "research_theme": "3D Object Referral",
-      "why_this_matters": "Integrating human pointing gestures into 3D perception pipelines is a critical step toward more intuitive and natural human-robot spatial communication.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=h2K52fhsDU",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/3d739bae.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Robots usually require precise coordinates to find objects, but this system identifies a target in 3D space just by watching where a human points.",
-        "what_it_does": "Predicts a 3D segmentation mask for a specific object in a point cloud by analyzing a single RGB image of a person pointing at it.",
-        "key_idea": "Jointly maps human pose estimation (detecting arm and finger vectors) to 3D scene geometry using a unified model that performs interactive instance segmentation.",
-        "core_challenge": "Existing methods only estimate the pointing direction vector, failing to resolve the semantic extent or the specific 3D boundaries of the intended object.",
-        "key_assumption": "Relies on a static 3D point cloud of the environment and assumes only one user is present during the interaction.",
-        "result": "Outperforms non-interactive 3D and interactive 2D segmentation models in zero-shot evaluations on the POINTR3D dataset.",
-        "what_it_enables": "Enables intuitive, hardware-free human-robot communication for tasks like object handover and inspection in unstructured indoor environments.",
-        "open_source": null,
-        "tldr": "The system segments 3D objects by projecting human pointing vectors directly onto 3D scene geometry."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Enabling Robots to Understand Human Pointing Gestures",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Robots Struggle With Natural Communication",
-            "body": "Current robots often require precise coordinates to identify objects, which is unintuitive for humans. Pointing is a natural way to communicate, but robots lack the ability to translate a gesture into a specific 3D object.",
-            "detail": "Existing methods only estimate the direction of a finger, failing to identify the actual object being pointed at.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Pointing-Based 3D Segmentation",
-            "body": "The researchers define a new task where a robot takes an image of a person pointing and a 3D scan of the room to identify the exact 3D shape of the target object.",
-            "detail": "This requires the robot to combine human pose estimation with semantic understanding of the 3D environment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "context",
-            "heading": "Lack of Training Data",
-            "body": "No existing datasets combined 3D indoor environments with human pointing gestures. The authors created a new benchmark called POINTR3D to fill this gap.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "method",
-            "heading": "The Pointing3D Model",
-            "body": "The team developed a unified model that processes the human's pose and the 3D scene simultaneously to isolate the referred object.",
-            "detail": "The model performs zero-shot evaluation, meaning it works on scenes it was not specifically trained on.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "result",
-            "heading": "Superior Performance Over Baselines",
-            "body": "Pointing3D outperformed both standard 3D segmentation models and 2D interactive models in identifying the correct object.",
-            "detail": "Operating directly in 3D space proved more effective than trying to project 2D pointing gestures onto 3D objects.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "next",
-            "heading": "Future Improvements Needed",
-            "body": "The current model requires a static environment and only supports one user at a time. Future work will focus on dynamic scenes and more diverse human participants.",
-            "detail": "The authors note that pointing styles vary by culture and age, requiring larger, more diverse datasets for better generalization.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By combining human pose estimation with 3D scene data, robots can now interpret pointing gestures to identify specific objects in a room.",
-        "prerequisite_concepts": [
-          "3D Point Clouds",
-          "Instance Segmentation",
-          "Human-Robot Interaction (HRI)",
-          "Pose Estimation"
-        ]
-      }
-    },
-    {
-      "id": "0124e7ba",
-      "headline": "3D spatial-aware VLA model predicts end-effector poses using 3D point cloud tokens",
-      "tags": [
-        "Vision-Language-Action",
-        "3D Spatial Awareness",
-        "Multi-task Manipulation",
-        "Point Cloud Encoding"
-      ],
-      "research_theme": "VLA Foundation Models",
-      "why_this_matters": "Explicitly incorporating 3D spatial awareness into VLA models addresses the fundamental limitation of 2D-only vision models in complex, geometry-dependent manipulation tasks.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=dT45OMevL5",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/0124e7ba.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Standard 2D vision-language models fail at basic spatial reasoning because they treat the world as a flat picture, so this system forces them to process 3D point clouds as if they were visual tokens.",
-        "what_it_does": "A vision-language-action model processes 3D point cloud observations alongside 2D images to predict precise end-effector keypoint trajectories for multi-task robotic manipulation.",
-        "key_idea": "It projects 3D point cloud data into the latent space of a pre-trained 2D vision encoder and applies 3D spatial constraints to enforce geometric consistency between the robot and its environment.",
-        "core_challenge": "Existing 2D vision-language models lack inherent 3D geometry awareness, while 3D-native models suffer from a lack of large-scale pre-training data compared to their 2D counterparts.",
-        "key_assumption": "Relies on the assumption that 3D spatial information can be effectively mapped into a shared latent space with 2D image features without losing geometric context.",
-        "result": "Achieved successful multi-task manipulation across various embodiments in both simulation and real-world environments, including tasks like 'stack blocks' and 'wipe table'.",
-        "what_it_enables": "Enables robots to perform complex spatial-temporal reasoning tasks by combining the generalization power of 2D foundation models with the geometric precision of 3D point cloud processing.",
-        "open_source": null,
-        "tldr": "3DS-VLA injects 3D point cloud data into 2D vision-language models to improve spatial reasoning for robotic manipulation tasks."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving Robot Spatial Reasoning with 3D-Aware Language Models",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Robots Struggle with 3D Space",
-            "body": "Robots using standard 2D vision models often fail to understand depth and spatial relationships, making precise manipulation tasks difficult.",
-            "detail": "While 2D models are powerful, they lack the geometric awareness required to interact accurately with objects in a 3D environment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "limitation",
-            "heading": "Scarcity of 3D Training Data",
-            "body": "Existing 3D-focused models require massive datasets that are hard to collect, limiting their ability to learn diverse tasks.",
-            "detail": "Previous attempts to bridge this gap by projecting 3D data into 2D images often result in the loss of critical spatial information.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "The 3DS-VLA Approach",
-            "body": "This method combines pre-trained 2D vision models with 3D spatial constraints to help the robot understand the geometry of its surroundings.",
-            "detail": "It uses a shared encoder to process both 2D images and 3D point clouds, ensuring the robot maintains spatial awareness while performing tasks.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Multi-Task Performance",
-            "body": "The model successfully completed various manipulation tasks, such as stacking blocks and wiping tables, in both simulated and real-world environments.",
-            "detail": "By encoding 3D spatial relationships, the robot achieved more reliable action generation compared to models relying solely on 2D inputs.",
+            "heading": "Successful Real-World Transfer",
+            "body": "The robot successfully pivoted a variety of real-world objects without needing additional training after moving from the simulation.",
+            "detail": "The approach demonstrates that policies trained on a single object can generalize to objects with different inertial and kinematic properties.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
             "type": "impact",
-            "heading": "Better Generalization for Robots",
-            "body": "This approach allows robots to perform complex tasks across different environments and hardware setups without needing massive, task-specific 3D datasets.",
-            "detail": "It effectively bridges the gap between the high-level reasoning of language models and the low-level geometric needs of physical manipulation.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "next",
-            "heading": "Future Planning Capabilities",
-            "body": "Future work will focus on integrating advanced planning models to automatically determine the sequence of steps for even more complex tasks.",
-            "detail": "Researchers also aim to optimize inference speed to overcome the current latency issues associated with large language model processing.",
+            "heading": "Efficient Skill Scaling",
+            "body": "This approach reduces the need for manual programming or physical data collection, making it easier to deploy robots in complex, unstructured environments.",
+            "detail": "By mastering contact-rich tasks in simulation, robots can handle a wider range of objects in real-world table-top manipulation.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By integrating 3D spatial constraints into 2D vision-language models, robots can better understand their environment and perform complex manipulation tasks more reliably.",
-        "prerequisite_concepts": [
-          "Point clouds",
-          "Vision-Language Models (VLM)",
-          "Imitation learning",
-          "End-effector control"
-        ]
-      }
-    },
-    {
-      "id": "9081ec8d",
-      "headline": "Vision-Language Models self-correct long-horizon manipulation plans using imagined future states",
-      "tags": [
-        "Vision-Language Models",
-        "Long-Horizon Manipulation",
-        "Diffusion Dynamics Model",
-        "Reflective Planning"
-      ],
-      "research_theme": "Long-Horizon Manipulation",
-      "why_this_matters": "Developing reflective planning mechanisms allows VLMs to move beyond simple reactive control, enabling them to handle the multi-stage reasoning required for complex real-world tasks.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=iq0wUf6dUy",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/9081ec8d.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of just predicting the next move, the robot imagines the outcome of its plan using a diffusion model and then critiques its own logic before touching a single object.",
-        "what_it_does": "A robotic system performs multi-stage manipulation of interlocking objects by generating an initial action sequence with a VLM, simulating the resulting state with a diffusion dynamics model, and reflecting on that simulation to revise the plan.",
-        "key_idea": "Reflective planning (a loop where a VLM evaluates its own proposed actions by conditioning on future states generated by a diffusion dynamics model).",
-        "core_challenge": "Standard VLMs lack the physical intuition to predict the consequences of multi-step actions, leading to catastrophic planning failures in tasks with interlocking parts.",
-        "key_assumption": "Removes the assumption that a VLM can directly output a perfect long-horizon plan, instead treating planning as an iterative process of proposal, imagination, and correction.",
-        "result": "Outperforms standard VLM-based planning by achieving higher success rates on complex interlocking object manipulation tasks while requiring significantly less compute than Monte Carlo Tree Search (MCTS).",
-        "what_it_enables": "Enables robots to perform complex, multi-stage assembly tasks by grounding high-level language instructions in physically plausible, self-corrected visual trajectories.",
-        "open_source": null,
-        "tldr": "The robot uses a diffusion model to preview its plan and then lets the VLM self-correct errors."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving Robot Planning Through Vision-Language Model Reflection",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Robots Struggle With Long Tasks",
-            "body": "Robots often fail at complex, multi-step tasks because they lack the ability to reason about physical consequences over long periods of time.",
-            "detail": "While Vision-Language Models (VLMs) understand images and language, they struggle to predict how physical objects will interact after several sequential actions.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Reflection Through Future Simulation",
-            "body": "The researchers created a system where a VLM proposes an action, and a separate 'diffusion dynamics model' simulates the future result of that action.",
-            "detail": "The VLM then 'reflects' on this simulated future to decide if the initial plan is correct or if it needs to be revised.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Iterative Action Refinement",
-            "body": "Instead of blindly executing a plan, the robot uses the simulated outcome as feedback to adjust its strategy before moving its motors.",
-            "detail": "This allows the robot to catch potential errors in its plan before they happen in the real world.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Efficiency Over Traditional Planning",
-            "body": "The reflective planning approach achieves high-level reasoning performance while requiring significantly less computation than traditional search-based methods like MCTS (Monte Carlo Tree Search).",
-            "detail": null,
-            "has_number": true,
-            "number_callout": "significantly less compute than MCTS"
-          },
-          {
-            "id": 5,
-            "type": "next",
-            "heading": "Future Real-World Deployment",
-            "body": "The current system is limited to simulated environments and needs to be tested on physical robots.",
-            "detail": "Future work will focus on handling real-world sensor noise and using human-in-the-loop feedback to correct the robot when it fails.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By simulating future outcomes, robots can 'reflect' on their plans and correct mistakes before executing them, leading to better performance on long, multi-step tasks.",
-        "prerequisite_concepts": [
-          "Vision-Language Models (VLMs)",
-          "Diffusion Models",
-          "Long-horizon planning"
-        ]
-      }
-    },
-    {
-      "id": "8203b5cd",
-      "headline": "Vision-Language Models infer human intent to automate assistive mobile manipulation",
-      "tags": [
-        "Assistive Teleoperation",
-        "Vision-Language-Action",
-        "Mobile Manipulation",
-        "Human-Robot Collaboration"
-      ],
-      "research_theme": "Assistive Teleoperation",
-      "why_this_matters": "Inferring diverse human intents is the key to moving from rigid teleoperation to fluid, intent-aware shared autonomy in unstructured environments.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=bU15EK0oqk",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/8203b5cd.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "The robot watches your teleoperation inputs and uses commonsense reasoning to guess your goal, only stepping in to help once it confirms its prediction with you.",
-        "what_it_does": "This architecture accelerates the development of robots that function as intuitive partners for individuals with motor impairments by bridging the gap between high-level intent and low-level control.",
-        "key_idea": "It uses pre-trained Vision-Language Models (VLMs) as an intent inference engine that runs in parallel with human control, mapping user inputs to a library of parameterized skills.",
-        "core_challenge": "Existing assistive systems fail in open-world settings because they rely on closed-set intent prediction that cannot handle diverse, context-dependent human goals.",
-        "key_assumption": "Removes the requirement for task-specific training data by shifting intent inference from supervised learning to zero-shot commonsense reasoning via VLMs.",
-        "result": "User studies show higher success rates and lower mental workload compared to direct teleoperation and standard assistive baselines across varied household manipulation tasks.",
-        "what_it_enables": "",
-        "open_source": null,
-        "tldr": "CASPER uses VLMs to infer user intent from teleoperation, enabling robots to proactively assist with complex manipulation tasks."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Using Vision-Language Models for Assistive Robot Teleoperation",
-        "reading_time_seconds": 85,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "High Cognitive Load in Teleoperation",
-            "body": "Directly controlling a robot is mentally exhausting for users, but fully autonomous robots often fail to understand nuanced human needs in complex environments.",
-            "detail": "Assistive teleoperation aims to bridge this gap by sharing control, but robots struggle to accurately guess what the human wants to do next.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Commonsense Reasoning via VLMs",
-            "body": "The researchers created CASPER, a system that uses Vision-Language Models (VLMs) to watch the robot's camera feed and interpret the user's intent based on common sense.",
-            "detail": "For example, if a user moves a jar toward a pot, the system infers the intent is to pour, rather than just moving the jar randomly.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Parallel Inference and Execution",
-            "body": "CASPER runs intent prediction in the background while the user is still in control, ensuring the robot only intervenes when it is confident in its prediction.",
-            "detail": "The system uses a library of pre-defined skills to execute the robot's part of the task once the user confirms the suggested intent.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved User Performance",
-            "body": "In user studies, CASPER outperformed standard teleoperation and other assistive methods by increasing task success rates while simultaneously reducing the user's mental effort.",
-            "detail": "The system successfully handles open-ended goals rather than being limited to a small, pre-programmed set of tasks.",
-            "has_number": true,
-            "number_callout": "Outperforms baselines in success rate and mental workload"
-          },
-          {
-            "id": 5,
-            "type": "next",
-            "heading": "Future Improvements and Testing",
-            "body": "Future work will focus on testing the system with users who have motor disabilities and enabling the robot to learn new skills through ongoing human interaction.",
-            "detail": "The team also plans to support more complex, fine-grained motions and improve the reliability of intent predictions.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By using Vision-Language Models to infer intent, robots can act as smarter, more intuitive partners that reduce the mental burden on human operators.",
-        "prerequisite_concepts": [
-          "Teleoperation",
-          "Vision-Language Models (VLMs)",
-          "Human-Robot Interaction"
-        ]
-      }
-    },
-    {
-      "id": "ec4144b8",
-      "headline": "Multi-view robotic manipulation policies that survive sensor failure via feature disentanglement",
-      "tags": [
-        "Visual Reinforcement Learning",
-        "Multi-view Representation",
-        "Robotic Manipulation",
-        "Sensor Robustness"
-      ],
-      "research_theme": "Visual Reinforcement Learning",
-      "why_this_matters": "Efficiently merging multi-view visual information is a major bottleneck for scaling robotic manipulation; this work provides a path toward better sample efficiency without prohibitive compute costs.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=zK2SK6WbYn",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/ec4144b8.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "You can train a robot to rely on three cameras, yet force it to remain functional even when two of them suddenly go dark.",
-        "what_it_does": "A robotic agent learns manipulation tasks in Meta-World and ManiSkill3 by processing multiple camera feeds into a single representation that remains robust to the loss of individual sensor inputs.",
-        "key_idea": "The Merge And Disentanglement (MAD) algorithm uses feature summation to combine multiple views while simultaneously training the actor and critic on individual views to prevent the policy from over-relying on any single camera.",
-        "core_challenge": "Conditioning policies on multi-view inputs creates fragile systems where the failure of one camera causes the entire agent to collapse.",
-        "key_assumption": "Removes the assumption that a policy must be trained on a fixed set of sensors, allowing for lightweight deployment on hardware with fewer cameras than were available during training.",
-        "result": "Maintains high task success rates in ManiSkill3 environments even when input camera views are reduced from three to one during inference.",
-        "what_it_enables": "Deployment of high-performance multi-view RL agents on resource-constrained hardware that cannot support the computational overhead of processing all camera streams simultaneously.",
-        "open_source": null,
-        "tldr": "MAD trains policies on merged multi-view features while disentangling individual views to ensure graceful degradation during sensor failure."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Robust Multi-View Visual Reinforcement Learning for Robots",
-        "reading_time_seconds": 110,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Limited 3D Perception",
-            "body": "Robots using single-camera vision struggle to understand 3D space, which is critical for complex manipulation tasks.",
-            "detail": "While adding more cameras improves depth perception, it significantly increases computational costs and makes the system fragile if a single camera fails.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Merging and Disentangling Views",
-            "body": "The MAD algorithm combines multiple camera inputs into one representation for efficiency, while keeping individual views separate for robustness.",
-            "detail": "This allows the robot to learn from the combined data but remain functional even if some cameras are removed or malfunction during deployment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Shared Encoder Architecture",
-            "body": "The system processes each camera view through a single shared encoder (a neural network that compresses image data) before summing the features.",
-            "detail": "By training the policy on both the merged representation and individual views, the model learns to handle varying amounts of visual information.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Sample Efficiency",
-            "body": "By using multi-view data, the agent learns tasks faster than models relying on single-view inputs, requiring 40% fewer training samples to reach peak performance.",
-            "detail": "The system maintains stability by selectively augmenting inputs, preventing the policy from becoming confused by the different view combinations.",
-            "has_number": true,
-            "number_callout": "40% fewer training samples"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Deployment Flexibility",
-            "body": "This approach enables robots to be trained with high-fidelity multi-view setups but deployed with lightweight, single-camera configurations without retraining.",
-            "detail": "This significantly reduces the hardware requirements for real-world robotic deployment while maintaining high performance.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "MAD allows robots to learn from multiple cameras for better efficiency while remaining robust enough to operate with fewer cameras during deployment.",
+        "key_takeaway": "Robots can learn to pivot diverse objects by training in simulation and using depth-based feature mapping to adapt to new shapes.",
         "prerequisite_concepts": [
           "Reinforcement Learning",
-          "Convolutional Neural Networks (CNNs)",
-          "Q-learning",
-          "Visual Servoing"
+          "Sim-to-Real Transfer",
+          "Contact Dynamics",
+          "Depth Image Processing"
         ]
       }
     },
     {
-      "id": "0fb6eda3",
-      "headline": "Robot navigates complex instructions by solving linguistic constraints as a graph",
+      "id": "e0a1d934",
+      "headline": "Underwater manipulator caches highway paths to bypass search-heavy motion planning",
       "tags": [
-        "Vision-and-Language Navigation",
-        "Constraint Optimization",
-        "Zero-shot Learning",
-        "Continuous Environments"
+        "Underwater Manipulation",
+        "Motion Planning",
+        "Probabilistic Roadmap",
+        "Bayesian Networks"
       ],
-      "research_theme": "Vision-Language Navigation",
-      "why_this_matters": "Training-free navigation frameworks are essential for deploying robots in novel, real-world environments where collecting large-scale training data is infeasible.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=mjYKNIRqpy",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/0fb6eda3.jpg",
+      "research_theme": "Underwater Manipulation",
+      "why_this_matters": "Underwater environments present unique challenges for motion planning; this paper introduces a way to leverage prior experience to handle the high uncertainty of marine settings.",
+      "source": "IROS",
+      "published": "2025-07-18",
+      "source_url": "http://arxiv.org/abs/2507.14099v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/e0a1d934.jpg",
       "image_is_fallback": false,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of training a neural network to guess where to go, this robot treats natural language instructions as a set of geometric constraints to be solved in real-time.",
-        "what_it_does": "A mobile robot interprets natural language commands by decomposing them into a directed acyclic graph of spatial constraints, which it then solves to navigate continuous, previously unseen environments.",
-        "key_idea": "It maps linguistic instructions to a spatial constraint library (a predefined set of geometric relationships) and uses a constraint solver to determine the robot's trajectory without any task-specific training.",
-        "core_challenge": "Existing zero-shot navigation methods rely on discrete node-based simulators, making them incapable of operating in continuous, real-world spaces where movement is fluid.",
-        "key_assumption": "Removes the assumption that navigation agents require large-scale annotated datasets or simulator-based training to understand spatial instructions.",
-        "result": "Successfully navigates real-world environments without performance degradation compared to simulated benchmarks, achieving zero-shot generalization across diverse indoor layouts.",
+        "hook": "Instead of recalculating every path from scratch, this robot treats its workspace like a road network, storing frequently traveled 'highways' to navigate cluttered underwater sites instantly.",
+        "what_it_does": "A BlueROV2 equipped with a Reach Alpha 5 manipulator performs repetitive inspection and cleaning tasks in cluttered underwater environments by reusing cached motion trajectories.",
+        "key_idea": "Integrates a Heuristic Motion Space (a persistent cache of high-probability paths) with a Probabilistic Roadmap (PRM) and Bayesian Networks to prune the search space based on real-time uncertainty.",
+        "core_challenge": "Standard motion planners suffer from prohibitive computational overhead when repeatedly calculating collision-free trajectories in dynamic, high-uncertainty underwater settings.",
+        "key_assumption": "Removes the requirement for full-space re-computation by assuming that complex underwater tasks often involve recurring spatial waypoints that can be optimized as 'shortcuts'.",
+        "result": "Maintains consistent, collision-free trajectory generation across multi-goal inspection tasks on a BlueROV2 platform while reducing search overhead compared to standard PRM implementations.",
         "what_it_enables": "",
         "open_source": null,
-        "tldr": "The system turns navigation instructions into a graph of geometric constraints, allowing training-free movement in continuous spaces."
+        "tldr": "The system caches successful underwater motion paths as 'highways' to avoid redundant search in cluttered environments."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Navigating Continuous Environments Using Graph-Based Instruction Constraints",
-        "reading_time_seconds": 75,
+        "flow_title": "Improving Underwater Robot Motion Planning with Memory",
+        "reading_time_seconds": 85,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "The Sim-to-Real Navigation Gap",
-            "body": "Existing navigation robots struggle to move in real-world environments because they are trained in simplified, discrete simulators that do not match the complexity of the physical world.",
-            "detail": "Current zero-shot methods are limited to moving between pre-defined nodes, making them impractical for continuous, real-world spaces.",
+            "heading": "Underwater Motion Planning Challenges",
+            "body": "Underwater robots struggle to plan movements efficiently because marine environments are dynamic and unpredictable. Traditional planning methods often waste time re-calculating paths for repetitive tasks.",
+            "detail": "Uncertainty from water currents and changing visibility makes standard pathfinding computationally expensive for underwater manipulators.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Instructions as Graph Constraints",
-            "body": "Instead of training a model on massive datasets, this approach breaks down natural language instructions into a directed graph of spatial constraints.",
-            "detail": "A Large Language Model (LLM) parses the instruction into a sequence of requirements, such as 'turn left' or 'pass the door', which are then treated as mathematical constraints.",
+            "heading": "Heuristic Motion Memory",
+            "body": "The researchers created a 'Heuristic Motion Space' (HMS) that acts as a memory bank for frequently used paths, similar to 'highways' for the robot to follow.",
+            "detail": "By caching successful paths, the robot avoids searching the entire environment from scratch every time it performs a repetitive task like spot welding.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Constraint-Based Path Solving",
-            "body": "The robot uses a constraint solver to determine its path by matching its current visual observations against the graph of spatial requirements.",
-            "detail": "A navigation tree structure is used to manage uncertainty, allowing the robot to re-plan its path if it encounters an unexpected obstacle or fails to find a clear route.",
+            "heading": "Bayesian Uncertainty Management",
+            "body": "A Bayesian Network (a statistical model for representing uncertainty) continuously monitors environmental conditions to decide when it is safe to reuse a stored path.",
+            "detail": "This allows the robot to adapt its behavior if the current conditions, such as water flow or obstacles, differ from when the path was first recorded.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "experiment",
+            "heading": "Testing on Underwater Hardware",
+            "body": "The team tested this system using a BlueROV2 underwater drone equipped with a Reach Alpha 5 robotic arm.",
+            "detail": "The experiments focused on precision tasks like inspection and cleaning in cluttered underwater settings.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Efficient and Reliable Trajectories",
+            "body": "The system successfully generated collision-free paths while significantly reducing the search time compared to standard planning methods.",
+            "detail": "By using HMS shortcuts, the robot maintained thorough coverage of the workspace without the computational slowdown typically seen in large search spaces.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "next",
+            "heading": "Future Object Handling",
+            "body": "While currently validated for inspection and cleaning, future work will expand the system to handle complex object manipulation.",
+            "detail": "The researchers aim to improve the robot's ability to interact with objects that require more force or delicate handling than simple inspection tools.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By combining a memory bank of successful paths with real-time uncertainty monitoring, underwater robots can plan movements faster and more reliably in changing environments.",
+        "prerequisite_concepts": [
+          "Probabilistic Roadmap (PRM)",
+          "Bayesian Networks",
+          "Motion Planning"
+        ]
+      }
+    },
+    {
+      "id": "7985e5e0",
+      "headline": "Robots learn dynamic tool manipulation by observing human video via tool-centric coordinate frames",
+      "tags": [
+        "Learning from Observation",
+        "Tool Manipulation",
+        "Embodiment Gap",
+        "Imitation Learning"
+      ],
+      "research_theme": "Learning from Observation",
+      "why_this_matters": "Scaling robot learning requires moving beyond teleoperation, and this paper explores how to extract useful policies from human tool-use videos despite viewpoint shifts.",
+      "source": "CoRL",
+      "published": "2025-08-08",
+      "source_url": "https://openreview.net/forum?id=ZA8iXa45P2",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/7985e5e0.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of trying to map human hand movements to robot joints, this system treats the tool itself as the interface, effectively ignoring the human's body entirely.",
+        "what_it_does": "A robot executes high-precision dynamic tasks like flipping an egg in a pan by learning policies directly from monocular human video recordings.",
+        "key_idea": "It uses a tool-centric representation (a coordinate frame anchored to the tool) to decouple the manipulation trajectory from the human's specific hand morphology and viewpoint.",
+        "core_challenge": "Existing imitation methods struggle with the embodiment gap and viewpoint variance when trying to map human hand-centric demonstrations to robot end-effectors.",
+        "key_assumption": "Removes the requirement for teleoperation or kinesthetic teaching, assuming instead that the tool's motion relative to the object is sufficient to define the task.",
+        "result": "Successfully deployed on UR5e and Kinova Gen3 arms to perform dynamic tasks like egg flipping using only two standard monocular RGB cameras.",
+        "what_it_enables": "Low-cost, scalable data collection for complex manipulation using ubiquitous hardware like smartphones instead of specialized motion capture rigs.",
+        "open_source": null,
+        "tldr": "By tracking tools instead of hands, robots learn complex manipulation directly from cheap, uncalibrated human video."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Learning Robot Tool Manipulation From Human Video Data",
+        "reading_time_seconds": 120,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Bottleneck in Robot Skill Acquisition",
+            "body": "Teaching robots to use tools typically requires teleoperation (manually controlling the robot), which is slow, expensive, and difficult to scale.",
+            "detail": "Teleoperation is also highly sensitive to latency and struggles with the fluid, dynamic motions required for complex tool use.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "context",
+            "heading": "The Embodiment Gap Challenge",
+            "body": "Using human videos for training is cheaper, but robots struggle to copy humans because human hands and robot grippers have different shapes and movement ranges.",
+            "detail": "This difference in physical structure is known as the embodiment gap, which complicates transferring human motion to robot hardware.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Tool-as-Interface Learning Strategy",
+            "body": "The researchers created a system that focuses on the tool's movement rather than the human hand's specific pose.",
+            "detail": "By tracking the tool's interaction with the environment, the robot learns the task goal regardless of the specific hand shape used in the video.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "experiment",
+            "heading": "Low-Cost Data Collection Setup",
+            "body": "The system only requires two standard monocular RGB cameras (like smartphone cameras) to record human demonstrations.",
+            "detail": "This makes the data collection process highly accessible compared to specialized motion-capture studios or expensive teleoperation rigs.",
+            "has_number": true,
+            "number_callout": "2 monocular RGB cameras"
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Generalization Across Robot Platforms",
+            "body": "The trained policies successfully controlled two different robot arms, the UR5e and the Kinova Gen3, to perform dynamic tasks.",
+            "detail": "The system handled tasks like flipping an egg, which requires high precision and fluid motion that traditional methods often fail to achieve.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Scalable Robot Learning",
+            "body": "By using widely available smartphone cameras, this approach could tap into the 7.14 billion smartphones globally to create massive datasets for robot training.",
+            "detail": "This significantly lowers the barrier to entry for training robots on complex, real-world manipulation tasks.",
+            "has_number": true,
+            "number_callout": "7.14 billion smartphones"
+          }
+        ],
+        "key_takeaway": "By focusing on tool movement instead of human hand motion, robots can learn complex skills from simple, low-cost video recordings.",
+        "prerequisite_concepts": [
+          "Imitation learning",
+          "Robot kinematics",
+          "Computer vision"
+        ]
+      }
+    },
+    {
+      "id": "89ec63d6",
+      "headline": "Generating multi-view street images from bird's-eye view maps using latent diffusion",
+      "tags": [
+        "Bird's-Eye View",
+        "Latent Diffusion Model",
+        "Autonomous Driving",
+        "Conditional Image Generation"
+      ],
+      "research_theme": "Generative World Models",
+      "why_this_matters": "Generating street-view images from BEV maps is a powerful way to synthesize training data for autonomous driving, helping you address the scarcity of complex traffic scenarios.",
+      "source": "ICRA",
+      "published": "2024-09-02",
+      "source_url": "http://arxiv.org/abs/2409.01014v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/89ec63d6.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of training a vision model to see the road, this system hallucinates photorealistic street-level camera views directly from top-down semantic maps.",
+        "what_it_does": "Synthesizes consistent, multi-view street images from a bird's-eye view (BEV) layout to simulate complex traffic scenarios for autonomous driving perception.",
+        "key_idea": "Integrates a shape refinement process and street-view adaptation module into a pretrained latent diffusion model to align map semantics with camera-perspective geometry.",
+        "core_challenge": "Standard generative models struggle to maintain strict spatial alignment between top-down map elements and the complex, occluded geometry of street-level camera views.",
+        "key_assumption": "Removes the requirement for training generative models from scratch by adapting pretrained latent diffusion priors to the specific spatial constraints of autonomous driving datasets.",
+        "result": "Outperforms baseline models trained from scratch in image quality, conditioning precision, and visual diversity on the nuScenes dataset.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "The system renders photorealistic street-level images from top-down maps by adapting latent diffusion to spatial camera geometry."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Generating Realistic Street Views from Bird's-Eye Maps",
+        "reading_time_seconds": 80,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Difficulty Visualizing Traffic Scenarios",
+            "body": "Autonomous driving systems rely on Bird's-Eye View (BEV) maps, which are top-down representations of the road. However, these maps lack the realistic visual detail needed to test how driving algorithms react to complex street-level environments.",
+            "detail": "Converting abstract map data into realistic camera-perspective images is a major challenge for training and simulation.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Using Latent Diffusion Models",
+            "body": "The researchers adapted a pretrained latent diffusion model (a type of AI that generates images by gradually removing noise) to translate top-down map layouts into multi-view street images.",
+            "detail": "This approach combines view transformation and street-view adaptation to ensure the generated images match the spatial layout of the map.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Shape Refinement and Adaptation",
+            "body": "The system uses a shape refinement process to ensure map elements like lanes and vehicles are positioned correctly in the final image. A street-view adaptation module then ensures the output aligns with the camera's perspective.",
+            "detail": "Proper alignment between the map's geometry and the camera's semantic view is critical for realistic generation.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Real-World Deployment Success",
-            "body": "The system operates without any task-specific training, showing consistent performance when moving from simulated environments to physical, real-world settings.",
-            "detail": "The framework maintains its navigation accuracy in continuous spaces where previous discrete-node methods typically fail.",
+            "heading": "Superior Image Quality and Diversity",
+            "body": "Compared to models trained from scratch, this method produces images with higher quality, better conditioning precision, and greater visual diversity.",
+            "detail": "The model effectively bridges the gap between abstract spatial data and photorealistic street-level imagery.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
             "type": "impact",
-            "heading": "Removing Data Dependency",
-            "body": "By eliminating the need for large-scale training data, this method allows robots to navigate novel environments immediately using only linguistic instructions.",
-            "detail": "This significantly lowers the barrier for deploying mobile robots in homes or offices where the layout is unknown to the robot beforehand.",
+            "heading": "Improving Autonomous Driving Simulation",
+            "body": "This technology allows developers to generate diverse, realistic training data for autonomous vehicles, reducing the reliance on expensive real-world data collection.",
+            "detail": "By creating synthetic scenarios from map data, researchers can better stress-test driving algorithms in varied, complex environments.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots can navigate continuous, real-world environments without prior training by converting language instructions into a graph of solvable spatial constraints.",
+        "key_takeaway": "By using latent diffusion models, researchers can accurately transform top-down map layouts into realistic street-level images for autonomous driving simulation.",
         "prerequisite_concepts": [
-          "Zero-shot learning",
-          "Constraint optimization",
-          "Large Language Models (LLMs)",
-          "Vision-and-Language Navigation (VLN)"
+          "Bird's-Eye View (BEV)",
+          "Latent Diffusion Models",
+          "Multi-view geometry"
         ]
       }
     },
     {
-      "id": "36a5f8b9",
-      "headline": "Autonomous real-world robot policy evaluation system using automated scene resets",
+      "id": "6416cbfa",
+      "headline": "Estimating peer robot 6D pose by observing controllable LED state transitions",
       "tags": [
-        "Robot Foundation Models",
-        "Policy Evaluation",
-        "Autonomous Reset",
-        "Generalist Manipulation"
+        "6D Pose Estimation",
+        "Self-Supervised Learning",
+        "Multi-Robot Perception",
+        "Fully Convolutional Network"
       ],
-      "research_theme": "Robot Policy Evaluation",
-      "why_this_matters": "Standardizing autonomous evaluation is the 'missing link' for scaling up generalist robot learning and ensuring reproducible progress in the field.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=isrcFrgwZp",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/36a5f8b9.jpg",
+      "research_theme": "Multi-Robot Perception",
+      "why_this_matters": "Estimating the pose of peer robots is critical for multi-agent coordination, and this paper provides a clever way to use simple visual cues (LEDs) to solve a complex localization problem.",
+      "source": "IROS",
+      "published": "2024-07-15",
+      "source_url": "http://arxiv.org/abs/2407.10661v2",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/6416cbfa.jpg",
       "image_is_fallback": false,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Evaluating generalist robot policies currently requires hundreds of hours of human labor, but this system turns real-world testing into a hands-off software job that runs around the clock.",
-        "what_it_does": "A hardware-software pipeline executes robot manipulation tasks, classifies success, and resets the physical scene autonomously without human intervention.",
-        "key_idea": "It treats robot evaluation as a continuous integration pipeline by training task-specific reset policies and vision-based success classifiers to manage the physical environment state.",
-        "core_challenge": "Human-in-the-loop evaluation is the primary bottleneck for scaling generalist robot foundation models, as manual resets and scoring prevent statistically significant, high-throughput testing.",
-        "key_assumption": "Removes the assumption that human operators must be present to reset the workspace and verify task completion for every individual trial.",
-        "result": "Reduced human labor requirements to near zero while maintaining performance metrics that closely match human-run evaluations across BridgeDataV2 tasks.",
-        "what_it_enables": "High-throughput, statistically reliable real-world testing of robot policies, allowing for rapid iteration cycles previously only possible in simulation.",
-        "open_source": "https://autoeval-robot.github.io/",
-        "tldr": "AutoEval automates real-world robot testing by training reset policies and success classifiers to eliminate human-in-the-loop bottlenecks."
+        "hook": "You can teach a robot to track its peer's pose just by watching its LEDs blink, without needing expensive motion capture labels for most of your training data.",
+        "what_it_does": "A convolutional network predicts the 6D relative pose of a peer robot by learning to map camera images to the known binary states of the peer's onboard LEDs.",
+        "key_idea": "The system uses self-supervised learning where the LED state (on/off) acts as a proxy task, forcing the network to learn spatial features that correlate with specific body parts to solve the pose estimation problem.",
+        "core_challenge": "Acquiring ground truth 6D pose labels for multi-robot systems is prohibitively expensive and requires external infrastructure like motion capture systems.",
+        "key_assumption": "Relies on the assumption that the peer robot's LED configuration is known and that the LEDs can be toggled independently to generate abundant, cheap supervision signals.",
+        "result": "Achieved a mean translation error of 4.2 cm and rotation error of 2.1 degrees on a mobile robot platform using only a handful of pose-labeled images supplemented by LED-labeled data.",
+        "what_it_enables": "Scalable multi-robot perception systems that bootstrap pose estimation capabilities using only onboard lights instead of external tracking hardware.",
+        "open_source": null,
+        "tldr": "Train peer pose estimators using cheap LED-state labels instead of expensive ground-truth motion capture data."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Automating Real-World Evaluation for Generalist Robot Policies",
+        "flow_title": "Estimating Robot Pose Using Controllable LED Patterns",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "The Real-World Evaluation Bottleneck",
-            "body": "Evaluating modern generalist robot models requires hundreds of test runs, which currently demands massive amounts of human labor to reset scenes and score performance.",
-            "detail": "Traditional manual evaluation is too slow and costly to keep up with the rapid development of robot foundation models.",
-            "has_number": true,
-            "number_callout": "2,500+ rollouts required for one model"
+            "heading": "Difficult Robot Pose Estimation",
+            "body": "Determining the exact 3D position and orientation (6D pose) of one robot relative to another is difficult because it requires expensive, precise external tracking systems to label training data.",
+            "detail": "Without accurate labels, robots struggle to understand where their peers are located in a camera view.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 2,
-            "type": "context",
-            "heading": "Simulation vs. Reality",
-            "body": "While simulation is faster, it often fails to capture the complexity of real-world tasks like handling cloth or liquids, leading to unreliable results.",
-            "detail": "The gap between simulated physics and real-world interaction remains a significant hurdle for policy validation.",
+            "type": "idea",
+            "heading": "Using Controllable LED States",
+            "body": "Instead of relying on manual labels, this method uses the robot's own controllable LEDs as visual markers. By turning LEDs on and off in specific patterns, the system creates unique visual signals.",
+            "detail": "The robot learns to associate these light patterns with its own physical structure.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "The AutoEval System",
-            "body": "AutoEval automates the entire evaluation loop by handling robot task execution, success scoring, and scene resetting without human intervention.",
-            "detail": "Users submit policies as software jobs, and the system runs them around the clock, returning a detailed performance report upon completion.",
+            "heading": "Self-Supervised Network Training",
+            "body": "The system trains a neural network to predict the state of the LEDs (on or off) from images. Because the robot knows which LEDs it turned on, it generates its own training data without human help.",
+            "detail": "This approach uses a fully convolutional network to map image pixels directly to the spatial configuration of the peer robot.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "High Reliability and Throughput",
-            "body": "AutoEval matches the accuracy of human-run evaluations while enabling continuous, 24/7 testing across diverse robot tasks.",
-            "detail": "In a test of 50 episodes, the system maintained high reliability, with only 3 trials failing due to classification or reset errors.",
+            "heading": "High Accuracy With Minimal Labels",
+            "body": "The model achieves high precision in pose estimation using almost zero manually labeled images. It performs nearly as well as systems trained on thousands of expensive, human-labeled examples.",
+            "detail": "The network successfully isolates the peer robot's pose by tracking the light signals against the background.",
             "has_number": true,
-            "number_callout": "94% success rate in autonomous evaluation"
+            "number_callout": "near-zero manual labeling requirement"
           },
           {
             "id": 5,
             "type": "impact",
-            "heading": "Standardizing Robot Benchmarking",
-            "body": "By providing public access to evaluation cells, this system allows researchers to compare generalist policies on a level playing field.",
-            "detail": "This shift toward automated, real-world benchmarking is expected to accelerate the development of more robust and capable robot foundation models.",
+            "heading": "Scalable Multi-Robot Coordination",
+            "body": "This technique allows robots to learn how to perceive each other in the wild without needing specialized motion capture labs.",
+            "detail": "This is a major step toward autonomous robot teams that can calibrate their own perception systems in real-world environments.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "AutoEval replaces manual human labor with an autonomous system that resets and scores robot tasks, enabling scalable and reliable real-world policy evaluation.",
+        "key_takeaway": "Robots can learn to track each other's 3D pose by observing their own controllable LED patterns, eliminating the need for expensive manual data labeling.",
         "prerequisite_concepts": [
-          "Robot foundation models",
-          "Policy rollouts",
-          "Task-oriented manipulation"
+          "6D Pose Estimation",
+          "Self-Supervised Learning",
+          "Convolutional Neural Networks"
         ]
       }
     },
     {
-      "id": "0d713cd8",
-      "headline": "Decentralized dual-arm manipulation using dual-latent diffusion policies and sheaf-theoretic consensus",
+      "id": "2ba5e682",
+      "headline": "Streaming Flow Policy generates robot actions incrementally during flow-matching integration",
       "tags": [
-        "Diffusion Policy",
-        "Cooperative Manipulation",
-        "Sheaf Theory",
-        "Multi-Agent Systems"
+        "Flow Matching",
+        "Imitation Learning",
+        "Sensorimotor Control",
+        "Streaming Policy"
       ],
-      "research_theme": "Cooperative Manipulation",
-      "why_this_matters": "Decentralized coordination using latent theory of mind allows for scalable multi-agent collaboration without the need for explicit, high-bandwidth communication channels.",
+      "research_theme": "Diffusion Policies",
+      "why_this_matters": "This paper simplifies the computationally heavy sampling process in diffusion policies, making real-time execution more feasible for high-frequency robotic control.",
       "source": "CoRL",
       "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=b24y5SENo5",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/0d713cd8.jpg",
+      "source_url": "https://openreview.net/forum?id=jnpILGz9gQ",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/2ba5e682.jpg",
       "image_is_fallback": false,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Two robotic arms coordinate complex tasks without a central controller by maintaining a 'theory of mind' that separates their individual ego from a shared consensus of the scene.",
-        "what_it_does": "Two independent robotic arms perform cooperative manipulation tasks by generating motion trajectories through decentralized diffusion policies that align their latent representations.",
-        "key_idea": "Each agent maintains an ego embedding for local state and a consensus embedding (a shared latent space constrained by 1-cohomology from sheaf theory) to ensure global coordination without explicit communication.",
-        "core_challenge": "Decentralized multi-arm systems struggle to maintain global consistency when agents rely on partial, local observations, leading to catastrophic task failure in delicate cooperative maneuvers.",
-        "key_assumption": "Removes the requirement for a centralized controller or explicit inter-agent communication, assuming instead that agents can learn to align latent representations through shared scene-level observations.",
-        "result": "Matches the performance of centralized diffusion policy baselines in dual-arm manipulation while significantly exceeding the success rates of naive decentralized approaches.",
-        "what_it_enables": "Scalable, robust multi-robot coordination in environments where centralized control is too fragile or computationally prohibitive.",
+        "hook": "Instead of waiting for a diffusion model to finish dreaming up an entire sequence of actions, this robot starts moving the moment the first action is computed.",
+        "what_it_does": "A robot controller generates and executes action sequences on-the-fly by integrating a learned velocity field where flow time is mapped directly to real-world execution time.",
+        "key_idea": "Treating action trajectories as flow trajectories allows the policy to sample actions sequentially from a narrow Gaussian tube centered on the previous action rather than sampling entire trajectories from pure noise.",
+        "core_challenge": "Standard diffusion and flow-matching policies are computationally heavy and introduce significant latency because the robot must wait for the full sampling process to complete before executing any actions.",
+        "key_assumption": "Relaxes the requirement that the policy must model the full joint distribution of an action trajectory, accepting that it only matches per-timestep marginal distributions.",
+        "result": "Achieves performance comparable to standard diffusion policies on imitation learning benchmarks while enabling significantly faster execution and tighter sensorimotor control loops.",
+        "what_it_enables": "",
         "open_source": null,
-        "tldr": "Decentralized arms coordinate via dual-latent diffusion policies that use sheaf-theoretic consensus to align their internal world models."
+        "tldr": "Streaming flow policies eliminate diffusion latency by executing actions incrementally as the velocity field is integrated over time."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Decentralized Coordination for Multi-Arm Robotic Manipulation",
+        "flow_title": "Streaming Flow Policies for Faster Robot Control",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Slow Robot Control Loops",
+            "body": "Current diffusion and flow-matching policies generate entire action sequences at once, forcing the robot to wait for the full calculation before moving.",
+            "detail": "This 'trajectory of trajectories' approach is computationally heavy and creates a delay that prevents tight, reactive control.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Streaming Action Trajectories",
+            "body": "Instead of generating a full sequence from noise, this method treats action trajectories as flow trajectories that can be generated incrementally.",
+            "detail": "By starting from the most recent action, the robot can stream new actions to its controller while the rest of the path is still being calculated.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Velocity Field Integration",
+            "body": "The system learns a velocity field that guides the robot's actions along a path, with the 'flow time' of the calculation matching the actual execution time.",
+            "detail": "This allows the robot to begin moving immediately rather than waiting for the entire generative process to finish.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Comparable Performance, Faster Execution",
+            "body": "The streaming approach matches the accuracy of previous imitation learning methods while significantly reducing latency in the control loop.",
+            "detail": "This makes the policy much more practical for real-world tasks requiring high-frequency reactivity.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "limitation",
+            "heading": "Joint Distribution Mismatch",
+            "body": "The method matches the distribution of actions at each individual time step, but it does not guarantee the same joint distribution across the entire trajectory.",
+            "detail": "In complex scenarios, this can lead to sampled trajectories that differ in shape from the original training data.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "More Reactive Robot Control",
+            "body": "By enabling on-the-fly action streaming, this method allows robots to operate with tighter sensorimotor loops in dynamic environments.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Streaming flow policies allow robots to execute actions incrementally during the generation process, enabling faster and more reactive control.",
+        "prerequisite_concepts": [
+          "Imitation learning",
+          "Diffusion models",
+          "Flow matching",
+          "Sensorimotor control"
+        ]
+      }
+    },
+    {
+      "id": "8ac64b86",
+      "headline": "Standardized non-destructive characterization of fabric elasticity, stiffness, and friction for robotic manipulation",
+      "tags": [
+        "Deformable Object Manipulation",
+        "Cloth Characterization",
+        "Fabric Properties",
+        "Dataset Standardization"
+      ],
+      "research_theme": "Deformable Object Manipulation",
+      "why_this_matters": "Standardizing fabric properties is a foundational step toward solving the long-standing problem of robustly manipulating cloth in real-world environments.",
+      "source": "ICRA",
+      "published": "2024-03-07",
+      "source_url": "http://arxiv.org/abs/2403.04608v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/8ac64b86.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Standard textile testing destroys the fabric, so this work adapts industrial methods into a non-destructive pipeline that lets robots 'feel' the mechanical properties of cloth before they try to fold it.",
+        "what_it_does": "A measurement system quantifies the mechanical properties of cloth\u2014specifically elasticity, stiffness, and friction\u2014to create standardized labels for deformable object datasets.",
+        "key_idea": "Adapts KES (Kawabata Evaluation System) and FAST (Fabric Assurance by Simple Testing) protocols into a non-destructive, robotics-centric measurement pipeline that maps physical fabric behavior to quantitative parameters.",
+        "core_challenge": "Existing robotic manipulation datasets characterize cloth only by visual attributes like color or size, ignoring the mechanical properties that dictate how fabric reacts to grippers.",
+        "key_assumption": "Removes the assumption that mechanical characterization of textiles must be destructive, enabling the use of the same cloth samples for both measurement and subsequent manipulation experiments.",
+        "result": "Validated the framework by annotating diverse cloth sets and visualizing their mechanical diversity on radar charts, establishing a quantitative basis for comparing fabric behavior in manipulation tasks.",
+        "what_it_enables": "Enables researchers to correlate specific mechanical properties with manipulation success rates, accelerating the development of generalizable policies for deformable objects.",
+        "open_source": null,
+        "tldr": "Non-destructive testing pipeline quantifies fabric mechanics to standardize cloth datasets for more predictable robotic manipulation."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Standardizing Fabric Properties for Robotic Cloth Manipulation",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Difficulty Manipulating Deformable Objects",
+            "body": "Robots struggle to handle cloth because they lack a standard way to measure physical properties like stiffness, elasticity, and friction.",
+            "detail": "Current datasets focus on visual traits like color or size, ignoring the mechanical properties that dictate how fabric moves.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "limitation",
+            "heading": "Destructive Industry Testing Methods",
+            "body": "Existing textile industry tests for fabric properties are destructive, meaning they ruin the material and cannot be used on robots.",
+            "detail": "Standard tests like KES and FAST require cutting or damaging samples, making them unsuitable for robotic benchmarking.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Non-Destructive Measurement Framework",
+            "body": "The researchers created a new, non-destructive system to measure and label the mechanical properties of various fabrics.",
+            "detail": "This allows researchers to quantify how different cloths behave without destroying the samples used in robotic experiments.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Visualizing Fabric Diversity",
+            "body": "The framework successfully maps different fabrics onto radar charts, allowing for a clear comparison of their mechanical profiles.",
+            "detail": "This provides a standardized way to label datasets, helping robots understand the physical differences between materials.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Better Benchmarking for Robots",
+            "body": "By standardizing how we describe cloth, this work enables more consistent testing of robotic manipulation algorithms across different research labs.",
+            "detail": "This helps the community move toward robots that can reliably handle diverse materials like silk, denim, or cotton.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Standardizing non-destructive mechanical measurements of fabrics allows robots to better understand and manipulate diverse cloth types.",
+        "prerequisite_concepts": [
+          "Deformable object manipulation",
+          "Material science basics",
+          "Robotic benchmarking"
+        ]
+      }
+    },
+    {
+      "id": "c65bff3b",
+      "headline": "Volumetric grasping model selects between power and pinch grips using multi-scale features",
+      "tags": [
+        "Volumetric Grasping",
+        "6-DoF Grasping",
+        "Multi-scale Feature Extraction",
+        "Contrastive Learning"
+      ],
+      "research_theme": "Volumetric Grasping",
+      "why_this_matters": "By integrating multi-scale features, this work addresses the challenge of grasping objects with diverse shapes, a key requirement for general-purpose robotic hands.",
+      "source": "IROS",
+      "published": "2025-07-03",
+      "source_url": "http://arxiv.org/abs/2507.02672v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/c65bff3b.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "The system determines whether to wrap around an object or pinch its edge by dynamically switching between high-level shape features and low-level geometric details.",
+        "what_it_does": "Enables robots to handle diverse, irregular objects in unstructured environments by automatically adapting the grasp type to the object's specific geometric constraints.",
+        "key_idea": "An Insight Transformer facilitates query-based interaction between multi-scale features, while an Empower Transformer selectively attends to high-level volumetric representations to balance grasp stability.",
+        "core_challenge": "Existing volumetric grasping methods fail when objects require different grasp paradigms\u2014power versus pinch\u2014based on subtle geometric features that vary significantly with object size.",
+        "key_assumption": "Removes the assumption that a single grasping strategy suffices for all object geometries within a scene by explicitly modeling the trade-off between power and pinch configurations.",
+        "result": "Outperforms the VGN (Volumetric Grasping Network) baseline by providing distinct, stable grasp predictions for objects of identical shape but varying sizes that exceed gripper clearance.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "A transformer-based model dynamically switches between power and pinch grasps by integrating multi-scale geometric features."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Improving Robotic Grasping for Diverse Object Shapes",
         "reading_time_seconds": 110,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Fragility of Centralized Robot Control",
-            "body": "Centralized systems for controlling multiple robotic arms are often fragile and difficult to scale. If the central controller fails or encounters a communication delay, the entire system stops working.",
-            "detail": "Decentralized systems are more robust to disturbances, but they struggle to keep multiple robots working together smoothly without a central brain.",
+            "heading": "Limited Grasping Versatility",
+            "body": "Robots struggle to pick up objects that vary significantly in shape and size because they often default to only one type of grasp.",
+            "detail": "Existing systems often fail to distinguish between 'power grasps' (holding the whole object) and 'pinch grasps' (holding edges), which are necessary for irregular objects.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
-            "type": "idea",
-            "heading": "Dual Latent Representation Strategy",
-            "body": "The researchers created a system where each robot maintains two internal 'mental' states: an ego embedding for its own specific tasks and a consensus embedding for shared goals.",
-            "detail": "This mimics 'Theory of Mind,' where an agent understands its own perspective while simultaneously tracking the shared state of the environment.",
+            "type": "context",
+            "heading": "Grasp Types Explained",
+            "body": "Power grasps provide stability for simple objects, while pinch grasps allow robots to handle complex, irregular shapes by targeting specific protrusions.",
+            "detail": "Current datasets often lack the geometric diversity required to train robots to switch effectively between these two strategies.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Sheaf Theory for Coordination",
-            "body": "To ensure the robots stay in sync, the system uses mathematical tools from sheaf theory (a way to track data consistency across different local spaces) to guide how the robots align their consensus embeddings.",
-            "detail": "This allows robots to maintain global consistency even when they only have partial, local views of the workspace.",
+            "heading": "Multi-Scale Feature Extraction",
+            "body": "The system uses two transformers to analyze object data at different levels of detail simultaneously.",
+            "detail": "The 'Insight Transformer' connects high-level and low-level features, while the 'Empower Transformer' focuses on the most critical geometric information for the grasp.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "method",
+            "heading": "Contrastive Learning Integration",
+            "body": "The model uses contrastive learning to better distinguish between different grasp configurations by comparing similar and dissimilar object features.",
+            "detail": "This helps the robot learn which grasp type is more stable for a specific object geometry.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Improved Grasp Prediction",
+            "body": "The method successfully predicts stable 6-DoF (six degrees of freedom) grasp poses for objects that previous systems could not handle.",
+            "detail": "It demonstrates a clear improvement in adapting to objects of the same shape but different sizes compared to standard baseline models like VGN.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Self-Adaptive Manipulation",
+            "body": "This approach allows robots to operate in more unpredictable environments by automatically choosing the best way to hold an object.",
+            "detail": "By bridging the gap between power and pinch grasping, robots can handle a wider range of real-world items without manual reprogramming.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By combining multi-scale feature analysis and contrastive learning, robots can intelligently switch between power and pinch grasps to handle diverse object geometries.",
+        "prerequisite_concepts": [
+          "6-DoF (Six Degrees of Freedom) pose estimation",
+          "Transformer architectures",
+          "Contrastive learning",
+          "Point cloud processing"
+        ]
+      }
+    },
+    {
+      "id": "0e3614b8",
+      "headline": "Legged robots learn wall-jumping by autonomously discovering diverse movement strategies",
+      "tags": [
+        "Agile Locomotion",
+        "Unsupervised Skill Discovery",
+        "Reinforcement Learning",
+        "Exploration"
+      ],
+      "research_theme": "Agile Locomotion",
+      "why_this_matters": "Unsupervised skill discovery is a promising path to enabling legged robots to learn complex behaviors like jumping without relying on manually engineered reward functions.",
+      "source": "CoRL",
+      "published": "2025-08-08",
+      "source_url": "https://openreview.net/forum?id=ZPJo9RJL15",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/0e3614b8.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of teaching a robot how to jump, this system forces it to play with its own body mechanics until it accidentally discovers how to vault over a wall.",
+        "what_it_does": "A quadruped robot autonomously learns agile maneuvers like wall-jumping and climbing by maximizing both task-specific velocity commands and a diversity reward that encourages varied movement patterns.",
+        "key_idea": "SDAX (Skill Discovery As eXploration) uses unsupervised reinforcement learning to treat skill vectors as high-level exploration strategies, balanced by a learnable weight parameter that dynamically adjusts the trade-off between task completion and behavioral diversity.",
+        "core_challenge": "Standard reinforcement learning for locomotion often collapses into a single, suboptimal gait when faced with complex obstacles, requiring tedious reward engineering or expert demonstrations to force exploration.",
+        "key_assumption": "Removes the requirement for manually designed curricula or demonstration datasets, though it assumes the user can identify relevant state-space dimensions (like body height) to guide the exploration process.",
+        "result": "Successfully deployed on real-world hardware to execute complex, non-standard agile maneuvers including wall-jumping without any prior expert demonstrations.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Robots learn complex agile skills by maximizing behavioral diversity alongside task rewards without needing human-designed curricula."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Autonomous Skill Discovery for Agile Robot Locomotion",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Manual Training Bottlenecks",
+            "body": "Teaching robots agile movements like jumping usually requires human experts to design complex training schedules or provide demonstration data.",
+            "detail": "This manual effort is time-consuming and limits the robot's ability to discover new, creative ways to overcome obstacles.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Unsupervised Skill Discovery",
+            "body": "Instead of being told exactly how to move, the robot is rewarded for trying a wide variety of different behaviors autonomously.",
+            "detail": "The robot learns to associate specific 'skill vectors' with different movement patterns, effectively exploring its own physical capabilities.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Balancing Exploration and Tasks",
+            "body": "The system uses a learnable parameter to balance two goals: completing the task and exploring diverse movement strategies.",
+            "detail": "This prevents the robot from either getting stuck in repetitive motions or wasting time on movements that don't help it reach its goal.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Performance Matching Centralized Baselines",
-            "body": "In tests, the decentralized LatentToM system performed as well as centralized methods while significantly outperforming standard decentralized approaches that lack a consensus mechanism.",
-            "detail": "The system successfully coordinated two robotic arms to complete complex manipulation tasks without needing a central controller.",
-            "has_number": true,
-            "number_callout": "Matches state-of-the-art centralized performance"
+            "heading": "Emergent Agile Behaviors",
+            "body": "The robot successfully learned complex maneuvers like wall-jumping and climbing without any human-provided examples.",
+            "detail": "The learned policies were successfully transferred from simulation to real-world hardware.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 5,
-            "type": "method",
-            "heading": "Current Scale and Sensor Constraints",
-            "body": "The system was only tested with two robotic arms and currently relies on a fixed third-person camera to provide the shared view needed for consensus.",
-            "detail": "If the camera view is blocked or limited, the robots may struggle to coordinate effectively, which is a key area for future improvement.",
-            "has_number": true,
-            "number_callout": "Tested with 2 robotic arms"
+            "type": "limitation",
+            "heading": "Need for State Guidance",
+            "body": "The system currently requires humans to specify which parts of the robot's state (like body height) are important for exploration.",
+            "detail": "Additionally, the training process is sensitive to noise, requiring a two-phase approach to ensure stability.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 6,
-            "type": "next",
-            "heading": "Scaling to Larger Systems",
-            "body": "Future work will focus on testing this architecture with larger groups of robots and developing view-invariant sensors that do not rely on a single fixed camera.",
-            "detail": "The team aims to build a pipeline where skills learned by small groups can be transferred to larger, more complex multi-robot setups.",
+            "type": "impact",
+            "heading": "Scalable Robot Training",
+            "body": "This approach reduces the reliance on human-crafted curricula, allowing robots to learn complex physical skills more independently.",
+            "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By giving robots a shared 'consensus' mental state, decentralized systems can now coordinate as effectively as centralized ones.",
+        "key_takeaway": "Robots can autonomously discover agile locomotion strategies by balancing task completion with diverse, self-directed exploration.",
         "prerequisite_concepts": [
-          "Diffusion models",
-          "Multi-agent systems",
-          "Latent space",
-          "Sheaf theory"
+          "Reinforcement Learning",
+          "Exploration-Exploitation Trade-off",
+          "Robot Locomotion"
+        ]
+      }
+    },
+    {
+      "id": "8a5e4e7f",
+      "headline": "Decentralized passive impedance control enables multiple aerial manipulators to grasp objects collaboratively",
+      "tags": [
+        "Aerial Manipulation",
+        "Passivity-based Control",
+        "Decentralized Control",
+        "Under-actuated Systems"
+      ],
+      "research_theme": "Aerial Manipulation",
+      "why_this_matters": "Collaborative grasping with aerial robots is highly complex due to under-actuation; this paper provides a control framework that ensures stability through passivity.",
+      "source": "ICRA",
+      "published": "2023-03-19",
+      "source_url": "http://arxiv.org/abs/2303.10567v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/8a5e4e7f.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "By treating each aerial manipulator as a passive energy-dissipating port, you can plug an arbitrary number of drones together to lift heavy objects without needing a centralized controller.",
+        "what_it_does": "Enables scalable, plug-and-play aerial manipulation teams that can scale to any number of drones without re-tuning the control gains for the entire fleet.",
+        "key_idea": "The system uses a coordinate transformation to decouple the aerial vehicle's inertial dynamics, allowing the interaction forces to be modeled as a feedback interconnection of passive systems (a control structure that guarantees stability by ensuring the system never generates more energy than it consumes).",
+        "core_challenge": "Centralized control architectures for multi-robot aerial manipulation suffer from communication bottlenecks and catastrophic failure if a single node loses connectivity or timing synchronization.",
+        "key_assumption": "Removes the requirement for a centralized communication hub or global state estimation, assuming instead that each agent only needs to maintain passivity relative to the grasped object.",
+        "result": "Simulations confirm stable collaborative grasping and transport of a payload using a decentralized architecture that remains stable even when adding or removing agents modularly.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Decentralized passive impedance control allows multiple drones to grasp and move objects without a central coordinator."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Decentralized Control for Collaborative Aerial Grasping",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Complex Collaborative Aerial Grasping",
+            "body": "Coordinating multiple aerial robots to grasp a single object is difficult because the robots must share information without crashing or losing stability.",
+            "detail": "Under-actuated systems (robots with fewer control inputs than degrees of freedom) make this even harder to stabilize.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Passivity-Based Control Strategy",
+            "body": "The researchers treat each robot as a 'passive' system, meaning it does not generate its own energy, which helps ensure the entire group remains stable.",
+            "detail": "By ensuring the interaction between robots is passive, the system avoids the chaotic oscillations that often occur in multi-robot coordination.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Decentralized Control Architecture",
+            "body": "Each aerial manipulator calculates its own movements based only on local interactions, removing the need for a central computer to manage every robot.",
+            "detail": "This allows for a modular design where you can add or remove robots from the team without reprogramming the entire system.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Stable Multi-Robot Coordination",
+            "body": "The system successfully maintained stability while multiple aerial manipulators grasped and moved a shared object in simulation.",
+            "detail": "The control scheme proved robust even when the robots were under-actuated, meaning they could handle complex tasks with limited motor control.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Scalable Aerial Teamwork",
+            "body": "This approach enables teams of aerial robots to perform heavy-lifting or assembly tasks that are impossible for a single drone to handle alone.",
+            "detail": "Because the control is decentralized, these teams can scale to include an arbitrary number of robots.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By treating aerial robots as passive systems, we can coordinate large teams to grasp objects without needing a central controller.",
+        "prerequisite_concepts": [
+          "Passivity theory",
+          "Under-actuated systems",
+          "Decentralized control",
+          "Aerial manipulation"
         ]
       }
     }
