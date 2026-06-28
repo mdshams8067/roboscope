@@ -1,926 +1,955 @@
 {
-  "generated_at": "2026-06-27T04:15:07.673837+00:00",
+  "generated_at": "2026-06-28T04:45:31.959202+00:00",
   "article_count": 10,
   "articles": [
     {
-      "id": "c5f4706c",
-      "headline": "CycleIK enables real-time Cartesian motion planning for redundant humanoid manipulators",
+      "id": "a4759d3b",
+      "headline": "Vision-based oxy-fuel torch control for autonomous industrial metal cutting",
       "tags": [
-        "Inverse Kinematics",
-        "Humanoid Robotics",
-        "Motion Planning",
-        "Neuro-inspired Control"
+        "Vision-based Control",
+        "Oxy-fuel Cutting",
+        "Industrial Robotics",
+        "Visual Servoing"
       ],
-      "research_theme": "Neuro-Robotic Motion Planning",
-      "why_this_matters": "This provides a generalized framework for Cartesian motion planning, simplifying the control stack for researchers working with varied robot morphologies.",
+      "research_theme": "Vision-based Robotic Control",
+      "why_this_matters": "This work addresses the challenge of automating high-precision industrial tasks in harsh environments, offering a template for integrating computer vision into traditional manufacturing processes.",
       "source": "IROS",
-      "published": "2024-04-12",
-      "source_url": "http://arxiv.org/abs/2404.08825v2",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/c5f4706c.jpg",
+      "published": "2023-06-30",
+      "source_url": "http://arxiv.org/abs/2307.00133v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/a4759d3b.jpg",
       "image_is_fallback": false,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "By replacing traditional iterative optimization with a neural network trained on Smooth L1 loss, this system solves inverse kinematics in a single forward pass while maintaining physical precision.",
-        "what_it_does": "A motion planner generates smooth Cartesian B\u00e9zier curves and converts them into joint-space trajectories for humanoid robots NICO and NICOL to execute household object grasping.",
-        "key_idea": "CycleIK uses a neural network architecture with custom Smooth L1 loss functions to map 6D end-effector poses to joint configurations, allowing for high-precision, batched inference across arbitrary kinematic chains.",
-        "core_challenge": "Numerical inverse kinematics solvers require computationally expensive iterative optimization for every pose, creating a bottleneck that prevents fluid, real-time motion planning for redundant robots.",
-        "key_assumption": "Removes the requirement for lengthy training cycles by demonstrating that high-precision IK can be achieved in as few as ten training epochs.",
-        "result": "Achieved an 82% grasp success rate on the NICO robot and 72% on the NICOL robot during human-in-the-loop experiments.",
-        "what_it_enables": "Low-latency, batched motion generation for humanoid agents where runtime is the primary constraint for interactive manipulation.",
+        "hook": "The robot mimics human ship-breakers by watching the molten heat pool to decide how fast to move, rather than following a rigid, pre-programmed speed.",
+        "what_it_does": "A robotic arm equipped with an oxy-fuel torch and an eye-in-hand camera dynamically adjusts its cutting velocity along a pre-defined path by monitoring the combustion state of the metal heat pool.",
+        "key_idea": "The system uses visual feedback\u2014specifically the convexity and intensity of the molten heat pool\u2014to modulate torch velocity in real-time, decoupling the cutting process control from the robot's geometric path planning.",
+        "core_challenge": "Standard industrial cutting robots rely on fixed feed rates that fail when material thickness varies or thermal conditions fluctuate, often resulting in incomplete cuts or torch blowouts.",
+        "key_assumption": "Removes the requirement for precise, pre-calculated feed rates by assuming the robot can dynamically adapt its velocity based on the visual state of the combustion front.",
+        "result": "Successfully cut steel plates of varying thicknesses on a 1-DOF robotic testbed using only visual feedback to regulate the combustion process.",
+        "what_it_enables": "",
         "open_source": null,
-        "tldr": "CycleIK replaces slow numerical IK with a fast neural solver to enable real-time Cartesian motion planning for humanoids."
+        "tldr": "The robot adjusts its cutting speed by visually tracking the molten heat pool like a human worker."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Fast Motion Planning for Humanoid Robot Grasping",
-        "reading_time_seconds": 85,
+        "flow_title": "Automating Industrial Metal Cutting Using Visual Feedback",
+        "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Inverse Kinematics Trade-offs",
-            "body": "Robots need to translate target positions into joint angles, but current methods force a choice between high precision (slow) or high speed (low precision).",
-            "detail": "Redundant robots with many joints make this problem harder because there are infinite ways to reach a single point.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "The CycleIK Solver",
-            "body": "The researchers created CycleIK, a neural network that converts Cartesian paths (straight or curved lines in space) into joint movements in a single step.",
-            "detail": "They updated the training process using a 'Smooth L1 loss' function, which allows the network to learn high-precision movements in just 10 training epochs.",
-            "has_number": true,
-            "number_callout": "10 epochs"
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "B\u00e9zier Curve Planning",
-            "body": "To ensure smooth movement, the system uses B\u00e9zier curves (mathematical curves used for smooth paths) to define the trajectory before the solver converts it to joint angles.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Real-World Grasping Success",
-            "body": "The system was tested on two humanoid robots, NICO and NICOL, achieving success rates of 82% and 72% respectively in human-in-the-loop grasping tasks.",
-            "detail": "The method performs faster than traditional numerical solvers while maintaining competitive precision.",
-            "has_number": true,
-            "number_callout": "82% and 72% success rates"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Efficient Humanoid Control",
-            "body": "This approach provides a balance between speed and accuracy, making it ideal for humanoid robots that need to react quickly in dynamic environments.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "CycleIK enables fast, precise motion planning for humanoid robots by combining neural network speed with smooth B\u00e9zier path planning.",
-        "prerequisite_concepts": [
-          "Inverse Kinematics",
-          "Degrees of Freedom",
-          "Cartesian vs Joint Space"
-        ]
-      }
-    },
-    {
-      "id": "386fef03",
-      "headline": "ComposableNav executes complex navigation instructions by summing individual diffusion-based motion primitives",
-      "tags": [
-        "Composable Diffusion",
-        "Instruction-Following Navigation",
-        "Motion Primitives",
-        "Dynamic Environments"
-      ],
-      "research_theme": "Composable Diffusion Policies",
-      "why_this_matters": "As robot skill sets grow, combinatorial instruction following becomes intractable; this approach offers a scalable way to compose behaviors without exponential data requirements.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=FBsawSyYBM",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/386fef03.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of training a model for every possible instruction, this system treats navigation behaviors like Lego bricks, adding their noise predictions together at runtime to create entirely new, unseen maneuvers.",
-        "what_it_does": "A mobile robot navigates dynamic environments by decomposing natural language instructions into multiple motion primitives, such as yielding to pedestrians or maintaining lane discipline, and executing them simultaneously.",
-        "key_idea": "It uses compositional diffusion (summing the predicted noise from multiple specialized denoising networks) to merge distinct motion primitives into a single, coherent trajectory without needing joint training for every combination.",
-        "core_challenge": "The combinatorial explosion of instruction specifications makes it impossible to collect enough training data for every possible combination of navigation behaviors.",
-        "key_assumption": "Relies on the assumption that complex navigation tasks can be decomposed into a linear set of independent motion primitives that are additive in the diffusion score space.",
-        "result": "The system successfully composes navigation behaviors in real-time, maintaining performance across diverse, previously unseen instruction combinations in both simulation and real-world deployment.",
-        "what_it_enables": "Robots can perform complex, multi-constraint navigation tasks without requiring massive, task-specific datasets for every unique combination of user preferences.",
-        "open_source": "https://amrl.cs.utexas.edu/ComposableNav",
-        "tldr": "ComposableNav sums diffusion-based motion primitives to satisfy complex, multi-part navigation instructions without needing exhaustive joint training."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Composable Diffusion for Complex Robot Navigation Instructions",
-        "reading_time_seconds": 120,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Combinatorial Complexity in Navigation",
-            "body": "Robots struggle to follow complex instructions like 'overtake the pedestrian while staying on the right side of the road' because the number of possible instruction combinations grows exponentially.",
-            "detail": "Standard learning methods require massive amounts of data to cover every possible combination of tasks, making them impractical for dynamic environments.",
+            "heading": "Manual Metal Cutting Hazards",
+            "body": "Industrial metal cutting, such as ship-breaking, is dangerous and labor-intensive work that requires high precision to manage thermal combustion.",
+            "detail": "Human workers currently rely on visual cues to adjust torch speed based on the heat pool, but this is difficult to automate with standard robots.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Composition Over Training",
-            "body": "Instead of training one model for every possible combination, the researchers train separate 'motion primitives' for individual tasks and combine them at runtime.",
-            "detail": "This shifts the complexity from exponential to linear, allowing a small set of primitives to support a vast range of instructions.",
+            "heading": "Mimicking Human Visual Cues",
+            "body": "The researchers developed a control system that mimics how skilled workers observe the heat pool's shape and brightness to adjust cutting speed.",
+            "detail": "The system uses an eye-in-hand camera (a camera mounted directly on the robot arm) to monitor the combustion state in real-time.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Two-Stage Training Pipeline",
-            "body": "The system uses supervised pre-training to learn basic navigation, followed by reinforcement learning to specialize each motion primitive.",
-            "detail": "At deployment, a language model breaks down user instructions into these specific primitives, which are then composed using diffusion models.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Real-World Performance",
-            "body": "The system successfully generates trajectories for previously unseen combinations of instructions in both simulated and real-world environments.",
-            "detail": "The robot can operate in real-time, though performance drops slightly as the number of simultaneous specifications increases.",
-            "has_number": true,
-            "number_callout": "6 navigation primitives"
-          },
-          {
-            "id": 5,
-            "type": "next",
-            "heading": "Future Scaling and Refinement",
-            "body": "Future work aims to replace manual reward functions with vision-language models and improve the composition math to handle more complex instruction sets.",
-            "detail": "Integrating high-level task planners will eventually allow for longer, multi-step navigation sequences.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By breaking complex instructions into modular motion primitives, robots can navigate dynamic environments without needing to be trained on every possible task combination.",
-        "prerequisite_concepts": [
-          "Diffusion models",
-          "Reinforcement learning",
-          "Motion primitives",
-          "Large language models"
-        ]
-      }
-    },
-    {
-      "id": "8fe60b5e",
-      "headline": "MPPI navigation controller adjusts collision risk bounds based on estimator uncertainty calibration",
-      "tags": [
-        "MPPI",
-        "Chance-Constrained Control",
-        "Collision Avoidance",
-        "Uncertainty Calibration"
-      ],
-      "research_theme": "Chance-Constrained MPPI Control",
-      "why_this_matters": "Bridging the gap between theoretical collision risk bounds and real-world perception uncertainty is critical for deploying safe autonomous systems in dynamic environments.",
-      "source": "IROS",
-      "published": "2026-05-27",
-      "source_url": "http://arxiv.org/abs/2605.28330v1",
-      "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Standard safety-critical controllers fail not because of bad planning, but because they blindly trust the overconfident uncertainty estimates provided by their own perception systems.",
-        "what_it_does": "A navigation controller for dynamic environments computes collision-avoidance trajectories while dynamically adjusting risk thresholds to account for miscalibrated state and object prediction uncertainties.",
-        "key_idea": "It integrates a calibration-aware risk assessment layer into the MPPI (Model Predictive Path Integral) cost function, which scales the safety buffer based on the empirical reliability of the upstream perception and localization covariance.",
-        "core_challenge": "Existing chance-constrained controllers assume perception uncertainty is perfectly calibrated, causing robots to either collide due to overconfidence or freeze due to excessive caution.",
-        "key_assumption": "Removes the assumption that upstream localization and perception estimators provide accurate, well-calibrated uncertainty bounds for collision risk calculation.",
-        "result": "Reduces collision rate by 42% in high-uncertainty dynamic scenarios compared to standard MPPI controllers that ignore estimator miscalibration.",
-        "what_it_enables": "Deployment of probabilistic safety controllers in real-world environments where perception noise is non-Gaussian and frequently misestimated.",
-        "open_source": null,
-        "tldr": "The controller dynamically adjusts safety buffers to compensate for the systematic overconfidence of perception and localization estimators."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving Robot Safety Under Uncertain Dynamic Object Predictions",
-        "reading_time_seconds": 120,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Unreliable Collision Risk Estimates",
-            "body": "Robots use probabilistic control to avoid collisions, but these systems assume that input data about the environment is perfectly accurate. If the robot's perception system is wrong about its own uncertainty, the robot will either crash or act too cautiously.",
-            "detail": "This is known as miscalibration, where the predicted probability of a collision does not match the actual frequency of collisions.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "The Role of MPPI Control",
-            "body": "Model Predictive Path Integral (MPPI) control is a method where the robot simulates thousands of possible future paths to choose the safest one. It relies on chance constraints, which are mathematical rules that keep the probability of a collision below a specific threshold.",
-            "detail": "MPPI is popular because it handles complex, non-linear robot dynamics well while considering future uncertainty.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Calibration of Uncertainty Estimates",
-            "body": "The researchers developed a way to adjust the robot's uncertainty estimates in real-time. By ensuring the robot knows how 'unsure' it is about dynamic objects, the control system can make better decisions about when to slow down or steer away.",
-            "detail": "This involves checking if the predicted collision risk aligns with reality and scaling the covariance (a measure of uncertainty) accordingly.",
+            "heading": "Visual Servoing Control Algorithm",
+            "body": "The controller analyzes the convexity and intensity of the heat pool to determine if the torch should move faster or slower along a pre-planned path.",
+            "detail": "The algorithm decouples the torch control from the robot's general motion planning, allowing it to focus specifically on maintaining the optimal cutting state.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "experiment",
-            "heading": "Simulation-Based Performance Testing",
-            "body": "The team tested their approach in a physics-based simulation environment to see how the robot handled moving obstacles. They compared the calibrated system against standard, uncalibrated control methods.",
-            "detail": "Simulation allows for controlled testing of failure modes that would be dangerous to attempt on physical hardware.",
-            "has_number": false,
-            "number_callout": null
+            "heading": "Testing on Steel Plates",
+            "body": "The team tested the controller on a 1-DOF (degree of freedom) robot tasked with cutting through steel plates of varying thicknesses.",
+            "detail": "The robot successfully adjusted its velocity based solely on the visual feedback provided by the camera.",
+            "has_number": true,
+            "number_callout": "1-DOF robot"
           },
           {
             "id": 5,
             "type": "result",
-            "heading": "Reduced Safety Violations",
-            "body": "The calibrated system significantly reduced the number of unexpected collisions compared to standard MPPI. By fixing the overconfidence in perception, the robot maintained a consistent safety buffer even when object movement was hard to predict.",
-            "detail": "The study confirmed that miscalibration is a primary driver of closed-loop failure modes in autonomous navigation.",
-            "has_number": true,
-            "number_callout": "Significant reduction in systematic safety violations"
+            "heading": "Successful Autonomous Cutting",
+            "body": "The system successfully maintained the combustion process across different material thicknesses, proving that visual feedback is sufficient for autonomous control.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 6,
             "type": "next",
-            "heading": "Future Real-World Validation",
-            "body": "The next step is to test this method on physical robots navigating among real pedestrians. Researchers also plan to integrate advanced techniques like Conformal Prediction to handle non-Gaussian noise in real-time.",
-            "detail": "Moving from simulation to physical hardware introduces new challenges like computational limits on embedded processors.",
+            "heading": "Future Surface Conditioning",
+            "body": "The current system requires further development to handle the transition from the initial preheating phase to the active cutting phase automatically.",
+            "detail": "Future work will focus on surface conditioning to ensure the robot can start the cut without manual intervention.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots must calibrate their uncertainty estimates to ensure that probabilistic collision avoidance actually keeps them safe in dynamic environments.",
+        "key_takeaway": "Robots can autonomously perform oxy-fuel cutting by using visual feedback to monitor heat pool intensity, similar to human workers.",
         "prerequisite_concepts": [
-          "Model Predictive Control",
-          "Probability distributions",
-          "Covariance",
-          "Autonomous navigation"
+          "Visual servoing",
+          "Degrees of freedom",
+          "Feedback control"
         ]
       }
     },
     {
-      "id": "2fa16cbd",
-      "headline": "LodeStar automates long-horizon dexterous manipulation by synthesizing diverse skill data from human demonstrations",
+      "id": "1694175f",
+      "headline": "Generating physically consistent robot trajectories from single human demonstrations using fisheye view-augmentation",
       "tags": [
-        "Dexterous Manipulation",
-        "Imitation Learning",
-        "Skill Decomposition",
-        "Synthetic Data Augmentation"
+        "Visuomotor Policies",
+        "Data Augmentation",
+        "Trajectory Optimization",
+        "Imitation Learning"
       ],
-      "research_theme": "Dexterous Manipulation Learning",
-      "why_this_matters": "Overcoming the data bottleneck in long-horizon manipulation is a primary hurdle for achieving human-level dexterity in real-world robotics.",
+      "research_theme": "Visuomotor Policy Augmentation",
+      "why_this_matters": "Data efficiency is a primary bottleneck in robotics; this paper provides a method to improve policy robustness to out-of-distribution scenarios without requiring massive data collection.",
       "source": "CoRL",
       "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=6yB6AX8aSU",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/2fa16cbd.jpg",
+      "source_url": "https://openreview.net/forum?id=Hu3NoPMAg4",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/1694175f.jpg",
       "image_is_fallback": false,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of collecting thousands of human trials, this system takes a handful of demonstrations and automatically explodes them into a massive, diverse synthetic dataset for multi-fingered hands.",
-        "what_it_does": "A robotic system decomposes complex multi-stage tasks like using a spray bottle into individual skills, then generates synthetic training data in simulation to teach a global policy how to chain these behaviors robustly.",
-        "key_idea": "It uses automatic task segmentation to isolate semantic skills from limited human demonstrations, followed by synthetic data augmentation (generating varied initial and terminal state distributions in simulation) to bridge the gap between discrete skill execution and continuous long-horizon control.",
-        "core_challenge": "Existing imitation learning methods fail to scale to long-horizon dexterous tasks because they require prohibitively large datasets and struggle with state distribution mismatches at the boundaries between sequential skills.",
-        "key_assumption": "Removes the requirement for massive, manually-collected human demonstration datasets by assuming that a small set of demonstrations can be effectively decomposed and augmented through simulation-based skill synthesis.",
-        "result": "Achieved a 2x higher success rate on three challenging real-world dexterous manipulation tasks compared to the best baseline, while demonstrating improved generalization to environmental variations.",
-        "what_it_enables": "Accelerates the development of multi-fingered robots capable of complex, multi-step chores by reducing the data collection burden and stabilizing the transition between learned manipulation primitives.",
-        "open_source": null,
-        "tldr": "LodeStar decomposes human demonstrations into skills and uses synthetic augmentation to train robust, long-horizon dexterous manipulation policies."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Automating Long-Horizon Dexterous Robot Manipulation via Synthetic Data",
-        "reading_time_seconds": 85,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Difficulty of Long-Horizon Tasks",
-            "body": "Robots struggle to perform complex, multi-step tasks like watering a plant because they require both fine motor control and the ability to sequence multiple distinct actions.",
-            "detail": "Collecting enough high-quality human demonstration data to teach these long sequences is extremely expensive and time-consuming.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "limitation",
-            "heading": "Existing Data Methods Are Limited",
-            "body": "Previous methods for generating training data often fail to handle multi-fingered hands or struggle to connect different skills smoothly, leading to poor performance.",
-            "detail": "Simply chaining together pre-recorded motions often results in robots that cannot handle small changes in their environment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "The LodeStar System",
-            "body": "LodeStar automatically breaks down a long task into smaller, manageable skills and uses simulation to generate a massive variety of synthetic training data from just a few human examples.",
-            "detail": "By creating synthetic variations of these skills in a simulator, the robot learns to be more robust to environmental changes.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Success Rates",
-            "body": "In real-world testing across three challenging tasks, the system achieved a success rate two times higher than the best alternative method.",
-            "detail": "The robot also showed better generalization, meaning it could handle a wider range of object positions and environmental variations.",
-            "has_number": true,
-            "number_callout": "2 times higher success rate"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Scalable Dexterous Learning",
-            "body": "This approach reduces the reliance on massive human datasets, making it easier to teach robots complex, multi-step behaviors for real-world use.",
-            "detail": "It provides a blueprint for combining structured task planning with synthetic data to improve robot dexterity.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "next",
-            "heading": "Future Improvements",
-            "body": "Future work will focus on handling transparent or reflective objects, incorporating tactile (touch) sensors, and learning to manipulate soft, deformable objects.",
-            "detail": "Researchers also aim to add human-in-the-loop corrections to further boost performance beyond current levels.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "LodeStar enables robots to perform complex, multi-step tasks by automatically decomposing human demonstrations and augmenting them with synthetic data.",
-        "prerequisite_concepts": [
-          "Imitation learning",
-          "Dexterous manipulation",
-          "Sim-to-real transfer"
-        ]
-      }
-    },
-    {
-      "id": "4e22ae4a",
-      "headline": "Force-directed sampling planner uses invalid obstacle-collision vertices to accelerate path convergence",
-      "tags": [
-        "Sampling-based Motion Planning",
-        "C-space Obstacles",
-        "Informed Sampling",
-        "Potential Fields"
-      ],
-      "research_theme": "Sampling-based Motion Planning",
-      "why_this_matters": "Efficient pathfinding in high-dimensional configuration spaces remains a bottleneck for real-time robot autonomy, especially in cluttered environments.",
-      "source": "IROS",
-      "published": "2025-08-27",
-      "source_url": "http://arxiv.org/abs/2508.19771v1",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/4e22ae4a.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of discarding collision-prone samples, this planner treats invalid vertices as repulsive charges that push the search tree toward valid, low-cost paths.",
-        "what_it_does": "A sampling-based motion planner computes optimal paths in high-dimensional configuration spaces by modeling invalid vertices as physical entities that exert repulsive forces on the search tree.",
-        "key_idea": "It applies Coulomb\u2019s Law to treat collision-detected samples as repulsive potential fields, biasing the tree expansion away from obstacles while maintaining the elliptical informed-sampling bounds of EIT*.",
-        "core_challenge": "Standard sampling-based planners discard invalid vertices entirely, wasting valuable information about the geometry of the C-space obstacles that could otherwise guide the search.",
-        "key_assumption": "Removes the assumption that collision-detected samples are useless, instead treating them as informative data points for shaping the configuration space exploration.",
-        "result": "Reduces the number of iterations required to reach a near-optimal solution compared to EIT* by leveraging the repulsive force vectors to prune the search space more effectively.",
+        "hook": "A single human demonstration can be transformed into a thousand unique training trajectories by synthetically re-rendering the scene and re-planning the robot's path around new, unseen obstacles.",
+        "what_it_does": "The system reconstructs 3D scenes from single demonstrations to generate new, collision-free, fisheye-view image sequences and corresponding action labels that maintain physical consistency.",
+        "key_idea": "It employs a trajectory-level action-view augmentation algorithm that combines 3D scene reconstruction with trajectory optimization (a mathematical method to find paths satisfying kinematic and collision constraints) to synthesize valid robot behaviors.",
+        "core_challenge": "Visuomotor policies fail when minor shifts in initial robot configuration or scene layout create out-of-distribution observations that the original training data never covered.",
+        "key_assumption": "Removes the assumption that robots require exhaustive manual data collection for every possible spatial configuration or obstacle placement.",
+        "result": "Enables successful task completion in scenarios with novel obstacles and varied initial robot configurations that caused failure in policies trained on original, unaugmented data.",
         "what_it_enables": "",
         "open_source": null,
-        "tldr": "FDIT* treats invalid collision samples as repulsive charges to steer the search tree away from obstacles."
+        "tldr": "Synthetically augment single demonstrations into thousands of physically valid, obstacle-avoiding trajectories to improve visuomotor policy robustness."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Improving Robot Path Planning Using Invalid Obstacle Data",
+        "flow_title": "Generating Diverse Robot Training Data from Single Demonstrations",
         "reading_time_seconds": 110,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Wasted Data in Motion Planning",
-            "body": "Sampling-based motion planners generate many random points in a robot's configuration space (C-space) to find a path. Points that land inside obstacles are typically discarded, wasting potentially useful information about the environment's geometry.",
-            "detail": "Standard algorithms focus only on valid, collision-free points, ignoring the spatial structure of the obstacles themselves.",
+            "heading": "Brittle Robot Policies",
+            "body": "Robots trained via imitation learning often fail when they encounter slight changes in object placement or starting positions. This happens because the robot has not seen enough variations in its training data.",
+            "detail": "These failures occur because the robot enters 'out-of-distribution' states, where the current scene looks nothing like the data it was trained on.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
-            "type": "idea",
-            "heading": "Physics-Inspired Path Optimization",
-            "body": "The researchers developed Force Direction Informed Trees (FDIT*), which treats invalid (collision) points as sources of repulsive force, similar to Coulomb's Law in physics.",
-            "detail": "By calculating these forces, the algorithm can steer the search process away from obstacles more effectively than random sampling alone.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Elliptical Informed Sampling",
-            "body": "The planner uses an elliptical sampling region to focus the search between the start and goal points, ensuring the robot doesn't waste time exploring irrelevant areas.",
-            "detail": "This builds upon existing informed sampling techniques by refining the search area as the path cost improves.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "method",
-            "heading": "Invalid Vertex Utilization",
-            "body": "Instead of deleting points that hit obstacles, FDIT* uses them to map the boundaries of the C-space obstacles.",
-            "detail": "These points act as 'repulsive' markers that help the algorithm quickly identify and navigate around narrow passages or complex constraints.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "result",
-            "heading": "Faster Convergence Rates",
-            "body": "By incorporating force-based guidance and reusing invalid points, the algorithm finds optimal paths significantly faster than the baseline Effort Informed Trees (EIT*) method.",
-            "detail": "The approach demonstrates improved convergence in high-dimensional spaces where traditional random sampling struggles to find narrow corridors.",
-            "has_number": true,
-            "number_callout": "Faster convergence than EIT*"
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Efficient Navigation in Complex Spaces",
-            "body": "This method allows robots to plan paths in cluttered environments with less computational effort, making it more suitable for real-time applications.",
-            "detail": "It shifts the paradigm from treating obstacles as simple 'no-go' zones to using them as informative guides for path optimization.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "FDIT* improves motion planning efficiency by using collision points as repulsive forces to guide the robot away from obstacles.",
-        "prerequisite_concepts": [
-          "Configuration Space (C-space)",
-          "Sampling-based Motion Planning",
-          "Potential Fields",
-          "Informed Sampling"
-        ]
-      }
-    },
-    {
-      "id": "1f99efd5",
-      "headline": "FOMO-3D fuses foundation model priors for long-tailed 3D object detection",
-      "tags": [
-        "Vision Foundation Models",
-        "Long-Tailed 3D Detection",
-        "Multi-modal Fusion",
-        "Autonomous Driving"
-      ],
-      "research_theme": "Vision Foundation Models",
-      "why_this_matters": "Leveraging foundation models to solve long-tailed detection problems is key to improving the safety and reliability of autonomous vehicles in rare, critical scenarios.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=19LSN4QnV4",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/1f99efd5.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Self-driving cars struggle to see construction workers because they rarely appear in training data, so this system teaches them to 'read' the internet instead.",
-        "what_it_does": "A two-stage 3D object detector integrates off-the-shelf 2D foundation model priors\u2014specifically OWL-Large for detection and Metric3D-Giant for depth\u2014into a LiDAR-based perception pipeline to identify rare, long-tailed objects in urban and highway driving scenes.",
-        "key_idea": "It injects external semantic and geometric priors into a 3D detector via a camera-based proposal branch and cross-camera-attention mechanism, effectively bridging the gap between 2D internet-scale knowledge and 3D spatial LiDAR data.",
-        "core_challenge": "Standard 3D detectors rely on frequency-based supervision, causing them to fail on safety-critical but infrequent objects like debris or construction personnel.",
-        "key_assumption": "Relaxes the reliance on large-scale, in-domain 3D annotated data by assuming that zero-shot priors from internet-scale vision models can generalize to specific, rare 3D driving scenarios.",
-        "result": "Outperforms existing 3D detectors and long-tailed detection methods across urban and highway datasets, specifically improving detection precision for rare, long-range objects.",
-        "what_it_enables": "Automated labeling pipelines can now generate high-quality 3D annotations for rare events, accelerating the development of safer autonomous systems without needing massive manual data collection.",
-        "open_source": null,
-        "tldr": "FOMO-3D boosts rare object detection in 3D driving scenes by injecting zero-shot semantic and depth priors from foundation models."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving 3D Object Detection for Rare Traffic Scenarios",
-        "reading_time_seconds": 85,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Rare Objects in Autonomous Driving",
-            "body": "Self-driving cars struggle to detect rare objects like construction workers or debris because these items appear infrequently in standard training datasets.",
-            "detail": "Standard models excel at common objects like cars but fail when data is imbalanced, creating a safety risk for rare, critical scenarios.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "Vision Foundation Models as Priors",
-            "body": "Large-scale vision models trained on internet-wide data possess broad knowledge that can help identify objects the car has rarely seen before.",
-            "detail": "These models provide 'zero-shot' capabilities, meaning they can recognize objects without needing specific training examples for every single category.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "The FOMO-3D Architecture",
-            "body": "FOMO-3D combines 2D image insights from foundation models with 3D spatial data from LiDAR sensors to create a more accurate perception system.",
-            "detail": "It uses cross-camera attention to fuse 2D detections and depth estimates with 3D point clouds, bridging the gap between different data types.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Superior Detection Performance",
-            "body": "FOMO-3D outperforms existing state-of-the-art methods, particularly for long-tailed classes and objects located at long distances.",
-            "detail": "The model successfully integrates external knowledge to improve detection accuracy where traditional models typically fail.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
             "type": "limitation",
-            "heading": "High Computational Cost",
-            "body": "The system currently relies on very large models, making it too slow for real-time onboard processing in a moving vehicle.",
-            "detail": "Because of this, the model is currently best suited for offline tasks like auto-labeling large datasets rather than live driving.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "next",
-            "heading": "Future Real-Time Deployment",
-            "body": "Researchers plan to distill these large models into smaller, faster versions that can run in real-time on vehicle hardware.",
-            "detail": "Future work will also focus on fine-tuning the foundation models to better distinguish between similar-looking classes like trucks and trailers.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By integrating internet-scale vision foundation models, autonomous vehicles can better detect rare, safety-critical objects that are missing from standard driving datasets.",
-        "prerequisite_concepts": [
-          "LiDAR and Camera Fusion",
-          "Zero-shot Learning",
-          "3D Object Detection",
-          "Class Imbalance"
-        ]
-      }
-    },
-    {
-      "id": "995a05d6",
-      "headline": "Real-time vision-language navigation using history-aware spatio-temporal token pruning",
-      "tags": [
-        "Vision-Language Navigation",
-        "Token Pruning",
-        "Vision-Language-Action",
-        "Spatio-Temporal Memory"
-      ],
-      "research_theme": "Vision-Language Navigation",
-      "why_this_matters": "Reducing the computational overhead of VLA models is essential for moving from lab-based navigation to real-time, on-device deployment.",
-      "source": "IROS",
-      "published": "2026-03-06",
-      "source_url": "http://arxiv.org/abs/2603.06480v2",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/995a05d6.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Most navigation models waste compute on redundant pixels, but this system treats past frames as a memory bank to prune current visual input without losing spatial context.",
-        "what_it_does": "A navigation agent reduces the number of visual tokens processed by a Vision-Language-Action model in real-time by dynamically selecting salient spatial regions and compressing temporal history.",
-        "key_idea": "Adaptive Maximal Marginal Relevance (A-MMR) selects spatial tokens based on both current visual saliency and their information gain relative to the cached spatio-temporal memory.",
-        "core_challenge": "Standard transformer-based navigation models suffer from high latency because they process every visual token in every frame, ignoring the fact that much of the environment is already stored in the agent's history.",
-        "key_assumption": "Removes the need for retraining or fine-tuning the underlying VLA model, treating token pruning as a plug-and-play inference-time module.",
-        "result": "Achieves the highest throughput and navigation accuracy across standard VLN benchmarks while maintaining a superior performance-efficiency profile compared to existing token pruning methods.",
-        "what_it_enables": "Deployment of heavy, high-performance VLA models on resource-constrained robotic hardware for real-time, closed-loop navigation.",
-        "open_source": "https://wqtwjt1996.github.io/publications/2026-vln.html",
-        "tldr": "Prune visual tokens dynamically using history-conditioned saliency to speed up navigation models without retraining."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Accelerating Robot Navigation Through Intelligent Visual Token Pruning",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "High Latency in Navigation Models",
-            "body": "Vision-Language-Action models allow robots to follow natural language commands, but they are computationally heavy. This creates a delay that prevents the robot from making real-time decisions while moving.",
-            "detail": "These models process massive amounts of visual data, which slows down the control loop necessary for safe navigation.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "Navigation Requires Spatio-Temporal Memory",
-            "body": "Unlike simple image recognition, navigation requires a robot to remember past views and relate them to current surroundings. Pruning must preserve this history to keep the robot on track.",
-            "detail": "The model must reason over the spatio-temporal relationship between past and current observations to successfully reach a destination.",
+            "heading": "High Cost of Data Collection",
+            "body": "To fix this, humans currently must perform the same task hundreds of times to cover all possible variations. This manual process is extremely tedious and expensive.",
+            "detail": null,
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
-            "type": "method",
-            "heading": "Training-Free Token Pruning",
-            "body": "The researchers created a plug-and-play module that removes redundant visual data (tokens) without needing to retrain the underlying model. It uses an Adaptive Maximal Marginal Relevance strategy to select only the most important visual information.",
-            "detail": "This strategy identifies spatial saliency in the current view and uses it to guide the compression of the robot's memory.",
+            "type": "idea",
+            "heading": "Automated Trajectory Augmentation",
+            "body": "The researchers created a method called 1001 DEMOS that takes a single human demonstration and automatically generates many new, valid training trajectories.",
+            "detail": "It works by reconstructing the 3D scene and using trajectory optimization to create new, physically possible paths that avoid obstacles.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "result",
-            "heading": "Improved Efficiency and Accuracy",
-            "body": "The new method outperforms existing pruning techniques by reducing computational redundancy while maintaining high navigation accuracy. It achieves the highest throughput among tested methods while keeping latency low.",
-            "detail": "By focusing on essential context, the robot processes fewer tokens while retaining the critical information needed for navigation.",
-            "has_number": true,
-            "number_callout": "highest throughput and strongest performance"
+            "type": "method",
+            "heading": "Maintaining Physical Consistency",
+            "body": "The system ensures that every generated trajectory is physically realistic by checking for 3D collisions and ensuring the robot's actions match the new visual perspective.",
+            "detail": "It specifically maintains 'action-view consistency,' meaning the robot's movement commands always align correctly with the simulated camera view.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 5,
+            "type": "result",
+            "heading": "Improved Spatial Robustness",
+            "body": "The resulting policies can successfully perform tasks even when obstacles are added or the robot starts from a position it never saw in the original demonstration.",
+            "detail": "This allows a robot to generalize to new configurations without needing a human to perform those specific variations during training.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
             "type": "impact",
-            "heading": "Real-Time Deployment Potential",
-            "body": "This approach enables complex navigation models to run on robots with limited hardware. It bridges the gap between high-performance research models and the requirements for real-world, responsive robotic systems.",
+            "heading": "Scaling Robot Learning",
+            "body": "This approach significantly reduces the amount of human effort required to train capable robots, making it easier to deploy them in unpredictable real-world environments.",
             "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By intelligently pruning visual tokens based on spatio-temporal importance, robots can navigate using complex language models without the latency that previously hindered real-time performance.",
-        "prerequisite_concepts": [
-          "Vision-Language-Action (VLA) models",
-          "Transformer architecture",
-          "Tokenization in neural networks",
-          "Spatio-temporal reasoning"
-        ]
-      }
-    },
-    {
-      "id": "93501125",
-      "headline": "Sentinel detects generative robot policy failures by monitoring action consistency and progress",
-      "tags": [
-        "Generative Policies",
-        "Runtime Monitoring",
-        "Imitation Learning",
-        "Failure Detection"
-      ],
-      "research_theme": "Generative Policy Monitoring",
-      "why_this_matters": "Developing runtime safety monitors is a prerequisite for the scalable, reliable deployment of imitation-learned policies in unpredictable real-world settings.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=yqLFb0RnDW",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/93501125.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Robots often fail silently, but by measuring the entropy of their own action sequences, we can predict a crash before the robot actually hits the wall.",
-        "what_it_does": "Sentinel monitors imitation-learned policies at runtime to flag erratic behavior and lack of task progress before the robot executes a catastrophic action.",
-        "key_idea": "It employs a dual-stream monitoring approach using temporal action consistency (measuring variance in predicted action distributions) and a progress estimator (a learned value function tracking distance to goal).",
-        "core_challenge": "Generative policies trained via imitation learning exhibit unpredictable, high-variance behaviors when encountering out-of-distribution states, leading to silent failures.",
-        "key_assumption": "Removes the assumption that a policy's internal confidence score is sufficient for detecting failures, instead relying on external consistency and progress metrics.",
-        "result": "Sentinel achieves a 92% failure detection rate on the CALVIN benchmark while maintaining a false positive rate below 5%.",
-        "what_it_enables": "Autonomous systems can now trigger safety interventions or human-in-the-loop recovery protocols the moment a generative policy drifts from its training manifold.",
-        "open_source": null,
-        "tldr": "Sentinel catches generative policy failures by tracking action consistency and task progress in real-time."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Detecting Robot Policy Failures During Real-Time Execution",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Unpredictable Robot Policy Failures",
-            "body": "Robots trained through imitation learning often fail when they encounter situations not present in their training data. These failures are difficult to catch before the robot causes damage or stops working.",
-            "detail": "Generative policies, like diffusion models, can produce erratic or nonsensical actions when confused by their environment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Two-Tiered Failure Detection",
-            "body": "The researchers created Sentinel, a system that splits failure detection into two categories: erratic behavior and lack of task progress.",
-            "detail": "Erratic behavior is caught by checking if actions change too wildly over time, while task progress is checked by Vision Language Models (VLMs).",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Efficient Computational Strategy",
-            "body": "The system uses simple statistical math to catch erratic behavior instantly, saving the more expensive VLM analysis for slower, non-urgent checks.",
-            "detail": "This hybrid approach keeps the system fast enough to run in real-time without needing massive computing power for every single frame.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Detection Accuracy",
-            "body": "By combining both detection methods, the system identified 18% more failures than using either method by itself.",
-            "detail": "The system was tested on mobile manipulation robots in both simulated environments and real-world settings.",
-            "has_number": true,
-            "number_callout": "18% more failures detected"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Safer Robot Deployment",
-            "body": "This research provides a way to monitor autonomous robots, allowing them to stop or ask for help when they realize they are failing.",
-            "detail": "This is a critical step toward deploying robots in complex, real-world environments where they cannot be constantly supervised by humans.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Combining fast statistical checks with intelligent vision models allows robots to detect their own failures more accurately and efficiently.",
+        "key_takeaway": "By automatically generating diverse, physically valid training data from a single demonstration, robots can learn to handle new obstacles and configurations without extra human effort.",
         "prerequisite_concepts": [
           "Imitation learning",
-          "Diffusion policies",
-          "Vision Language Models (VLMs)",
-          "Runtime monitoring"
+          "Visuomotor policy",
+          "Trajectory optimization",
+          "Out-of-distribution (OOD) data"
         ]
       }
     },
     {
-      "id": "8acefabf",
-      "headline": "Bimanual robot extracts target items from clutter by sliding and supporting",
+      "id": "15031dfa",
+      "headline": "Optimizing symbolic state spaces to group manipulation tasks by reachable locations",
       "tags": [
-        "Bimanual Manipulation",
-        "Cluttered Environment",
-        "Monte Carlo Tree Search",
-        "Manipulation Planning"
+        "Task and Motion Planning",
+        "Mobile Manipulation",
+        "Symbolic Planning",
+        "Geometric Grounding"
       ],
-      "research_theme": "Bimanual Manipulation Planning",
-      "why_this_matters": "Solving the problem of clutter extraction requires sophisticated coordination between manipulation and support, a core capability for service robots.",
+      "research_theme": "Task and Motion Planning",
+      "why_this_matters": "Automating the definition of state spaces for TAMP is critical for scaling long-horizon planning to complex, unstructured environments where manual engineering is infeasible.",
       "source": "IROS",
-      "published": "2023-06-22",
-      "source_url": "http://arxiv.org/abs/2306.12649v1",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/8acefabf.jpg",
+      "published": "2023-07-21",
+      "source_url": "http://arxiv.org/abs/2307.11889v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/15031dfa.jpg",
       "image_is_fallback": false,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of clearing away obstacles one by one, the robot uses one hand to slide the target out while the other hand acts as a physical brace to keep the rest of the pile from collapsing.",
-        "what_it_does": "A bimanual robot system extracts a specific target object from a dense warehouse-style pile by simultaneously sliding the target and providing mechanical support to surrounding objects.",
-        "key_idea": "A neural network predicts the post-action stacking state of the clutter, which is then used as a transition model within a Monte Carlo Tree Search (MCTS) to sequence sliding and supporting actions.",
-        "core_challenge": "Existing single-arm methods fail in dense clutter because moving a target object often triggers a chain reaction that causes the entire pile to collapse or damages surrounding items.",
-        "key_assumption": "Removes the assumption that clutter must be cleared via sequential picking or pushing, instead treating the pile as a dynamic system that can be stabilized during extraction.",
-        "result": "Reduced the total number of motion sequences and the displacement of surrounding objects compared to single-arm retrieval methods across multiple cluttered warehouse scenarios.",
-        "what_it_enables": "High-density warehouse picking without the need for time-consuming pre-clearing of the entire workspace.",
+        "hook": "Instead of forcing a robot to navigate before every single pick-and-place action, this system automatically groups objects into shared symbolic locations to minimize redundant travel.",
+        "what_it_does": "Enables autonomous discovery of efficient task-level abstractions in complex mobile manipulation environments without manual domain engineering.",
+        "key_idea": "It treats symbolic state space construction as an optimization problem where the objective is to maximize the number of manipulation actions per navigation step by grounding symbolic locations to geometric clusters.",
+        "core_challenge": "Manual definition of symbolic state spaces often forces robots into inefficient, rigid navigation-manipulation cycles that fail to exploit the reachability of multiple objects from one position.",
+        "key_assumption": "Removes the requirement for domain experts to manually define symbolic locations, instead deriving them from the geometric feasibility of manipulation actions.",
+        "result": "Reduced navigation frequency by 40% in long-horizon pick-and-place tasks compared to standard TAMP planners that treat every object as a distinct symbolic location.",
+        "what_it_enables": "",
         "open_source": null,
-        "tldr": "The robot uses one hand to slide a target out while the other hand props up the pile."
+        "tldr": "Automatically clusters objects into symbolic locations to allow multi-task manipulation from a single navigation pose."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Bimanual Robot Planning for Extracting Objects from Clutter",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Picking Items from Dense Clutter",
-            "body": "Robots in warehouses struggle to pick specific items when they are tightly packed, as moving one object often causes the entire pile to collapse or items to be damaged.",
-            "detail": "Existing methods either push items aside or pick them one by one from the top, both of which are slow and inefficient.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "Bimanual Slide-and-Support Strategy",
-            "body": "The robot uses two arms simultaneously: one arm slides the target object out of the pile, while the other arm supports surrounding objects to keep the stack stable.",
-            "detail": "A neural network predicts how the clutter will shift during these movements, allowing the robot to anticipate potential collapses.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Monte Carlo Tree Search",
-            "body": "The robot uses a decision-making algorithm called Monte Carlo Tree Search to evaluate different sequences of sliding and supporting actions.",
-            "detail": "The goal is to find the sequence that extracts the target with the fewest motions and the least amount of disturbance to the surrounding items.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Efficiency and Stability",
-            "body": "Compared to single-arm approaches, this dual-arm method significantly reduced the total movement of surrounding objects and successfully extracted items from piles that previously caused failures.",
-            "detail": "The dual-arm approach prevented the pile collapse that frequently occurred when the robot attempted to move objects with only one arm.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "next",
-            "heading": "Future Scope and Refinement",
-            "body": "Future work will focus on testing the system with a wider variety of object shapes and improving the prediction model to handle objects that are tilted at steep angles.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Using two arms\u2014one to slide a target and one to support the pile\u2014allows robots to extract items from dense clutter without causing a collapse.",
-        "prerequisite_concepts": [
-          "Bimanual manipulation",
-          "Monte Carlo Tree Search",
-          "Neural networks for state prediction"
-        ]
-      }
-    },
-    {
-      "id": "81d28dc3",
-      "headline": "Humanoid robots perform high-kick maneuvers and single-leg balance using HuB",
-      "tags": [
-        "Humanoid Control",
-        "Reinforcement Learning",
-        "Motion Tracking",
-        "Balance Control"
-      ],
-      "research_theme": "Humanoid Balance Control",
-      "why_this_matters": "Achieving extreme balance is a fundamental requirement for humanoid robots to navigate complex, unstructured human environments effectively.",
-      "source": "CoRL",
-      "published": "2025-08-08",
-      "source_url": "https://openreview.net/forum?id=FCpYuGtN4j",
-      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/81d28dc3.jpg",
-      "image_is_fallback": false,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Robots usually fall when mimicking human motion because human reference data often violates the physical constraints of a rigid-body humanoid.",
-        "what_it_does": "A humanoid robot executes balance-intensive skills like single-leg standing and high-kicking by tracking human motion capture data while maintaining dynamic stability.",
-        "key_idea": "The system employs a hierarchical reinforcement learning structure that decouples motion tracking from a balance-aware residual controller, which modulates the center of mass to counteract tracking errors.",
-        "core_challenge": "Reinforcement learning agents struggle to track human reference motions when those motions contain kinematic inconsistencies that cause the robot to lose its center of mass.",
-        "key_assumption": "Removes the requirement for perfectly physically consistent reference data by allowing the controller to deviate from the reference motion to preserve balance.",
-        "result": "The humanoid successfully performs high kicks with the foot reaching 1.5 meters in height while maintaining a stable base, outperforming standard motion-tracking policies that collapse at 0.8 meters.",
-        "what_it_enables": "Humanoid robots can now perform dynamic, high-amplitude athletic movements without requiring manually cleaned or physically simulated reference datasets.",
-        "open_source": null,
-        "tldr": "HuB enables humanoids to perform high-kicks by prioritizing dynamic balance over exact tracking of imperfect human motion data."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Achieving Extreme Balance Control in Humanoid Robots",
+        "flow_title": "Optimizing Symbolic State Spaces for Mobile Manipulation Planning",
         "reading_time_seconds": 120,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Difficulty of Extreme Balance",
-            "body": "Humanoid robots struggle to perform tasks requiring precise balance, such as standing on one leg or executing high kicks. Current methods often fail when the robot's physical structure differs from the human motion being copied.",
-            "detail": "Instability arises from errors in the reference motion data and the gap between simulation and real-world physics.",
+            "heading": "Manual State Space Bottlenecks",
+            "body": "Robots rely on human experts to define symbolic locations for task planning, which is time-consuming and often inefficient for long-horizon tasks.",
+            "detail": "If a human defines every object as a separate location, the robot wastes time navigating to each one individually instead of grouping them.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "context",
+            "heading": "Task and Motion Planning (TAMP)",
+            "body": "TAMP systems must bridge the gap between high-level symbolic logic (e.g., 'pick up apple') and low-level continuous motion (e.g., joint trajectories).",
+            "detail": "The system must ensure that the high-level plan is actually physically possible for the robot to execute.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "idea",
+            "heading": "Dynamic Symbolic Location Grouping",
+            "body": "Instead of static definitions, the robot should compute its own symbolic locations by grouping nearby objects into single reachable areas.",
+            "detail": "This allows the robot to perform multiple manipulation actions from one navigation stop, similar to how a waiter serves multiple tables from one position.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "method",
+            "heading": "Geometric Grounding of Symbols",
+            "body": "The system calculates the optimal geometric coordinates that satisfy the reachability requirements for multiple objects simultaneously.",
+            "detail": "This process accounts for physical constraints like obstacle avoidance and the robot's specific reach envelope.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Reduced Navigation Frequency",
+            "body": "By optimizing the state space, the robot reduces the number of navigation actions required to complete a sequence of manipulation tasks.",
+            "detail": "The system successfully identifies clusters of objects that can be handled from a single base pose, minimizing travel time.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Efficient Long-Horizon Planning",
+            "body": "Automating the creation of symbolic state spaces allows robots to handle complex, multi-step tasks without constant manual re-programming.",
+            "detail": "This approach makes mobile manipulation systems more robust to real-world uncertainties in navigation and perception.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Robots can automatically group objects into symbolic locations to minimize navigation and improve efficiency in long-horizon manipulation tasks.",
+        "prerequisite_concepts": [
+          "Task and Motion Planning (TAMP)",
+          "Symbolic Logic",
+          "Robot Kinematics",
+          "Path Planning"
+        ]
+      }
+    },
+    {
+      "id": "a2f52385",
+      "headline": "Autonomous driving policy scales by replacing complex multi-objective rewards with route completion",
+      "tags": [
+        "Reinforcement Learning",
+        "Autonomous Driving",
+        "Reward Design",
+        "PPO"
+      ],
+      "research_theme": "Reinforcement Learning Planning",
+      "why_this_matters": "Moving beyond complex reward shaping is essential for scaling RL to real-world autonomous driving where simple, scalable objectives are needed for long-tail robustness.",
+      "source": "CoRL",
+      "published": "2025-08-08",
+      "source_url": "https://openreview.net/forum?id=1otaE496Vm",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/a2f52385.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Engineers have been over-engineering reward functions for years, but it turns out that simply telling a car to reach its destination is more effective than hand-tuning a dozen competing objectives.",
+        "what_it_does": "This approach enables researchers to scale reinforcement learning for driving by parallelizing data collection without the overhead of manual reward shaping.",
+        "key_idea": "The system replaces additive multi-component reward functions (which introduce local minima) with a singular route-completion objective, allowing the use of massive mini-batch sizes (16,384) in PPO to improve optimization stability.",
+        "core_challenge": "Complex, hand-tuned reward functions in autonomous driving create conflicting objectives that trap optimization in local minima when scaling to larger batch sizes.",
+        "key_assumption": "Removes the assumption that dense, multi-objective feedback is necessary for agents to learn complex reactive driving behaviors in traffic.",
+        "result": "Achieved a 33 point improvement on the Longest6v2 benchmark and 91 CLS on the Val14 benchmark, outperforming prior learning-based approaches.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Replacing complex multi-objective rewards with a single route-completion signal allows PPO to scale effectively in autonomous driving."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Scaling Autonomous Driving Policies with Simple Reward Design",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Reward Complexity Limits Scalability",
+            "body": "Autonomous driving models often use complex, multi-part reward functions to guide learning. These functions require manual tuning and often trap the model in local minima, preventing it from scaling to larger datasets.",
+            "detail": "Complex rewards combine factors like speed, orientation, and comfort, which creates conflicting objectives that are difficult for reinforcement learning algorithms to optimize.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "method",
-            "heading": "The HuB Control System",
-            "body": "The researchers created a system called HuB that cleans up reference motion data and trains the robot to prioritize balance during movement. It also includes training in simulation that accounts for sensor noise and unexpected physical forces.",
-            "detail": "This approach specifically addresses the morphological mismatch between human reference data and the robot's actual hardware.",
+            "heading": "Simplifying the Reward Function",
+            "body": "The researchers replaced complex, multi-component rewards with a single, simple objective: route completion. Infractions like collisions simply end the episode or reduce the completion score.",
+            "detail": "This approach removes the need to manually balance competing objectives, allowing the model to focus entirely on reaching the destination safely.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "experiment",
-            "heading": "Testing on Unitree G1",
-            "body": "The team tested the system on a Unitree G1 humanoid robot, tasking it with difficult poses like the 'Swallow Balance' and a high kick reaching over 1.5 meters.",
-            "detail": "They also subjected the robot to external physical disturbances, such as a forceful soccer-style strike, to test stability.",
+            "heading": "Large-Scale Training with PPO",
+            "body": "By using a simpler reward, the team successfully trained the model using a much larger mini-batch size of 16,384. This allowed them to process 300 million samples efficiently.",
+            "detail": "Larger mini-batches help the Proximal Policy Optimization (PPO) algorithm avoid getting stuck in local minima during the training process.",
             "has_number": true,
-            "number_callout": "1.5 meters"
+            "number_callout": "16,384 mini-batch size"
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Superior Stability Performance",
-            "body": "The HuB system successfully maintained balance during extreme poses and physical impacts, whereas all baseline methods failed to complete the tasks.",
-            "detail": "The robot remained upright even when hit with significant force, demonstrating high robustness.",
+            "heading": "Improved Driving Performance",
+            "body": "The new method, called CaRL, achieved a 33% performance improvement on the Longest6v2 benchmark. It also reached 91% route completion in complex, reactive traffic scenarios.",
+            "detail": "This performance surpasses all previous learning-based approaches for autonomous driving in the CARLA simulation environment.",
+            "has_number": true,
+            "number_callout": "33% performance improvement"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "A Path to Scalable Driving",
+            "body": "This research demonstrates that simpler reward designs are more effective for scaling autonomous driving models. It suggests that future efforts should focus on data scale rather than complex reward engineering.",
+            "detail": "The authors note that while this works in simulation, future work is required to bridge the gap to real-world vehicle deployment.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Using a single, simple reward for route completion allows autonomous driving models to scale effectively and outperform complex, multi-objective reward designs.",
+        "prerequisite_concepts": [
+          "Reinforcement Learning",
+          "Proximal Policy Optimization (PPO)",
+          "Reward Engineering",
+          "Autonomous Driving Benchmarks"
+        ]
+      }
+    },
+    {
+      "id": "7d378e3a",
+      "headline": "Diffusion-based autonomous driving planner using differentiable spatio-temporal occupancy cost volumes",
+      "tags": [
+        "Diffusion Planning",
+        "Autonomous Driving",
+        "Spatio-Temporal Guidance",
+        "Occupancy Grids"
+      ],
+      "research_theme": "Diffusion Planning",
+      "why_this_matters": "As diffusion models become standard for motion planning, learning how to provide safe, explicit guidance is the next frontier for reliable closed-loop deployment.",
+      "source": "IROS",
+      "published": "2026-06-24",
+      "source_url": "http://arxiv.org/abs/2606.26017v2",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/7d378e3a.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of treating safety as a sparse list of obstacles to avoid, this planner treats the entire driving environment as a continuous, differentiable cost landscape that actively pushes the diffusion process away from collisions.",
+        "what_it_does": "A motion planner for autonomous vehicles that generates trajectories by injecting dense, grid-based safety gradients directly into the denoising loop of a diffusion model.",
+        "key_idea": "It transforms time-varying occupancy probabilities into a differentiable spatio-temporal cost volume, allowing the diffusion sampling process to perform gradient-based optimization against dense spatial constraints.",
+        "core_challenge": "Existing diffusion planners rely on sparse, entity-centric geometric queries that fail to provide proactive steering in complex, dense urban traffic scenarios.",
+        "key_assumption": "Removes the reliance on sparse, instance-anchored avoidance, assuming instead that dense occupancy grids can be effectively used as differentiable cost landscapes for generative trajectory sampling.",
+        "result": "Outperforms imitation-learning planners on the nuPlan benchmark with improved safety-critical metrics and successful zero-shot transfer to the interPlan and DeepScenario datasets.",
+        "what_it_enables": "Generative motion planning that maintains strict safety and rule compliance without sacrificing the multi-modal behavior modeling capabilities of diffusion models.",
+        "open_source": null,
+        "tldr": "G2DP injects dense occupancy grid gradients into the diffusion denoising loop to enforce safety during trajectory generation."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Improving Autonomous Driving Safety with Grid-Guided Diffusion Planning",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Safety in Generative Planning",
+            "body": "Diffusion-based planners are great at predicting human-like driving behavior, but they often struggle to guarantee safety in complex, interactive urban traffic.",
+            "detail": "Current methods rely on sparse geometric checks, which fail to account for the full, dense environment surrounding the vehicle.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Spatio-Temporal Grid Guidance",
+            "body": "Instead of looking at individual objects, this method uses a Bird's-Eye-View (BEV) occupancy grid to represent the entire environment as a cost map.",
+            "detail": "This allows the planner to see the probability of obstacles at every point in space and time, creating a 'cost volume' that guides the trajectory generation.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Differentiable Cost Injection",
+            "body": "The system injects 'safety gradients' directly into the diffusion denoising process, steering the robot's planned path away from high-cost, dangerous areas.",
+            "detail": "By making the occupancy grid differentiable, the model can mathematically optimize the trajectory to stay within safe, low-cost regions during every step of the generation.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "State-of-the-Art Performance",
+            "body": "When tested on the nuPlan benchmark, this approach outperformed existing imitation-learning planners in safety-critical metrics and reactive robustness.",
+            "detail": "The model also showed strong zero-shot transfer capabilities, meaning it performed well on new, interactive datasets without needing extra training.",
+            "has_number": true,
+            "number_callout": "New SOTA among imitation-learning planners"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Robust Urban Navigation",
+            "body": "This research proves that dense, probabilistic maps can effectively enforce strict safety rules within flexible generative AI models.",
+            "detail": "This bridges the gap between the flexibility of machine learning and the reliability of traditional rule-based safety systems.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By using dense occupancy grids to guide diffusion models, robots can plan safer, more robust trajectories in complex urban environments.",
+        "prerequisite_concepts": [
+          "Diffusion models",
+          "Bird's-Eye-View (BEV) representation",
+          "Motion planning",
+          "Differentiable programming"
+        ]
+      }
+    },
+    {
+      "id": "79323780",
+      "headline": "Generating synthetic robot training data from fine-tuned video world models",
+      "tags": [
+        "Video World Models",
+        "Synthetic Data",
+        "Visuomotor Policies",
+        "Robot Foundation Models"
+      ],
+      "research_theme": "Video World Models",
+      "why_this_matters": "Leveraging generative world models to synthesize robot data offers a promising path to overcome the scarcity of high-quality, diverse real-world robotic datasets.",
+      "source": "CoRL",
+      "published": "2025-08-08",
+      "source_url": "https://openreview.net/forum?id=3CnxNqmklv",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/79323780.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of teleoperating robots for thousands of hours, this system hallucinates realistic robot trajectories from video world models to train policies at 333x the scale of human demonstrations.",
+        "what_it_does": "Generates synthetic video-action sequences by fine-tuning video generative models on robot-specific embodiments and extracting pseudo-actions via inverse dynamics models to train visuomotor policies.",
+        "key_idea": "Treats video world models as synthetic data generators rather than real-time planners, using their learned priors for physical reasoning and language grounding to create 'neural trajectories'.",
+        "core_challenge": "Collecting high-quality teleoperation data is prohibitively expensive and labor-intensive, while simulation-based data often suffers from a significant sim-to-real gap.",
+        "key_assumption": "Removes the reliance on manual human demonstrations by assuming that video world models possess sufficient physical priors to synthesize functional robot motion when fine-tuned on target embodiments.",
+        "result": "Achieved log-linear performance improvements on the RoboCasa benchmark by scaling synthetic data up to 333x and improved real-world success rates across nine tasks on Fourier GR1, Franka Emika, and SO-100 robots.",
+        "what_it_enables": "Rapid scaling of robot learning pipelines without additional human teleoperation, accelerating the development of general-purpose visuomotor policies for diverse embodiments.",
+        "open_source": "https://research.nvidia.com/labs/gear/dreamgen",
+        "tldr": "Fine-tune video generative models to hallucinate robot trajectories and extract pseudo-actions for training policies at massive scale."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Generating Synthetic Robot Training Data with Video Models",
+        "reading_time_seconds": 120,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "High Cost of Robot Data",
+            "body": "Training robots currently requires massive amounts of human-collected teleoperation data, which is expensive, slow to gather, and difficult to scale.",
+            "detail": "Simulation-based data is an alternative, but it often fails to transfer to real-world robots due to the 'sim-to-real' gap.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Video Models as Data Generators",
+            "body": "Instead of using video models for real-time planning, this method uses them to generate massive amounts of synthetic, realistic robot training videos.",
+            "detail": "The model is fine-tuned on a specific robot's movements, then prompted to create new video sequences of tasks.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Extracting Actions from Video",
+            "body": "Since video models only output visual frames, the system uses an inverse dynamics model to calculate the robot actions required to produce those movements.",
+            "detail": "These video-action pairs are combined into 'neural trajectories' used to train the robot's control policy.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "experiment",
+            "heading": "Scaling Synthetic Data",
+            "body": "The researchers tested the pipeline by generating 333 times more data than the original human demonstrations for a household task benchmark.",
+            "detail": "They also validated the method on three different physical robot platforms performing tasks like folding towels and using hammers.",
+            "has_number": true,
+            "number_callout": "333x increase in training data"
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Improved Success Rates",
+            "body": "The synthetic data consistently improved robot performance, with success rates increasing from 37% to higher levels across all tested robot platforms.",
+            "detail": "Performance improved in a log-linear fashion as the volume of synthetic neural trajectories increased.",
+            "has_number": true,
+            "number_callout": "37% baseline success rate"
+          },
+          {
+            "id": 6,
+            "type": "limitation",
+            "heading": "High Computational Requirements",
+            "body": "Generating the training dataset is extremely compute-intensive, requiring 54 hours of processing time on 1500 high-end GPUs.",
+            "detail": "Future work is needed to reduce these costs and automate the selection of starting frames for the video generation process.",
+            "has_number": true,
+            "number_callout": "54 hours on 1500 GPUs"
+          },
+          {
+            "id": 7,
+            "type": "impact",
+            "heading": "Scaling Robot Learning",
+            "body": "This approach provides a path to training robots on diverse, complex tasks without needing to manually record every single movement.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Video world models can generate high-quality synthetic data to train robots, significantly reducing the need for manual human demonstrations.",
+        "prerequisite_concepts": [
+          "Visuomotor policies",
+          "Teleoperation",
+          "Inverse dynamics",
+          "Sim-to-real gap"
+        ]
+      }
+    },
+    {
+      "id": "c52aac51",
+      "headline": "LiDAR semantic segmentation using NeRF-based cross-modal distillation from 2D foundation models",
+      "tags": [
+        "LiDAR Semantic Segmentation",
+        "NeRF",
+        "Self-Supervised Learning",
+        "Multi-modal Perception"
+      ],
+      "research_theme": "LiDAR Semantic Segmentation",
+      "why_this_matters": "Reducing reliance on expensive manual annotations via multi-modal self-supervision is key to deploying perception systems across diverse, unlabelled environments.",
+      "source": "IROS",
+      "published": "2024-11-05",
+      "source_url": "http://arxiv.org/abs/2411.02969v1",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/c52aac51.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of manually labeling millions of LiDAR points, this system uses a NeRF to project 2D semantic knowledge from foundation models into 3D space, effectively teaching the robot to 'see' labels in the dark.",
+        "what_it_does": "A LiDAR semantic segmentation model generates dense 3D semantic labels by distilling knowledge from the Segment Anything Model (SAM) through a NeRF-based multi-modal self-supervision pipeline.",
+        "key_idea": "It uses a Neural Radiance Field (NeRF) to render semantic labels from 2D camera images into 3D space, which resolves the parallax errors inherent in simple perspective projection when aligning LiDAR and camera sensors.",
+        "core_challenge": "Existing projection methods fail because the physical offset between LiDAR and camera sensors creates parallax artifacts, leading to misaligned semantic labels that confuse the training process.",
+        "key_assumption": "Removes the assumption that LiDAR point clouds must be manually annotated, instead relying on the assumption that 2D foundation models can provide consistent semantic priors across multiple viewpoints.",
+        "result": "Achieved competitive performance improvements on the nuScenes, SemanticKITTI, and ScribbleKITTI benchmarks using only unlabeled LiDAR scans and synchronized camera images.",
+        "what_it_enables": "Autonomous driving perception systems can now scale to new environments without requiring expensive, human-curated 3D point cloud datasets.",
+        "open_source": null,
+        "tldr": "Distilling 2D foundation model masks into 3D via NeRF enables accurate LiDAR segmentation without manual point cloud labeling."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Using NeRF to Improve LiDAR Semantic Segmentation",
+        "reading_time_seconds": 105,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "High Cost of LiDAR Labeling",
+            "body": "Training robots to understand 3D environments requires massive amounts of labeled LiDAR data, which is expensive and time-consuming for humans to annotate.",
+            "detail": "Fully-supervised models perform well in specific cities but struggle to generalize to new environments without fresh, costly manual labels.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "context",
+            "heading": "Leveraging 2D Foundation Models",
+            "body": "Autonomous vehicles already collect synchronized camera images alongside LiDAR scans. Powerful 2D models like the Segment-Anything Model (SAM) can automatically label images, but transferring this knowledge to 3D LiDAR data is difficult.",
+            "detail": "Simple projection methods fail because cameras and LiDAR sensors are in different physical locations, causing parallax errors (misalignment between 2D and 3D views).",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "NeRF-Based Self-Supervision",
+            "body": "The researchers use Neural Radiance Fields (NeRF) to create a 3D representation that aligns camera images with LiDAR points, effectively bridging the gap between 2D and 3D data.",
+            "detail": "By rendering semantic labels from the NeRF model, the system creates 'pseudo-labels' for the LiDAR points without needing human input.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Improved Segmentation Accuracy",
+            "body": "The model successfully generates reliable labels for LiDAR data, outperforming traditional projection methods that suffer from sensor misalignment.",
+            "detail": "The system shows the strongest performance gains on the nuScenes dataset, where multi-view cameras provide full 360-degree coverage.",
+            "has_number": true,
+            "number_callout": "360-degree coverage"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Scalable Autonomous Perception",
+            "body": "This approach allows robots to learn from unlabeled data, significantly reducing the need for human-annotated datasets in new driving environments.",
+            "detail": "This method can be combined with existing LiDAR-only training techniques to further boost performance across diverse global scenarios.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By using NeRF to align camera images with LiDAR, robots can learn to segment 3D environments using only unlabeled data, bypassing the need for expensive human annotations.",
+        "prerequisite_concepts": [
+          "LiDAR pointclouds",
+          "Semantic segmentation",
+          "Neural Radiance Fields (NeRF)",
+          "Self-supervised learning"
+        ]
+      }
+    },
+    {
+      "id": "71a9fa64",
+      "headline": "Robotic branch manipulation using proprioceptive contact feedback instead of vision",
+      "tags": [
+        "Contact-Aware Policy Learning",
+        "Deformable Manipulation",
+        "Sim-to-Real Transfer",
+        "Proprioceptive Control"
+      ],
+      "research_theme": "Contact-Aware Policy Learning",
+      "why_this_matters": "Interacting with deformable objects in cluttered environments remains an open challenge, and this work provides a framework for handling complex contact dynamics under occlusion.",
+      "source": "CoRL",
+      "published": "2024-09-05",
+      "source_url": "https://openreview.net/forum?id=zr2GPi3DSb",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/71a9fa64.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Cameras fail in dense foliage, so this robot ignores the leaves entirely and navigates branches by feeling the resistance of the wood.",
+        "what_it_does": "A robotic manipulator performs gentle branch interaction and navigation in dense, occluded forest environments using only proprioceptive force-torque feedback.",
+        "key_idea": "The system uses a contact-aware policy trained via reinforcement learning on procedurally generated L-system (Lindenmayer system) forest models to map tactile force signatures directly to motor torques.",
+        "core_challenge": "Vision-based manipulation systems collapse in natural environments due to foliage occlusion, variable lighting, and the inability to visually assess the non-uniform rigidity of deformable plant structures.",
+        "key_assumption": "Removes the assumption that visual perception is necessary for navigating or manipulating complex, deformable natural structures.",
+        "result": "Achieved a 92% success rate in branch interaction tasks within simulated dense foliage, significantly outperforming vision-based planners which drop to 5% success under full occlusion.",
+        "what_it_enables": "Autonomous agricultural robots can now operate in dense, unmanaged outdoor environments where visual sensors are rendered useless by occlusion.",
+        "open_source": null,
+        "tldr": "Robot ignores occluding leaves and navigates branches by learning to interpret tactile force feedback instead of visual data."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Gentle Manipulation of Deformable Tree Branches",
+        "reading_time_seconds": 110,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Vision Fails in Dense Foliage",
+            "body": "Robots struggle to manipulate tree branches because cameras are blocked by leaves and changing outdoor lighting makes visual tracking unreliable.",
+            "detail": "Standard vision-based systems drop from 75% success to 5% when targets are fully hidden by foliage.",
+            "has_number": true,
+            "number_callout": "5% success rate in full occlusion"
+          },
+          {
+            "id": 2,
+            "type": "limitation",
+            "heading": "Complexity of Natural Deformables",
+            "body": "Tree branches have complex, non-linear shapes that are difficult to model mathematically, making traditional rigid-body planning ineffective.",
+            "detail": "Stress-induced deformation is non-uniform, meaning the branch reacts differently depending on where and how hard the robot touches it.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "idea",
+            "heading": "Prioritizing Contact Over Avoidance",
+            "body": "Instead of trying to avoid all contact, the robot is trained to embrace inevitable contact while minimizing damage to the plant and stress on the arm.",
+            "detail": "The approach uses deep reinforcement learning (a method where the robot learns by trial and error) to handle contact-rich tasks.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "method",
+            "heading": "Procedural Simulation of Forests",
+            "body": "The team created a virtual forest using L-systems (a mathematical way to model plant growth) to train the robot in a realistic, simulated environment.",
+            "detail": "This allows the robot to practice thousands of times without damaging real trees or breaking hardware.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
+            "type": "method",
+            "heading": "Domain Randomization for Transfer",
+            "body": "To bridge the gap between simulation and the real world, the researchers varied physical parameters like branch stiffness and friction during training.",
+            "detail": "This forces the robot to learn a robust policy that works even if the real-world physics don't perfectly match the simulation.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
             "type": "impact",
-            "heading": "Advancing Humanoid Agility",
-            "body": "This work proves that robots can learn complex, balance-heavy human movements without needing perfect motion data or identical physical proportions.",
-            "detail": "This brings humanoid robots closer to performing dynamic, real-world tasks that require high levels of physical stability.",
+            "heading": "Sustainable Agricultural Automation",
+            "body": "This research enables robots to perform delicate tasks like harvesting or pruning in messy, natural environments without needing perfect visual data.",
+            "detail": "By reducing reliance on cameras, robots can operate more reliably in dense, outdoor settings where labor is scarce.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By refining motion data and training for robustness, humanoid robots can now perform extreme balance tasks that were previously impossible.",
+        "key_takeaway": "By training robots to handle contact through simulated, randomized environments, we can automate delicate tasks in forests where vision-based systems fail.",
+        "prerequisite_concepts": [
+          "Deep reinforcement learning",
+          "Sim-to-real transfer",
+          "Proprioception",
+          "Domain randomization"
+        ]
+      }
+    },
+    {
+      "id": "8de41929",
+      "headline": "Learning latent automata from expert videos for continuous-space task planning",
+      "tags": [
+        "Task Planning",
+        "Latent Automata",
+        "Deterministic Finite Automata",
+        "Sequence Modeling"
+      ],
+      "research_theme": "Task Planning Latent Models",
+      "why_this_matters": "Learning latent task representations directly from observations is a fundamental step toward robots that can decompose complex instructions without explicit symbolic priors.",
+      "source": "IROS",
+      "published": "2025-03-11",
+      "source_url": "http://arxiv.org/abs/2503.08090v2",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/8de41929.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of manually coding symbolic rules, this system treats robot task execution as a learnable finite-state machine hidden inside a neural network's latent space.",
+        "what_it_does": "LATMOS decomposes complex tasks into sequences of latent states and transitions by observing expert demonstrations, enabling a robot to plan and verify its own execution in continuous, high-dimensional spaces.",
+        "key_idea": "It maps high-dimensional observations into a latent space structured as a Deterministic Finite Automaton (DFA), where the transition dynamics are learned from positive demonstration sequences rather than predefined symbolic logic.",
+        "core_challenge": "Existing task planning methods require manual engineering of symbolic states, which fail to capture the nuance of raw visual data or continuous robot motion.",
+        "key_assumption": "Removes the requirement for pre-defined symbolic propositions, assuming instead that task structure can be recovered from the latent topology of expert demonstration sequences.",
+        "result": "Successfully generalized across diverse domains ranging from formal LTL-specified tasks to real-world video-based demonstrations, outperforming traditional symbolic planning in continuous environments.",
+        "what_it_enables": "Enables robots to perform formal model checking and heuristic-guided planning directly on visual input, bridging the gap between deep learning and classical automata theory.",
+        "open_source": null,
+        "tldr": "LATMOS learns a latent finite-state machine from expert videos to plan tasks without manual symbolic engineering."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Learning Robot Task Models from Observation Sequences",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "The Robot Task Planning Gap",
+            "body": "Robots struggle to break down complex goals into simple steps while interpreting raw sensor data like images. Traditional methods require manual engineering of symbolic rules, which fails in messy, real-world environments.",
+            "detail": "Existing methods rely on discrete logic that cannot handle the high-dimensional, continuous nature of modern robot sensor data.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "context",
+            "heading": "Automata and Neural Networks",
+            "body": "Automata (mathematical models of state machines) are great for verifying task steps, while neural networks are great at processing images. This research aims to bridge these two worlds.",
+            "detail": "The goal is to create a 'latent' (hidden) representation that acts like an automaton but learns from continuous data.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "The LATMOS Approach",
+            "body": "LATMOS combines a neural network encoder with a sequence model to learn task structures from demonstrations. It maps raw observations into a continuous latent space that mimics the behavior of a finite state machine.",
+            "detail": "This allows the robot to understand its current progress in a task without needing pre-defined symbolic labels.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Generalization Across Domains",
+            "body": "The model successfully generalized across different scenarios, ranging from formal logic-based tasks to real-world video demonstrations.",
+            "detail": "The learned latent space provides effective heuristic guidance for A* search, allowing for efficient path planning.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "next",
+            "heading": "Future Interpretability and Language",
+            "body": "Future work will focus on making the latent space more human-readable and aligning it with large language models (LLMs).",
+            "detail": "Connecting these latent states to language models could allow humans to guide robots using natural language instructions.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "LATMOS enables robots to learn and plan complex tasks by automatically creating a latent state machine from raw observation data.",
+        "prerequisite_concepts": [
+          "Deterministic Finite Automata (DFA)",
+          "Latent space representation",
+          "A* search algorithm",
+          "Sequence modeling"
+        ]
+      }
+    },
+    {
+      "id": "e60351a4",
+      "headline": "Mobile robots navigate dense crowds by treating human trajectory predictions as conformal uncertainty sets",
+      "tags": [
+        "Crowd Navigation",
+        "Adaptive Conformal Inference",
+        "Constrained Reinforcement Learning",
+        "Out-of-Distribution Robustness"
+      ],
+      "research_theme": "Safe Crowd Navigation",
+      "why_this_matters": "Quantifying uncertainty in human behavior is essential for building navigation policies that remain safe under the distribution shifts common in real-world human-robot interaction.",
+      "source": "CoRL",
+      "published": "2025-08-08",
+      "source_url": "https://openreview.net/forum?id=FdgtV9mO6j",
+      "image_url": "https://cmubvkezgzmyybblkeum.supabase.co/storage/v1/object/public/roboscope-images/e60351a4.jpg",
+      "image_is_fallback": false,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "The robot stops blindly trusting its own trajectory predictions and instead treats them as statistical guesses, adjusting its caution based on how much the human's behavior deviates from the training data.",
+        "what_it_does": "Enables the deployment of learning-based navigation agents in unpredictable, real-world environments where human behavior is non-stationary and difficult to model perfectly.",
+        "key_idea": "Adaptive Conformal Inference (a statistical method for constructing prediction intervals with guaranteed coverage) quantifies the reliability of human motion models, allowing the robot to dynamically adjust its safety margins when predictions become unreliable.",
+        "core_challenge": "Reinforcement learning policies for crowd navigation suffer from catastrophic performance drops when human dynamics in the real world deviate from the specific crowd behaviors seen during training.",
+        "key_assumption": "Removes the assumption that human trajectory predictions are ground-truth signals, instead treating them as stochastic inputs with quantifiable error bounds.",
+        "result": "Maintained stable navigation performance across three distinct out-of-distribution shifts\u2014velocity variations, policy changes, and transitions to group dynamics\u2014where standard RL baselines failed.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "The robot uses conformal uncertainty to treat human motion predictions as statistical intervals rather than fixed paths."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Improving Robot Safety in Crowds Using Uncertainty Estimation",
+        "reading_time_seconds": 110,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Robot Failure in New Environments",
+            "body": "Robots trained with reinforcement learning often fail when they encounter crowds that behave differently than their training data (out-of-distribution).",
+            "detail": "These robots overfit to specific crowd patterns, making them unsafe when human movement changes unexpectedly.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Using Uncertainty as a Guide",
+            "body": "Instead of blindly trusting trajectory predictions, the robot should measure how uncertain it is about where people will move.",
+            "detail": "By quantifying uncertainty, the robot can adjust its behavior to be more cautious when predictions are unreliable.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Adaptive Conformal Inference",
+            "body": "The system uses a statistical technique called Adaptive Conformal Inference (ACI) to generate reliable uncertainty bounds for human movement.",
+            "detail": "ACI dynamically updates these bounds to ensure the robot remains safe even if the crowd's behavior shifts.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "experiment",
+            "heading": "Testing Against Distribution Shifts",
+            "body": "The researchers tested the robot in three challenging scenarios: changing pedestrian speeds, different navigation policies, and group-level movement transitions.",
+            "detail": "These tests simulate real-world shifts that typically cause standard reinforcement learning models to crash or freeze.",
+            "has_number": true,
+            "number_callout": "3 representative scenarios"
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Robust Navigation Performance",
+            "body": "The robot maintained stable navigation across all tested scenarios, successfully avoiding collisions where standard models failed.",
+            "detail": "Real-world trials confirmed that the uncertainty-aware policy effectively adapts to unpredictable human dynamics.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "next",
+            "heading": "Future Perception Upgrades",
+            "body": "The team plans to integrate cameras and better sensors to handle complex obstacles and reduce errors caused by limited perception.",
+            "detail": "Future work will also explore using larger models to further reduce performance drops in extreme, unseen environments.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By explicitly reasoning about prediction uncertainty, robots can navigate safely in crowds even when human behavior deviates from training data.",
         "prerequisite_concepts": [
           "Reinforcement learning",
-          "Sim-to-real transfer",
-          "Robot kinematics"
+          "Trajectory prediction",
+          "Uncertainty quantification"
         ]
       }
     }
