@@ -11,6 +11,9 @@ LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini")
 GOOGLE_API_KEY    = os.environ["GOOGLE_API_KEY"]
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 
+OPENREVIEW_USERNAME = os.environ.get("OPENREVIEW_USERNAME", "")
+OPENREVIEW_PASSWORD = os.environ.get("OPENREVIEW_PASSWORD", "")
+
 SUPABASE_URL         = os.environ["SUPABASE_URL"]
 SUPABASE_KEY         = os.environ["SUPABASE_KEY"]
 SUPABASE_SERVICE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
@@ -41,8 +44,8 @@ CONFERENCE_REGISTRY = {
         "field": "robotics",
     },
     "RSS": {
-        "access": "openreview",
-        "venue_id": "roboticsconference.org/RSS/{year}/Conference",
+        "access": "arxiv",
+        "arxiv_keywords": ["Robotics: Science and Systems"],
         "tier": 1,
         "field": "robotics",
     },
@@ -105,6 +108,9 @@ PAPERS_PER_DAY = int(os.environ.get("ROBOSCOPE_PAPERS_PER_DAY", "10"))
 
 # Candidates fetched per conference per run — fetch wide, dedup narrows it down
 PAPERS_PER_CONFERENCE = int(os.environ.get("ROBOSCOPE_PAPERS_PER_CONF", "50"))
+
+# Minimum new papers guaranteed per conference per run — triggers deeper re-fetch
+MIN_NEW_PER_CONFERENCE = int(os.environ.get("ROBOSCOPE_MIN_NEW_PER_CONF", "5"))
 
 # Backward-compat alias used by CuratorAgent — fetch 3× the daily target as candidates
 TOP_N_ARTICLES = PAPERS_PER_DAY * 3
