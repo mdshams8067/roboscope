@@ -10,7 +10,7 @@ RoboScope targets the problem of keeping up with conference-accepted research ac
 
 **Five agents run in sequence every 24 hours:**
 
-1. **SourceWatcher** — fetches accepted papers from a configurable conference registry. arXiv conferences (ICRA, IROS) are queried using the `co:` comment field so only papers that explicitly declare conference acceptance are returned. OpenReview conferences (RSS, CoRL) are queried directly via the OpenReview API for accepted submissions. Every paper is deduplicated against a SQLite database — a paper published once is never surfaced again.
+1. **SourceWatcher** — fetches accepted papers from a configurable conference registry. arXiv conferences (ICRA, IROS, RSS) are queried using the `co:` comment field so only papers that explicitly declare conference acceptance are returned. OpenReview conferences (CoRL) are queried directly via the authenticated OpenReview API for accepted submissions. Every paper is deduplicated against a SQLite database — a paper published once is never surfaced again.
 
 2. **CuratorAgent** — selects papers via random round-robin across conferences: each conference pool is shuffled independently, then one paper is taken from each conference before any gets a second slot. This guarantees every active conference appears in every feed. Conference acceptance is the quality filter — no LLM scoring is applied. After selection, a single LLM call labels each chosen paper with a `research_theme` and a `why_this_matters` sentence written for an early researcher.
 
@@ -27,7 +27,7 @@ The React frontend (Vite, dark theme, no CSS framework) reads the JSON and rende
 ## Architecture
 
 ```
-ICRA / IROS          RSS / CoRL
+ICRA / IROS / RSS        CoRL
 (arXiv co: search)   (OpenReview API)
          \                  /
           ▼                ▼
@@ -98,6 +98,7 @@ Set `LLM_PROVIDER=gemini` (default) or `LLM_PROVIDER=anthropic` in your `.env`.
 - Node.js 18+
 - A Google AI Studio account (free): https://aistudio.google.com
 - A Supabase project (free tier works): https://supabase.com
+- An OpenReview account (free): https://openreview.net — required for CoRL paper fetching
 - Optional: Anthropic API key if you want `LLM_PROVIDER=anthropic`
 
 ### 1. Clone and configure
@@ -166,6 +167,8 @@ Go to your repo → **Settings** → **Secrets and variables** → **Actions** �
 | `GOOGLE_API_KEY` | Your Google AI Studio key |
 | `LLM_PROVIDER` | `gemini` |
 | `GEMINI_TEXT_MODEL` | `gemini-2.5-flash` |
+| `OPENREVIEW_USERNAME` | Your OpenReview account email |
+| `OPENREVIEW_PASSWORD` | Your OpenReview account password |
 | `SUPABASE_URL` | Your Supabase project URL |
 | `SUPABASE_KEY` | Your Supabase anon key |
 | `SUPABASE_SERVICE_KEY` | Your Supabase service role key |
@@ -206,7 +209,7 @@ The pipeline now runs daily at midnight UTC without manual intervention.
 | `GEMINI_TEXT_MODEL` | `gemini-2.5-flash` | Gemini model for all text tasks |
 | `ANTHROPIC_TEXT_MODEL` | `claude-sonnet-4-5` | Anthropic model for all text tasks |
 | `ROBOSCOPE_CONFERENCES` | `ICRA,IROS,RSS,CoRL` | Comma-separated list from the conference registry |
-| `ROBOSCOPE_PAPERS_PER_DAY` | `5` | Papers published to feed.json per run |
+| `ROBOSCOPE_PAPERS_PER_DAY` | `10` | Papers published to feed.json per run |
 | `ROBOSCOPE_PAPERS_PER_CONF` | `50` | Candidates fetched per conference per run |
 | `ROBOSCOPE_START_YEAR` | `2022` | Earliest paper year eligible for the pool |
 
