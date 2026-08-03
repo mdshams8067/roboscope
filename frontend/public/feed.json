@@ -1,685 +1,752 @@
 {
-  "generated_at": "2026-08-02T02:42:07.940707+00:00",
+  "generated_at": "2026-08-03T02:42:43.086809+00:00",
   "article_count": 10,
   "articles": [
     {
-      "id": "1398836a",
-      "headline": "T3 transformer architecture learns universal tactile representations across heterogeneous sensor geometries",
+      "id": "2eed1d2a",
+      "headline": "Quadruped locomotion controller optimizes worst-case stability against state-dependent external force disturbances",
       "tags": [
-        "Tactile Representation Learning",
-        "Masked Autoencoding",
-        "Multi-Sensor Fusion",
-        "Transfer Learning"
+        "H-infinity Control",
+        "Robust Locomotion",
+        "Minimax Optimization",
+        "Disturbance Rejection"
       ],
-      "research_theme": "Tactile Representation Learning",
-      "why_this_matters": "Standardizing tactile features across heterogeneous sensors is critical for building general-purpose robotic touch models that don't require retraining for every new hardware setup.",
+      "research_theme": "Legged Locomotion",
+      "why_this_matters": "This paper addresses the challenge of state-dependent disturbance rejection, a critical step toward deploying legged robots in unpredictable, real-world environments.",
       "source": "CoRL",
       "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=KXsropnmNI",
-      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
+      "source_url": "https://openreview.net/forum?id=uMZ2jnZUDX",
+      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Tactile sensors are so physically diverse that a model trained on a GelSight cannot usually interpret data from a DIGIT, yet this transformer architecture learns a shared latent space for both.",
-        "what_it_does": "A transformer-based model extracts unified feature representations from raw tactile images captured by physically distinct sensors like GelSight and DIGIT to perform downstream manipulation tasks.",
-        "key_idea": "A shared trunk transformer architecture processes heterogeneous tactile inputs by mapping diverse sensor geometries into a common latent manifold through masked autoencoding.",
-        "core_challenge": "Existing tactile models fail because sensor form factors, lighting conditions, and contact modalities are highly specific, preventing the reuse of learned features across different hardware.",
-        "key_assumption": "Removes the assumption that tactile representations must be learned from scratch for every new sensor or specific contact geometry.",
-        "result": "Achieved a 15% improvement in sample efficiency on downstream manipulation tasks compared to sensor-specific models when evaluated across the GelSight and DIGIT sensor platforms.",
-        "what_it_enables": "Pre-training large-scale tactile models on aggregated, multi-sensor datasets becomes viable, accelerating the development of general-purpose robotic touch.",
+        "hook": "Instead of training against random pushes, this controller treats the environment as an adversarial agent that actively seeks the robot's most vulnerable state.",
+        "what_it_does": "A quadruped robot maintains balance on uneven terrain by solving a minimax optimization problem that calculates the most destabilizing force vector for any given robot pose.",
+        "key_idea": "It integrates H-infinity control (a robust control method that minimizes the impact of worst-case disturbances on system output) into a reinforcement learning loop to ensure stability against state-dependent perturbations.",
+        "core_challenge": "Standard neural policies fail because they train against fixed-distribution force noise, ignoring that a robot's sensitivity to a push changes drastically depending on its current joint configuration and gait phase.",
+        "key_assumption": "Removes the assumption that external disturbances are independent of the robot's state, instead modeling the disturbance as a function of the robot's current configuration.",
+        "result": "Maintained stability under external force impulses up to 150N in simulation, outperforming standard PPO-based policies that collapse at 80N.",
+        "what_it_enables": "Deployment of legged robots in high-stakes environments where worst-case disturbance rejection is more critical than average-case performance.",
         "open_source": null,
-        "tldr": "T3 uses a shared transformer trunk to unify tactile data from different sensors into one transferable feature space."
+        "tldr": "Locomotion policy trained against an adversarial force model that targets the robot's specific state-dependent vulnerabilities."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Standardizing Tactile Sensing Across Diverse Robot Hardware",
+        "flow_title": "Robust Quadruped Locomotion via Adversarial H-Infinity Control",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Fragmented Tactile Sensor Data",
-            "body": "Robots use many different types of touch sensors, but each has a unique shape and data format. This makes it impossible to share learning models between different robot hands.",
-            "detail": "Tactile sensors are highly heterogeneous, meaning a model trained for one sensor rarely works on another.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "Shared Transformer Architecture",
-            "body": "The researchers created a shared transformer model that uses sensor-specific encoders to process raw data and task-specific decoders to perform actions.",
-            "detail": "This allows the system to extract common patterns of touch regardless of the physical sensor hardware used.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "data",
-            "heading": "Large-Scale Tactile Dataset",
-            "body": "The team built the Foundation Tactile (FoTa) dataset, which combines data from 13 different sensors and 11 distinct tasks into one unified format.",
-            "detail": "This is the largest tactile dataset available, containing over 3 million individual data points.",
-            "has_number": true,
-            "number_callout": "3 million data points"
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Manipulation Success",
-            "body": "In precision tasks like inserting tiny electronic pins, the model achieved a 25% higher success rate compared to models trained from scratch.",
-            "detail": "When compared to systems without any tactile sensing at all, the success rate was 53% higher.",
-            "has_number": true,
-            "number_callout": "25% higher success rate"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Universal Tactile Learning",
-            "body": "This approach allows robots to learn touch-based skills once and apply them across different hardware, significantly reducing the need for custom training data.",
-            "detail": "The code and models are open-sourced to encourage standardization across the robotics community.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By training on a massive, unified dataset, tactile models can now transfer their sense of touch across different robot sensors and tasks.",
-        "prerequisite_concepts": [
-          "Transformer architecture",
-          "Representation learning",
-          "Tactile sensing"
-        ]
-      }
-    },
-    {
-      "id": "ae052cae",
-      "headline": "Autonomous self-supervised data collection enables policy learning from a single demonstration",
-      "tags": [
-        "Imitation Learning",
-        "Self-Supervision",
-        "Autonomous Data Collection",
-        "Policy Learning"
-      ],
-      "research_theme": "Self-Supervised Imitation Learning",
-      "why_this_matters": "Reducing the reliance on manual data collection is essential for scaling robot learning to real-world environments where human supervision is a major bottleneck.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=y8XkuQIrvI",
-      "image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "You can now train a complex manipulation policy using only one human demonstration and a single environment reset by letting the robot teach itself through self-supervised exploration.",
-        "what_it_does": "A robotic system autonomously collects its own training data by iteratively refining a policy through self-supervised interaction after observing a single human-provided demonstration.",
-        "key_idea": "The system employs a self-supervised data collection loop that generates synthetic transitions to augment the sparse initial demonstration, effectively bridging the gap between imitation and autonomous exploration.",
-        "core_challenge": "Imitation learning typically demands massive human-annotated datasets or frequent environment resets, both of which are prohibitively expensive and logistically difficult in real-world deployment.",
-        "key_assumption": "Removes the requirement for large-scale human demonstration datasets by substituting them with a self-supervised autonomous data generation process.",
-        "result": "Enables successful policy execution in manipulation tasks using only one demonstration and one environment reset, significantly reducing the human labor cost compared to traditional imitation learning.",
-        "what_it_enables": "Rapid deployment of robotic policies in unstructured environments where human interaction is limited or costly.",
-        "open_source": null,
-        "tldr": "MILES replaces massive human demonstration datasets with autonomous self-supervised exploration to learn policies from a single example."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Autonomous Data Collection for Efficient Imitation Learning",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "High Cost of Data Collection",
-            "body": "Training robots via imitation learning usually requires humans to provide many demonstrations or manually reset the environment after every attempt.",
-            "detail": "This manual labor makes scaling robot learning to new tasks slow and expensive.",
+            "heading": "Limitations of Current Robustness Training",
+            "body": "Robots often fail when pushed by unexpected forces because training data uses random, state-independent disturbances that do not accurately simulate real-world instability.",
+            "detail": "Existing methods sample forces from a fixed distribution, failing to identify the specific, worst-case scenarios that actually cause a robot to fall.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Self-Supervised Autonomous Collection",
-            "body": "The MILES approach allows a robot to collect its own training data by learning how to return to a starting state and follow a single human demonstration.",
-            "detail": "The robot uses self-guidance to practice the task without needing a human to reset the environment.",
+            "heading": "Adversarial Disturbance Modeling",
+            "body": "The researchers created a learnable 'adversary' that observes the robot's current state to generate the most effective, destabilizing forces possible.",
+            "detail": "This turns training into a competitive game where the robot learns to survive the most challenging pushes the adversary can invent.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Single Demonstration Policy Learning",
-            "body": "The system requires only one human demonstration and one environment reset to begin learning a functional policy.",
-            "detail": "The robot autonomously practices the task, building its own dataset from these self-guided attempts.",
-            "has_number": true,
-            "number_callout": "1 demonstration and 1 reset"
+            "heading": "H-Infinity Constraint Integration",
+            "body": "To keep training stable, the team added an H-infinity constraint, which mathematically limits the ratio between the robot's cost (instability) and the intensity of the disturbance.",
+            "detail": "This prevents the adversary from becoming too strong, ensuring the robot always has a recoverable path during the learning process.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 4,
             "type": "experiment",
-            "heading": "Real-World Contact Tasks",
-            "body": "Researchers tested the system on complex physical tasks, such as using a key to lock a door, which requires precise contact.",
-            "detail": "These tasks are notoriously difficult because they require fine motor control and physical interaction with objects.",
+            "heading": "Testing on Hind-Leg Locomotion",
+            "body": "The team tested the system on a quadruped robot performing standard walking and a much harder task: walking on only its two hind legs.",
+            "detail": "Hind-leg locomotion is highly unstable and serves as a rigorous test for the robot's ability to maintain balance under pressure.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
             "type": "result",
-            "heading": "Superior Performance Over Baselines",
-            "body": "MILES outperformed existing imitation learning methods that rely on reinforcement learning when both were restricted to a single demonstration.",
-            "detail": null,
+            "heading": "Improved Disturbance Rejection",
+            "body": "The robot successfully maintained balance against stronger and more strategic external forces compared to standard training methods.",
+            "detail": "The policy demonstrated superior recovery in both simulated environments and real-world physical trials.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 6,
             "type": "impact",
-            "heading": "Removing Human Bottlenecks",
-            "body": "This method enables robots to learn complex skills with minimal human input, significantly reducing the time and cost of training.",
-            "detail": "By automating the data collection process, robots can learn new tasks in the real world much faster.",
+            "heading": "Advancing Reliable Robot Mobility",
+            "body": "This approach allows robots to operate in unpredictable, complex environments by training them against intelligent, state-aware disturbances.",
+            "detail": "The release of the training and deployment code will allow other researchers to apply this robust control strategy to their own hardware.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots can learn complex manipulation tasks from just one human demonstration by autonomously collecting their own training data.",
+        "key_takeaway": "By training robots against an intelligent adversary that targets their specific weaknesses, they become significantly more stable in unpredictable environments.",
         "prerequisite_concepts": [
-          "Imitation learning",
           "Reinforcement learning",
-          "Policy gradient methods"
+          "Control theory",
+          "Adversarial training",
+          "Quadrupedal locomotion"
         ]
       }
     },
     {
-      "id": "f15fc591",
-      "headline": "Legged robots extend arm reach by coordinating base motion with end-effector control",
+      "id": "4cec04f6",
+      "headline": "TOP-Nav integrates terrain, obstacle, and proprioceptive feedback for legged robot navigation",
       "tags": [
-        "Whole-Body Control",
-        "Legged Loco-Manipulation",
-        "Mobile Manipulation",
-        "Visual Servoing"
+        "Legged Navigation",
+        "Proprioception",
+        "Terrain Awareness",
+        "Obstacle Avoidance"
       ],
-      "research_theme": "Legged Loco-Manipulation",
-      "why_this_matters": "Integrating whole-body control allows mobile robots to use their entire structure to extend their reach, a key step toward versatile robots that can operate in human-centric spaces.",
+      "research_theme": "Legged Navigation",
+      "why_this_matters": "By integrating terrain and proprioception, this work moves beyond simple obstacle avoidance toward robust navigation in complex, off-road environments.",
       "source": "CoRL",
       "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=cT2N3p1AcE",
-      "image_url": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
+      "source_url": "https://openreview.net/forum?id=O05tIQt2d5",
+      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "By treating the entire robot chassis as an extra degree of freedom, the arm's workspace effectively expands to cover the robot's entire reachable floor area.",
-        "what_it_does": "A quadrupedal robot with a mounted manipulator performs complex reaching and object-interaction tasks by simultaneously controlling its leg joints and arm joints using only visual inputs.",
-        "key_idea": "Uses a whole-body operational space controller that maps visual goals directly to joint-level commands, treating the base position as a dynamic extension of the manipulator's kinematic chain.",
-        "core_challenge": "Separating mobility from manipulation creates a restricted workspace where the arm can only reach objects directly in front of the robot, limiting utility in cluttered environments.",
-        "key_assumption": "Removes the assumption that the robot base must remain stationary during manipulation, allowing the legs to actively position the torso to optimize arm manipulability.",
-        "result": "Increased the effective manipulation workspace by 300% compared to fixed-base manipulation while maintaining sub-centimeter end-effector tracking accuracy.",
-        "what_it_enables": "",
+        "hook": "Legged robots often treat navigation as a simple path-finding problem, ignoring that the robot's own physical stability is a dynamic variable that changes with every step.",
+        "what_it_does": "A legged robot navigates complex, off-road environments by fusing terrain geometry, obstacle detection, and real-time proprioceptive state estimation into a unified control loop.",
+        "key_idea": "It employs a hierarchical architecture that couples a global path planner with a local controller that modulates velocity commands based on real-time estimates of terrain traversability and contact-based disturbance.",
+        "core_challenge": "Existing navigation systems fail because they treat obstacle avoidance as a purely geometric problem, ignoring the physical interaction forces that cause robots to slip or stumble on uneven terrain.",
+        "key_assumption": "Removes the assumption that navigation and locomotion control can be decoupled into independent modules, instead forcing the path planner to account for the robot's proprioceptive stability.",
+        "result": "Reduced the number of falls by 42% in high-slope, rocky terrain compared to standard geometric-only navigation planners.",
+        "what_it_enables": "Autonomous legged traversal of unstructured environments where the robot must actively balance its physical constraints against the geometry of the path.",
         "open_source": null,
-        "tldr": "Coordinating legs and arms allows robots to reach objects far outside the static range of the manipulator."
+        "tldr": "TOP-Nav fuses proprioceptive feedback with geometric path planning to prevent falls on challenging, uneven off-road terrain."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Coordinating Legs and Arms for Mobile Robot Manipulation",
+        "flow_title": "Improving Legged Robot Navigation Through Terrain and Proprioception",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Limited Robot Reach",
-            "body": "Legged robots with arms often treat mobility and manipulation as separate tasks. This limits the robot's reach because the arm can only move within its own fixed workspace.",
-            "detail": "By ignoring the legs during manipulation, the robot misses the chance to reposition its base to reach difficult objects.",
+            "heading": "Limited Navigation in Complex Terrain",
+            "body": "Legged robots often struggle in off-road environments because they focus only on avoiding obstacles rather than understanding the ground surface.",
+            "detail": "Existing systems fail when visual data is unreliable or when the terrain is physically difficult to traverse.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Whole-Body Control Strategy",
-            "body": "The robot should move its legs and arm simultaneously to extend its reach. This approach treats the entire robot as a single system rather than two separate parts.",
-            "detail": "This is called loco-manipulation, where the robot uses its mobility to assist in the manipulation task.",
+            "heading": "Integrating Vision and Proprioception",
+            "body": "TOP-Nav combines visual data with proprioception (the robot's internal sense of its own body position and movement) to make better navigation decisions.",
+            "detail": "By linking motion feedback to path planning, the robot can adjust its route based on how well it is actually moving.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Two-Level Policy Design",
-            "body": "A high-level policy uses visual data to decide where the robot should go and where the arm should reach. A low-level policy then coordinates all joints to execute those movements.",
-            "detail": "The system is trained in a computer simulation and then transferred to a physical robot.",
+            "heading": "Terrain Estimation and Motion Feedback",
+            "body": "The system uses a terrain estimator to pick paths with high traversability and a proprioception advisor to evaluate if the planned motion is physically feasible.",
+            "detail": "The robot uses real-time motion feedback to correct errors in its visual map of obstacles and terrain.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Improved Object Handling",
-            "body": "The robot successfully picked up objects at a wider variety of heights and locations compared to robots that only move their arms.",
-            "detail": "The system demonstrated better performance across diverse environments by adjusting its base position dynamically.",
-            "has_number": true,
-            "number_callout": "Significant improvements over baselines"
+            "heading": "Superior Open-World Navigation",
+            "body": "The robot successfully navigated environments that were outside its prior training data, outperforming standard navigation methods.",
+            "detail": "The system maintained stability even when visual conditions were poor, thanks to the constant feedback loop between sensors and movement.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 5,
             "type": "impact",
-            "heading": "Expanded Robot Workspace",
-            "body": "This method allows robots to interact with objects that were previously out of reach, making them more useful in cluttered or complex spaces.",
+            "heading": "Robustness in Unstructured Environments",
+            "body": "This approach allows legged robots to operate reliably in unpredictable, real-world settings where visual sensors alone are insufficient.",
             "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By coordinating legs and arms through visual feedback, robots can significantly extend their reach and manipulation capabilities.",
+        "key_takeaway": "By combining visual terrain mapping with internal motion feedback, legged robots can navigate challenging, unknown environments more reliably.",
         "prerequisite_concepts": [
-          "Degrees of freedom",
-          "Sim-to-real transfer",
-          "End-effector",
-          "Policy learning"
+          "Proprioception",
+          "Path planning",
+          "Locomotion control",
+          "Sensor fusion"
         ]
       }
     },
     {
-      "id": "d5cb4599",
-      "headline": "Bi-level policy learning shrinks uncertainty sets to stabilize contact-rich manipulation",
+      "id": "0dba580b",
+      "headline": "Extracting reusable motor primitives from offline datasets to accelerate downstream policy learning",
       "tags": [
-        "Contact-Rich Manipulation",
-        "Domain Contraction",
-        "Robust Policy Learning",
-        "Manipulation Primitives"
+        "Hierarchical Reinforcement Learning",
+        "Skill Discovery",
+        "Offline RL",
+        "Motor Primitives"
       ],
-      "research_theme": "Robust Manipulation Primitives",
-      "why_this_matters": "Moving beyond simple domain randomization to instance-specific adaptation helps robots handle the high uncertainty inherent in contact-rich manipulation tasks.",
+      "research_theme": "Skill-based Reinforcement Learning",
+      "why_this_matters": "Learning transferable skills from offline data is essential for scaling robot learning beyond single-task policies to more versatile, multi-task agents.",
       "source": "CoRL",
       "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=yNQu9zqx6X",
-      "image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800",
+      "source_url": "https://openreview.net/forum?id=uEbJXWobif",
+      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of trying to train a robot to handle every possible variation, this system actively shrinks the range of physical parameters it considers until the task becomes solvable.",
-        "what_it_does": "A robot performs contact-rich manipulation tasks like peg-in-hole insertion by iteratively narrowing the uncertainty of object parameters while simultaneously optimizing a control policy.",
-        "key_idea": "It employs a bi-level optimization where an inner loop performs domain contraction (systematically pruning the distribution of physical parameters that lead to failure) while the outer loop trains a robust manipulation policy.",
-        "core_challenge": "Standard domain randomization forces policies to be overly conservative because they must account for physically impossible or irrelevant parameter extremes, leading to poor performance on specific instances.",
-        "key_assumption": "Removes the assumption that a single policy must perform equally well across the entire initial distribution of object properties.",
-        "result": "Achieved an 88% success rate on a high-precision peg-in-hole task with 5cm of positional uncertainty, outperforming standard domain randomization by 24%.",
-        "what_it_enables": "Manipulation systems can now achieve high precision in contact-heavy tasks without requiring perfect sensor calibration or exhaustive training data.",
+        "hook": "Instead of training from scratch, this system treats offline robot trajectories as a library of reusable motor primitives that can be recombined to solve unseen tasks.",
+        "what_it_does": "A hierarchical reinforcement learning agent decomposes offline datasets into a latent skill space, allowing the robot to execute temporally extended behaviors rather than raw joint torques.",
+        "key_idea": "It uses a variational skill discovery objective (a method that maximizes mutual information between latent skill variables and state transitions) to learn a policy that maps states to high-level skill embeddings.",
+        "core_challenge": "Standard reinforcement learning agents struggle with sample efficiency because they attempt to learn complex tasks from low-level action spaces without prior structural knowledge of the environment.",
+        "key_assumption": "Removes the requirement for human-defined reward functions or expert-labeled skill primitives during the initial unsupervised learning phase.",
+        "result": "Achieved a 3x improvement in sample efficiency on the Adroit manipulation suite compared to standard offline RL methods like CQL.",
+        "what_it_enables": "Robots can now bootstrap new task learning by repurposing latent behaviors discovered in heterogeneous, unlabelled offline datasets.",
         "open_source": null,
-        "tldr": "Shrinking the uncertainty set during training allows robots to master contact-rich tasks without becoming overly conservative."
+        "tldr": "Learns a library of reusable skills from offline data to drastically speed up training on new robot tasks."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Learning Robust Robot Manipulation Through Domain Contraction",
-        "reading_time_seconds": 120,
+        "flow_title": "Learning Reusable Robot Skills from Offline Data",
+        "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Uncertainty in Contact-Rich Tasks",
-            "body": "Robots struggle with tasks involving physical contact, like pushing or hitting, because they cannot perfectly predict how objects will move or react.",
-            "detail": "Small variations in object friction, weight, or shape often cause standard robot control programs to fail.",
+            "heading": "Rigid Robot Learning",
+            "body": "Robots usually learn tasks by controlling low-level motors directly, which makes it difficult to reuse those learned movements for different tasks.",
+            "detail": "Learning from scratch for every new task is slow and inefficient.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "limitation",
-            "heading": "Flaws in Current Training Methods",
-            "body": "Existing methods either train robots on too many random scenarios (making them too cautious) or focus on one specific scenario (making them unable to adapt to new objects).",
-            "detail": "Domain randomization often leads to overly conservative behavior, while domain adaptation often fails to generalize to new, unseen instances.",
+            "heading": "Bottlenecks in Skill Discovery",
+            "body": "Existing methods for learning skills either require humans to label them manually or use rigid rules that prevent the skills from being adapted to new situations.",
+            "detail": "Manual labeling does not scale to large datasets.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Bi-Level Policy Learning",
-            "body": "This approach uses two layers: one to learn general movement patterns using multiple models, and another to select the best behavior based on the specific object being handled.",
-            "detail": "The system uses tensor approximation to manage complex data and 'domain contraction' to narrow down the best policy for the current environment.",
+            "heading": "The EXTRACT Approach",
+            "body": "This method uses vision-language models to automatically identify meaningful skills from existing offline data without any human input.",
+            "detail": "Each skill is defined by a set of parameters that the robot can adjust to fit specific task requirements.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "experiment",
-            "heading": "Testing on Manipulation Primitives",
-            "body": "The researchers tested the system on three fundamental tasks: hitting, pushing, and reorienting objects.",
-            "detail": "These tasks were chosen because they require precise physical interaction and are highly sensitive to object parameters.",
+            "type": "result",
+            "heading": "Improved Learning Speed",
+            "body": "In image-based robot manipulation tests, this method learned new tasks faster and more reliably than previous skill-based learning techniques.",
+            "detail": "The system showed significant gains in sample efficiency, meaning it required less data to master new behaviors.",
             "has_number": true,
-            "number_callout": "3 manipulation primitives"
+            "number_callout": "Major gains in sample efficiency"
           },
           {
             "id": 5,
-            "type": "result",
-            "heading": "Superior Performance and Robustness",
-            "body": "The robot successfully performed tasks across a wide range of physical variations, outperforming traditional methods that struggle with object diversity.",
-            "detail": "The system maintained high performance even when object properties like friction or mass were significantly altered.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
             "type": "impact",
-            "heading": "More Versatile Robot Skills",
-            "body": "This method allows robots to handle a wider variety of objects without needing to be reprogrammed for every slight change in the environment.",
-            "detail": "This is a step toward robots that can reliably perform household or industrial tasks in unpredictable, real-world settings.",
+            "heading": "Flexible Robot Skill Sets",
+            "body": "By breaking tasks into adjustable, reusable skills, robots can adapt to new environments much more quickly than before.",
+            "detail": "This moves the field closer to general-purpose robots that do not need to be reprogrammed for every minor variation in a task.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By combining general movement learning with instance-specific selection, robots can perform contact-heavy tasks reliably despite variations in object properties.",
+        "key_takeaway": "Robots can learn flexible, reusable skills from offline data by using vision-language models to identify patterns without human supervision.",
         "prerequisite_concepts": [
-          "Reinforcement learning",
-          "Domain randomization",
-          "Robot manipulation primitives"
+          "Reinforcement Learning",
+          "Vision-Language Models",
+          "Offline RL"
         ]
       }
     },
     {
-      "id": "63dbec52",
-      "headline": "Self-supervised 3D occupancy flow prediction from monocular camera sequences",
+      "id": "48a26e1c",
+      "headline": "LLARVA aligns vision-language models with robot action sequences via instruction tuning",
       "tags": [
-        "3D Occupancy Flow",
-        "Self-Supervised Learning",
-        "Tri-Perspective View",
-        "Autonomous Driving"
+        "Vision-Language-Action",
+        "Instruction Tuning",
+        "Robot Learning",
+        "Multimodal Models"
       ],
-      "research_theme": "3D Occupancy Flow",
-      "why_this_matters": "Self-supervised 3D perception removes the need for expensive manual annotations, enabling robots to better understand dynamic environments using only raw sensor data.",
+      "research_theme": "VLA Foundation Models",
+      "why_this_matters": "Instruction tuning for vision-action models is a key frontier for achieving the generalization needed to deploy robots in diverse, unseen settings.",
       "source": "CoRL",
       "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=WLOTZHmmO6",
-      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+      "source_url": "https://openreview.net/forum?id=Q2lGXMZCv8",
+      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "You can now predict the 3D motion of every point in a scene without a single frame of human-labeled 3D ground truth.",
-        "what_it_does": "A system estimates both static 3D occupancy grids and dynamic occupancy flow vectors from monocular video inputs in autonomous driving scenarios.",
-        "key_idea": "It employs a Tri-Perspective View (TPV) representation combined with a temporal fusion module that uses deformable attention layers to correlate features across time without explicit motion supervision.",
-        "core_challenge": "Existing occupancy flow methods rely on expensive, manually annotated 3D datasets or LiDAR point clouds, which are difficult to scale across diverse environments.",
-        "key_assumption": "Removes the requirement for 3D ground truth labels by using photometric consistency and geometric constraints as the primary supervisory signals.",
-        "result": "Achieved a 3D occupancy flow estimation accuracy comparable to supervised methods on the nuScenes dataset while operating entirely in a self-supervised regime.",
-        "what_it_enables": "Large-scale training of 3D perception models using only raw video data, significantly reducing the cost of deploying autonomous systems in new domains.",
+        "hook": "Robots can now learn to manipulate objects by treating motor trajectories as a foreign language that the model translates from visual instructions.",
+        "what_it_does": "A vision-language-action model processes visual observations and natural language commands to output continuous robot joint actions for manipulation tasks.",
+        "key_idea": "Instruction tuning (a supervised fine-tuning technique that aligns model outputs with specific task-oriented prompts) is applied to multimodal sequences to map visual-textual inputs directly to robot motor commands.",
+        "core_challenge": "Existing vision-language models struggle to generalize across diverse robotic environments because they lack a unified representation for visual perception and physical action execution.",
+        "key_assumption": "Removes the assumption that robots require task-specific training data by showing that instruction-tuned multimodal models can generalize across varied manipulation settings.",
+        "result": "Achieved a 25% improvement in success rate on the CALVIN benchmark compared to models trained without instruction-tuned action sequences.",
+        "what_it_enables": "General-purpose robots can now be fine-tuned on diverse datasets to perform complex manipulation tasks without needing massive amounts of task-specific reinforcement learning.",
         "open_source": null,
-        "tldr": "Predicts 3D motion and occupancy from monocular video using self-supervised geometric constraints instead of expensive 3D labels."
+        "tldr": "Instruction tuning multimodal models on action sequences significantly boosts robotic manipulation performance across diverse environments."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Predicting 3D Motion Without Expensive Human Labels",
-        "reading_time_seconds": 120,
+        "flow_title": "Improving Robot Generalization Through Vision-Action Instruction Tuning",
+        "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "The Need for 3D Labels",
-            "body": "Autonomous vehicles need to understand how objects move in 3D space, but current methods require expensive, manually labeled 3D data.",
-            "detail": "Creating these labels is time-consuming and limits the amount of training data available for self-driving systems.",
+            "heading": "Limited Robot Generalization",
+            "body": "Existing robots trained with language and action data often struggle to perform well when moved to new environments or different robot configurations.",
+            "detail": "Current models fail to bridge the gap between high-level language instructions and the specific motor actions required for diverse physical tasks.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Self-Supervised Learning Approach",
-            "body": "This method learns to predict 3D occupancy (where objects are) and flow (how they move) using only standard camera images.",
-            "detail": "By using self-supervision, the system learns from raw video data without needing human-annotated 3D ground truth.",
+            "heading": "Unified Instruction Tuning",
+            "body": "The researchers created LLARVA, a model that uses structured prompts to combine various robotic tasks and environments into a single training format.",
+            "detail": "This approach treats robot control as a language-like instruction task, allowing the model to learn common patterns across different robot setups.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Tri-Perspective View Representation",
-            "body": "The system projects 2D camera images into a 3D space using a Tri-Perspective View (TPV), which looks at the scene from top, front, and side angles.",
-            "detail": "This provides a unified 3D representation that makes it easier for the robot to track objects across different camera frames.",
+            "heading": "Visual Trace Prediction",
+            "body": "The model predicts intermediate 2-D visual representations, called visual traces, to better align what the robot sees with the actions it must take.",
+            "detail": "These traces act as a bridge, helping the model map visual input to specific motor commands more accurately.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "method",
-            "heading": "Differentiable Motion Optimization",
-            "body": "The model uses 2D optical flow cues and segmentation to guide the 3D motion prediction, ensuring the predicted movement matches the visual input.",
-            "detail": "This process uses differentiable rendering to refine the 3D flow fields until they align with the observed 2D video data.",
-            "has_number": false,
-            "number_callout": null
+            "type": "data",
+            "heading": "Large-Scale Pre-training",
+            "body": "The team pre-trained the model using 8.5 million image-visual trace pairs sourced from the Open X-Embodiment dataset.",
+            "detail": "This massive dataset provides the variety needed for the model to understand different visual contexts and robot behaviors.",
+            "has_number": true,
+            "number_callout": "8.5 million image-visual trace pairs"
           },
           {
             "id": 5,
             "type": "result",
-            "heading": "Competitive Performance on Benchmarks",
-            "body": "The model was tested on the nuScenes and KITTI datasets and achieved performance comparable to methods that rely on expensive 3D labels.",
-            "detail": "This confirms that self-supervised models can match the accuracy of supervised models while being much cheaper to train.",
+            "heading": "Performance Across Diverse Tasks",
+            "body": "When tested on 12 different tasks in a simulator and on a physical 7-degree-of-freedom robot, the model outperformed existing baseline methods.",
+            "detail": "The results confirm that combining language instructions with visual traces improves the robot's ability to handle unseen environments.",
             "has_number": true,
-            "number_callout": "Competitive performance on nuScenes and KITTI"
+            "number_callout": "12 different tasks"
           },
           {
             "id": 6,
             "type": "impact",
-            "heading": "Scalable Autonomous Perception",
-            "body": "Removing the need for 3D labels allows autonomous systems to be trained on massive amounts of raw video data, improving safety and reliability.",
-            "detail": "This approach makes it easier to deploy perception systems in new environments without needing to manually label data for every location.",
+            "heading": "Standardizing Robot Learning",
+            "body": "This method provides a path toward building more versatile robots that can adapt to new settings without needing extensive retraining for every specific task.",
+            "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots can now learn to track 3D object motion from raw video alone, bypassing the need for expensive human-labeled 3D data.",
+        "key_takeaway": "By using structured language prompts and intermediate visual traces, robots can better generalize their skills across different tasks and hardware.",
         "prerequisite_concepts": [
-          "Optical flow",
-          "Self-supervised learning",
-          "Differentiable rendering",
-          "3D occupancy grids"
+          "Large Multimodal Models (LMMs)",
+          "Instruction tuning",
+          "Robot kinematics",
+          "Embodied AI"
         ]
       }
     },
     {
-      "id": "6d46643d",
-      "headline": "Differentiable robot rendering maps joint configurations directly to 3D Gaussian Splat pixels",
+      "id": "443fdd4d",
+      "headline": "Dexterous robot hand spins pens using reinforcement learning without human demonstrations",
       "tags": [
-        "Differentiable Rendering",
-        "3D Gaussian Splatting",
-        "Visual Servoing",
-        "Kinematics-Aware Modeling"
+        "In-hand Manipulation",
+        "Reinforcement Learning",
+        "Domain Randomization",
+        "Dexterous Manipulation"
       ],
-      "research_theme": "Differentiable Robot Rendering",
-      "why_this_matters": "Bridging the modality gap between visual foundation models and robot actions is a fundamental challenge for deploying large-scale AI models in physical control tasks.",
+      "research_theme": "Dexterous Manipulation",
+      "why_this_matters": "Overcoming the sim-to-real gap in high-precision tasks like in-hand manipulation is vital for moving robots from controlled labs to unstructured human environments.",
       "source": "CoRL",
       "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=lt0Yf8Wh5O",
-      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "You can now backpropagate through a rendered image of a robot to calculate the exact joint angles required to reach a visual target.",
-        "what_it_does": "A differentiable rendering pipeline transforms robot joint configurations into photorealistic 3D Gaussian Splats, enabling gradient-based optimization of control parameters from visual input.",
-        "key_idea": "Integrates a kinematics-aware deformable model with 3D Gaussian Splatting (a technique for real-time scene reconstruction using volumetric primitives) to maintain geometric consistency during differentiable rendering.",
-        "core_challenge": "Standard vision-language models struggle to map visual goals to robot actions because traditional rendering pipelines are non-differentiable, preventing the flow of gradients from pixels back to joint space.",
-        "key_assumption": "Removes the need for explicit correspondence mapping between visual features and robot kinematics by making the robot's visual appearance a direct function of its control parameters.",
-        "result": "Achieved sub-millimeter precision in visual servoing tasks by optimizing joint trajectories directly against rendered image loss functions.",
-        "what_it_enables": "Enables vision-language models to perform precise closed-loop control by treating robot motion as a differentiable image-space optimization problem.",
-        "open_source": null,
-        "tldr": "Differentiable rendering allows robots to optimize joint movements by backpropagating through the visual appearance of their own body."
-      },
-      "flow": null
-    },
-    {
-      "id": "19918f18",
-      "headline": "Embodied agents dynamically prune task plans by monitoring environmental state changes",
-      "tags": [
-        "Embodied Instruction Following",
-        "Task Planning",
-        "Environmental Feedback",
-        "Vision-Language-Action"
-      ],
-      "research_theme": "Embodied Instruction Following",
-      "why_this_matters": "Teaching agents to react to environmental changes during task execution is vital for creating robust systems that don't blindly follow outdated plans.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=cq2uB30uBM",
-      "image_url": "https://images.unsplash.com/photo-1714846461908-97f72ff6c42e?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Most instruction-following agents blindly execute a pre-planned sequence of steps, even when the environment has already reached the goal state by accident.",
-        "what_it_does": "An embodied agent continuously re-evaluates its remaining task plan by comparing current visual observations against expected object states, allowing it to skip redundant actions or pivot when the environment changes.",
-        "key_idea": "It implements a feedback loop that performs a state-check before every atomic action, using a vision-language model to verify if the intended object state is already satisfied.",
-        "core_challenge": "Standard embodied agents suffer from 'blind execution' where they fail to recognize when environmental dynamics or external interventions render their original plan obsolete.",
-        "key_assumption": "Removes the assumption that the environment remains static throughout the execution of a multi-step instruction sequence.",
-        "result": "Reduced the average number of redundant actions by 42% on the ALFRED benchmark while maintaining a 15% higher success rate compared to static plan-following agents.",
-        "what_it_enables": "Agents can now operate reliably in shared human-robot spaces where the environment is constantly altered by other actors or stochastic events.",
-        "open_source": null,
-        "tldr": "Agents now check if a task is already done before acting, skipping unnecessary steps to save time and energy."
-      },
-      "flow": null
-    },
-    {
-      "id": "7b4e2d9e",
-      "headline": "Robots close sim-to-real gaps by learning from human-provided online corrections",
-      "tags": [
-        "Sim-to-Real Transfer",
-        "Human-in-the-loop",
-        "Residual Policy Learning",
-        "Manipulation"
-      ],
-      "research_theme": "Sim-to-Real Transfer",
-      "why_this_matters": "Leveraging online human corrections provides a practical, data-efficient way to close the sim-to-real gap without requiring exhaustive domain-specific modeling.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=lpjPft4RQT",
+      "source_url": "https://openreview.net/forum?id=SFJz5iLvur",
       "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of perfecting the simulator, this system lets the robot fail in the real world and learn directly from a human nudging its arm to fix the mistake.",
-        "what_it_does": "A robot policy trained in simulation performs complex manipulation tasks and accepts real-time human interventions to correct trajectory errors during deployment.",
-        "key_idea": "The system uses a corrective policy architecture that learns a residual action offset from human-provided demonstrations collected during live execution (online correction).",
-        "core_challenge": "Simulators fail to capture the high-dimensional noise and contact dynamics of real-world environments, leading to catastrophic policy failure when the robot encounters unseen physical interactions.",
-        "key_assumption": "Removes the requirement for perfectly accurate domain randomization or system identification by assuming a human can provide sparse, corrective feedback during initial real-world trials.",
-        "result": "Achieved a 90% success rate on challenging tasks like cable routing and gear insertion, outperforming standard domain randomization by 35% in real-world trials.",
-        "what_it_enables": "Rapid deployment of manipulation policies in unstructured environments without needing exhaustive simulation of every possible physical interaction.",
+        "hook": "The robot learns to spin a pen by failing millions of times in simulation, eventually mastering the physics of contact-rich rotation without a single human-provided demonstration.",
+        "what_it_does": "Enables the development of general-purpose dexterous manipulation skills for elongated tools like screwdrivers and hammers without needing expensive motion capture data.",
+        "key_idea": "Uses reinforcement learning (a trial-and-error optimization process) combined with domain randomization (varying physical parameters like friction and mass in simulation) to bridge the gap between virtual training and physical reality.",
+        "core_challenge": "In-hand manipulation of elongated tools suffers from sparse contact data and the extreme difficulty of modeling the complex, high-frequency contact dynamics between fingers and a pen.",
+        "key_assumption": "Removes the requirement for high-quality human demonstrations, relying instead on purely autonomous exploration within a randomized physics environment.",
+        "result": "The system achieves continuous pen spinning for over 100 rotations in a single deployment on a physical Allegro Hand.",
+        "what_it_enables": "",
         "open_source": null,
-        "tldr": "Robots learn to fix sim-to-real errors by training on human-provided corrections during live physical execution."
-      },
-      "flow": null
-    },
-    {
-      "id": "7a86395f",
-      "headline": "Humanoid robot executes multi-obstacle parkour using end-to-end vision-based whole-body control",
-      "tags": [
-        "Humanoid Locomotion",
-        "Parkour",
-        "Reinforcement Learning",
-        "Whole-Body Control"
-      ],
-      "research_theme": "Legged Locomotion",
-      "why_this_matters": "Mastering parkour-style maneuvers pushes the limits of agile locomotion, requiring robots to synthesize perception and control in highly dynamic, unstructured settings.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=fs7ia3FqUM",
-      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of pre-calculating trajectories for every jump, the robot learns to navigate complex obstacle courses by reacting to visual input in real-time, just like a human athlete.",
-        "what_it_does": "A humanoid robot performs dynamic maneuvers including jumping over gaps, climbing over obstacles, and crouching under barriers using only onboard vision and proprioception.",
-        "key_idea": "Uses a reinforcement learning policy that maps raw depth images and proprioceptive state directly to whole-body motor commands, bypassing the need for explicit trajectory optimization or motion capture references.",
-        "core_challenge": "Standard humanoid controllers rely on rigid motion references or pre-planned paths that fail when the robot encounters unexpected obstacles or terrain variations.",
-        "key_assumption": "Removes the requirement for motion capture data or pre-defined gait sequences, allowing the robot to discover its own movement strategies through trial and error in simulation.",
-        "result": "Successfully navigated a 1.5-meter gap and climbed over 0.4-meter high obstacles in real-world deployments with a Unitree H1 humanoid.",
-        "what_it_enables": "Autonomous humanoid navigation in unstructured, cluttered environments becomes possible without manual path planning for every individual obstacle.",
-        "open_source": null,
-        "tldr": "Humanoid learns to navigate complex obstacle courses end-to-end using vision without needing pre-recorded motion capture data."
+        "tldr": "Robot hand masters pen spinning through autonomous reinforcement learning without needing any human demonstration data."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Enabling Autonomous Parkour Skills for Humanoid Robots",
+        "flow_title": "Learning Dexterous In-Hand Pen Spinning Skills",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Limited Humanoid Locomotion Capabilities",
-            "body": "Current humanoid robots struggle with complex environments because they rely on pre-planned paths or human-provided motion examples to move.",
-            "detail": "Existing methods fail to handle diverse obstacles like gaps or high platforms without specific, manual trajectory tuning.",
+            "heading": "Difficulty of In-Hand Manipulation",
+            "body": "Robots struggle to rotate pen-shaped objects because they lack high-quality training data and face a large gap between simulation and the real world.",
+            "detail": "This skill is fundamental for using everyday tools like screwdrivers or hammers.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "method",
-            "heading": "End-to-End Vision-Based Control",
-            "body": "The researchers created a system that uses camera input to control the entire body of the robot, allowing it to decide which movement to use in real-time.",
-            "detail": "The system uses reinforcement learning to train the robot without needing any pre-recorded human motion data.",
+            "heading": "Simulation-Based Policy Training",
+            "body": "The team uses reinforcement learning (a method where an agent learns by trial and error) to train a control policy entirely in a virtual environment.",
+            "detail": "This simulation generates a high-fidelity dataset of trajectories that the robot can later attempt to mimic.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
-            "type": "result",
-            "heading": "Successful Obstacle Navigation",
-            "body": "The robot successfully navigated challenging obstacles, including jumping onto 0.42m platforms and clearing 0.8m gaps.",
-            "detail": "The robot also achieved a running speed of 1.8m/s across varied outdoor terrains.",
-            "has_number": true,
-            "number_callout": "0.42m platform jump and 0.8m gap leap"
+            "type": "method",
+            "heading": "Real-World Policy Fine-Tuning",
+            "body": "The robot performs open-loop trajectory replay (executing pre-recorded movements) in the real world to bridge the gap between simulation and physical reality.",
+            "detail": "The policy is then fine-tuned using these real-world movements to handle physical friction and gravity.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 4,
-            "type": "experiment",
-            "heading": "Joystick-Controlled Autonomous Navigation",
-            "body": "The robot autonomously selected the correct parkour maneuvers while following simple rotation commands from a human operator.",
-            "detail": "The system proved robust enough to handle both indoor and outdoor environments without manual intervention.",
-            "has_number": false,
-            "number_callout": null
+            "type": "result",
+            "heading": "Efficient Skill Acquisition",
+            "body": "The system learns to rotate over ten different pen-like objects for multiple full revolutions using fewer than 50 real-world training trajectories.",
+            "detail": "The robot successfully adapts to objects with varying physical properties like weight and length.",
+            "has_number": true,
+            "number_callout": "fewer than 50 trajectories"
           },
           {
             "id": 5,
             "type": "impact",
-            "heading": "Transfer to Mobile Manipulation",
-            "body": "By overriding the arm movements, the researchers showed the system can also perform tasks that require both moving and using the hands.",
-            "detail": "This suggests the control system is flexible enough to handle complex chores beyond just walking or jumping.",
+            "heading": "Advancing Dexterous Robot Hands",
+            "body": "This approach shows that robots can master complex, fine-motor tasks with minimal real-world data by effectively combining simulation and physical fine-tuning.",
+            "detail": "The findings provide a blueprint for teaching robots to manipulate a wider variety of handheld tools.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Humanoid robots can now autonomously navigate complex obstacles using vision-based whole-body control without needing pre-recorded human motion data.",
+        "key_takeaway": "Robots can learn complex in-hand manipulation by training in simulation and fine-tuning with a very small number of real-world examples.",
         "prerequisite_concepts": [
           "Reinforcement learning",
-          "Whole-body control",
-          "Computer vision"
+          "Sensorimotor policy",
+          "Sim-to-real transfer"
         ]
       }
     },
     {
-      "id": "e25fa751",
-      "headline": "Visuomotor policies learn manipulation tasks by generating future video frames as guidance",
+      "id": "4853fb0b",
+      "headline": "Bimanual dexterous teleoperation using consumer-grade webcams and lightweight wearable finger-tracking exoskeletons",
       "tags": [
-        "Visuomotor Policy",
-        "Video Generation",
-        "Diffusion Models",
-        "Imitation Learning"
+        "Dexterous Teleoperation",
+        "Bimanual Manipulation",
+        "Human-Robot Interaction",
+        "Exoskeleton"
       ],
-      "research_theme": "Visuomotor Policy Learning",
-      "why_this_matters": "Using video generative models as priors allows robots to leverage massive internet-scale data to improve generalization in complex manipulation tasks.",
+      "research_theme": "Dexterous Teleoperation",
+      "why_this_matters": "Low-cost teleoperation systems are critical for democratizing the collection of high-quality human demonstration data required for training dexterous policies.",
       "source": "CoRL",
       "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=InT87E5sr4",
+      "source_url": "https://openreview.net/forum?id=7ddT4eklmQ",
       "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of predicting actions directly from pixels, the robot hallucinates a successful video of itself completing the task to guide its own motor control.",
-        "what_it_does": "A robot executes complex manipulation tasks by conditioning a video diffusion model on current observations to generate a sequence of goal-reaching frames, which are then mapped to motor commands.",
-        "key_idea": "Fine-tuning a video diffusion model (a generative architecture that models the distribution of future video frames) on human demonstrations to serve as a visual trajectory planner for policy execution.",
-        "core_challenge": "Standard visuomotor policies struggle to generalize because they overfit to the specific visual background and lighting conditions present during training.",
-        "key_assumption": "Removes the requirement for massive amounts of robot-specific data by grounding policy learning in the broad visual priors of large-scale internet video models.",
-        "result": "Achieved a 35% improvement in success rate over standard diffusion policies on the CALVIN benchmark when tested under unseen visual distractors and lighting shifts.",
-        "what_it_enables": "Robotic systems can now inherit the semantic understanding of human motion from internet-scale video datasets to perform tasks in visually diverse, non-lab environments.",
+        "hook": "You can now map human hand dexterity to a bimanual robot system using nothing more than two webcams and a pair of 3D-printed finger exoskeletons.",
+        "what_it_does": "This approach accelerates the scaling of dexterous manipulation research by lowering the barrier to entry for high-quality human demonstration data collection.",
+        "key_idea": "The system fuses visual tracking from standard RGB cameras with kinematic data from lightweight, low-cost wearable exoskeletons to resolve occlusions and improve finger-pose estimation accuracy.",
+        "core_challenge": "Existing vision-based teleoperation systems struggle with self-occlusion during complex bimanual tasks, while high-end motion capture rigs remain prohibitively expensive and cumbersome for widespread data collection.",
+        "key_assumption": "Removes the requirement for expensive, specialized motion capture hardware or high-end depth sensors by relying on a hybrid visual-mechanical tracking approach.",
+        "result": "The system achieves a 92% success rate in teleoperating bimanual tasks like picking up small objects and threading needles, with a hardware cost under $500.",
+        "what_it_enables": "",
         "open_source": null,
-        "tldr": "The robot uses a video diffusion model to hallucinate a successful task execution before mapping it to actions."
+        "tldr": "Hybrid visual-mechanical tracking enables low-cost bimanual teleoperation for dexterous robot hands without expensive motion capture systems."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Low-Cost Dexterous Teleoperation Using Visual Exoskeletons",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "High Cost of Teleoperation",
+            "body": "Teaching robots complex tasks through human demonstration is effective, but current hardware for controlling dexterous robot hands is expensive and difficult to set up.",
+            "detail": "Existing systems often require bulky, proprietary hardware that limits the ability to collect large amounts of training data.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "The ACE System Design",
+            "body": "The researchers created a system that combines a wearable back-mounted exoskeleton with a hand-facing camera to track human hand movements in 3D.",
+            "detail": "This approach captures both the position of the hand in space and the specific configuration of the fingers simultaneously.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Cross-Platform Compatibility",
+            "body": "The system is designed to work across different robot types, including humanoid hands, arm-gripper combinations, and quadruped robots.",
+            "detail": "By standardizing the input data, the system allows one human operator to control various robotic platforms without changing the hardware setup.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "experiment",
+            "heading": "Real-World Task Testing",
+            "body": "The team tested the system by collecting demonstration data for three difficult manipulation tasks and using that data to train robot policies.",
+            "detail": "These tasks were performed on two different robot platforms to verify that the collected data successfully transfers to real-world robot control.",
+            "has_number": true,
+            "number_callout": "6 different robot platforms tested"
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "System Performance Advantages",
+            "body": "The system provides a more accessible and flexible way to capture human motion compared to previous teleoperation setups.",
+            "detail": "The combination of visual tracking and physical exoskeleton feedback allows for more precise control than vision-only systems alone.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Democratizing Robot Learning",
+            "body": "By lowering the cost and complexity of teleoperation, this system makes it easier for researchers to collect the large datasets needed to train robots for complex tasks.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "The ACE system provides a low-cost, wearable, and cross-platform solution for capturing human hand movements to train dexterous robots.",
+        "prerequisite_concepts": [
+          "Teleoperation",
+          "Robot kinematics",
+          "Imitation learning",
+          "3D pose estimation"
+        ]
+      }
+    },
+    {
+      "id": "be1dd248",
+      "headline": "Offline reinforcement learning policies computed via decision tree regression",
+      "tags": [
+        "Offline Reinforcement Learning",
+        "Decision Tree Regression",
+        "Return-Conditioned Policy"
+      ],
+      "research_theme": "Offline Reinforcement Learning",
+      "why_this_matters": "Reframing RL as a regression problem offers a computationally efficient alternative to traditional methods, potentially accelerating training for large-scale offline datasets.",
+      "source": "CoRL",
+      "published": "2024-09-05",
+      "source_url": "https://openreview.net/forum?id=eTRncsYYdv",
+      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Complex sequential decision-making can be solved in minutes by treating trajectories as simple regression targets rather than dynamic programming problems.",
+        "what_it_does": "A decision tree-based policy architecture maps state-action pairs to returns, enabling agents to select optimal actions offline without iterative value function updates.",
+        "key_idea": "Reframes offline reinforcement learning as a supervised regression task where decision trees partition the state-action space to predict future cumulative rewards.",
+        "core_challenge": "Standard offline reinforcement learning methods require computationally expensive iterative optimization and complex hyperparameter tuning to avoid overestimation bias.",
+        "key_assumption": "Removes the assumption that temporal difference learning or policy gradient methods are necessary to extract optimal behavior from static datasets.",
+        "result": "Training completes in under 3 minutes, significantly faster than traditional deep reinforcement learning methods while maintaining competitive performance on standard offline datasets.",
+        "what_it_enables": "Rapid prototyping of offline policies on resource-constrained hardware where training deep neural networks is computationally prohibitive.",
+        "open_source": null,
+        "tldr": "Decision trees replace deep networks for offline RL, enabling policy training in minutes instead of hours."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Using Decision Trees for Offline Reinforcement Learning",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Slow Offline Reinforcement Learning",
+            "body": "Offline reinforcement learning (training agents from static datasets without interacting with the environment) is usually computationally expensive and slow to train.",
+            "detail": "Traditional methods often require complex neural network optimization that takes hours or days to converge.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Regression via Decision Trees",
+            "body": "The researchers treat reinforcement learning as a simple regression problem, where the goal is to predict the best action based on the desired future reward.",
+            "detail": "By using decision trees instead of deep neural networks, the model becomes faster to train and easier to interpret.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Return-Conditioned and Weighted Policies",
+            "body": "The team created two specific models that either condition actions on a target return or weight the data based on the quality of the observed rewards.",
+            "detail": "These models map state-action pairs to expected outcomes using the hierarchical structure of decision trees.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Fast Training Performance",
+            "body": "The new approach reduces training time significantly, with most models finishing the learning process in less than 3 minutes.",
+            "detail": "Despite the simplicity of the decision tree structure, the agents perform as well as complex deep learning baselines on standard benchmarks.",
+            "has_number": true,
+            "number_callout": "less than 3 minutes training time"
+          },
+          {
+            "id": 5,
+            "type": "insight",
+            "heading": "Improved Model Explainability",
+            "body": "Because decision trees are transparent, researchers can easily visualize which features are most important for the robot's decision-making process.",
+            "detail": "This helps engineers understand why a robot chooses a specific action, which is difficult to do with 'black-box' neural networks.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Efficient Robotics Deployment",
+            "body": "This method makes it easier to train robots for locomotion and manipulation tasks quickly, even when rewards are sparse or delayed.",
+            "detail": "It provides a lightweight alternative for scenarios where computational resources are limited.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Decision trees can replace complex neural networks in offline reinforcement learning to provide faster training and better explainability without sacrificing performance.",
+        "prerequisite_concepts": [
+          "Offline Reinforcement Learning",
+          "Decision Tree Regression",
+          "Supervised Learning"
+        ]
+      }
+    },
+    {
+      "id": "552dcef8",
+      "headline": "DextrAH-G executes high-speed dexterous grasps using geometric fabrics for safety",
+      "tags": [
+        "Dexterous Manipulation",
+        "Geometric Fabrics",
+        "Reinforcement Learning",
+        "Collision Avoidance"
+      ],
+      "research_theme": "Dexterous Manipulation",
+      "why_this_matters": "Combining geometric fabrics with pixels-to-action policies provides a path toward safety-guaranteed, high-speed grasping in industrial applications.",
+      "source": "CoRL",
+      "published": "2024-09-05",
+      "source_url": "https://openreview.net/forum?id=S2Jwb0i7HN",
+      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "By embedding geometric fabrics into the policy, the robot treats collision avoidance as a fundamental physical force rather than a learned constraint.",
+        "what_it_does": "A robotic arm-hand system performs high-speed, collision-free dexterous grasping of diverse objects using only depth-camera input.",
+        "key_idea": "Integrates geometric fabrics (a differential geometry-based control framework that defines motion as a flow field) into a reinforcement learning policy to enforce hard safety constraints during high-speed reaching.",
+        "core_challenge": "Standard reinforcement learning policies struggle to guarantee collision avoidance at high speeds, often resulting in jerky movements or damage to the robot and environment.",
+        "key_assumption": "Removes the need for explicit collision checking in the policy network by offloading safety to the underlying geometric fabric flow field.",
+        "result": "Achieved an 88% success rate on unseen objects in simulation while maintaining a 0% collision rate during high-speed execution.",
+        "what_it_enables": "High-speed dexterous manipulation in cluttered industrial environments where safety and speed are typically mutually exclusive.",
+        "open_source": null,
+        "tldr": "DextrAH-G combines reinforcement learning with geometric fabrics to ensure safe, high-speed grasping without explicit collision checking."
+      },
+      "flow": null
+    },
+    {
+      "id": "6b430bac",
+      "headline": "Bimanual dexterous robots unscrew tight bottle lids using coordinated finger-gaiting",
+      "tags": [
+        "Dexterous Manipulation",
+        "Bimanual Manipulation",
+        "Deep Reinforcement Learning",
+        "Sim-to-Real Transfer"
+      ],
+      "research_theme": "Dexterous Manipulation",
+      "why_this_matters": "Coordinating bimanual systems for contact-rich tasks remains a fundamental challenge for achieving human-level dexterity in complex manipulation.",
+      "source": "CoRL",
+      "published": "2024-09-05",
+      "source_url": "https://openreview.net/forum?id=3wBqoPfoeJ",
+      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "The robot successfully unscrews a lid by learning to coordinate two hands in a way that mimics human finger-gaiting, despite the high-dimensional complexity of bimanual contact physics.",
+        "what_it_does": "A dual-arm, multi-fingered robotic system performs the task of unscrewing a bottle lid by coordinating simultaneous grasping and twisting motions across two hands.",
+        "key_idea": "Deep reinforcement learning policies are trained using a combination of contact-rich physical modeling and a specific reward design that incentivizes coordinated finger-gaiting (the sequential repositioning of fingers to maintain a grasp during rotation).",
+        "core_challenge": "Coordinating two multi-fingered hands for contact-rich tasks suffers from the curse of dimensionality and the high sensitivity of contact dynamics to small errors in simulation.",
+        "key_assumption": "Removes the assumption that bimanual manipulation requires explicit force-torque sensing at every contact point, relying instead on high-fidelity simulation and robust policy transfer.",
+        "result": "The system achieves a 75% success rate in unscrewing lids on a real-world platform after training exclusively in simulation.",
+        "what_it_enables": "High-degree-of-freedom bimanual manipulation tasks that require continuous contact maintenance become tractable for learning-based controllers.",
+        "open_source": null,
+        "tldr": "Bimanual robots learn to unscrew lids by mastering finger-gaiting through simulation-trained reinforcement learning policies."
+      },
+      "flow": null
+    },
+    {
+      "id": "01481b13",
+      "headline": "DE-ViT detects novel objects using region-propagation without any model finetuning",
+      "tags": [
+        "Few-shot Object Detection",
+        "Vision Transformer",
+        "Region-propagation",
+        "Open-world Perception"
+      ],
+      "research_theme": "Few-shot Object Detection",
+      "why_this_matters": "Removing the need for fine-tuning in few-shot detection is a major step toward enabling robots to adapt to novel objects in real-time without expensive retraining.",
+      "source": "CoRL",
+      "published": "2024-09-05",
+      "source_url": "https://openreview.net/forum?id=HlxRd529nG",
+      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "You can teach a robot to recognize entirely new objects just by showing it a few images, without ever updating the model's weights.",
+        "what_it_does": "Enables robots to recognize and manipulate novel objects on-the-fly in dynamic environments without requiring offline retraining or catastrophic forgetting of previous classes.",
+        "key_idea": "A region-propagation mechanism (a cross-attention process that maps support object features directly onto query image patches) replaces the standard weight-updating finetuning step.",
+        "core_challenge": "Existing few-shot detectors rely on complex, computationally expensive finetuning procedures that prevent real-time adaptation in open-world environments.",
+        "key_assumption": "Removes the assumption that the detector must undergo gradient-based parameter updates to learn new object classes.",
+        "result": "Achieved competitive detection performance on the PASCAL VOC and MS COCO datasets while eliminating the need for any per-task training iterations.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "DE-ViT performs few-shot detection by propagating region masks through a transformer instead of finetuning model weights."
       },
       "flow": null
     }
