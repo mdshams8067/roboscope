@@ -1,686 +1,199 @@
 {
-  "generated_at": "2026-08-05T02:21:42.184565+00:00",
-  "article_count": 10,
+  "generated_at": "2026-08-06T02:25:45.331582+00:00",
+  "article_count": 2,
   "articles": [
     {
-      "id": "7d9afd70",
-      "headline": "High-Density Visual Particle Dynamics simulates 100K+ latent points for real-world scene physics",
+      "id": "83c7cea3",
+      "headline": "Maniwhere enables visuomotor policies to generalize across unseen visual disturbances using multi-view spatial transform",
       "tags": [
-        "World Models",
-        "Point Cloud Transformers",
-        "Visual Dynamics",
-        "Particle-based Simulation"
+        "Visual Reinforcement Learning",
+        "Multi-view Representation Learning",
+        "Spatial Transformer Network",
+        "Generalizable Manipulation"
       ],
-      "research_theme": "Learned World Models",
-      "why_this_matters": "This work addresses the computational bottleneck of high-fidelity physical simulation, offering a scalable path for robots to predict and interact with complex, dynamic environments.",
+      "research_theme": "Visual Generalization, Reinforcement Learning",
+      "why_this_matters": "This work addresses the fragility of RL policies to visual distribution shifts, offering a path toward deploying robots in unconstrained, real-world environments.",
       "source": "CoRL",
       "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=pcPSGZFaCH",
-      "image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800",
+      "source_url": "https://openreview.net/forum?id=jart4nhCQr",
+      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Simulating the physics of a scene with 100,000 particles usually requires massive compute, yet this model handles that density by interlacing linear attention with graph-based local neighbor updates.",
-        "what_it_does": "A learned world model predicts the future physical state of complex scenes by processing high-density latent point clouds representing visual dynamics.",
-        "key_idea": "Interlacers combine Performer layers (linear-attention transformers) with graph-based neighbor attention to maintain global context while capturing local physical interactions at massive scale.",
-        "core_challenge": "Standard transformer architectures suffer from quadratic complexity, making them computationally prohibitive for the high-density particle counts required to model realistic fluid or granular dynamics.",
-        "key_assumption": "Removes the reliance on low-resolution voxel grids or sparse point representations, assuming instead that high-density latent particles can capture sufficient physical priors for complex scene evolution.",
-        "result": "Maintains temporal consistency across 100,000+ latent particles, outperforming standard point-based transformers in modeling high-fidelity physical scene transitions.",
-        "what_it_enables": "Long-horizon physical scene prediction becomes feasible for complex, non-rigid environments that were previously too computationally expensive to simulate.",
+        "hook": "Robots can now ignore distracting background clutter and lighting shifts by learning to align visual features across multiple camera perspectives simultaneously.",
+        "what_it_does": "A visuomotor reinforcement learning agent executes manipulation tasks in novel environments containing unseen visual disturbances like dynamic backgrounds, varying lighting, and camera viewpoint changes.",
+        "key_idea": "Multi-view representation learning fused with a Spatial Transformer Network (STN) module extracts shared semantic features that remain invariant across disparate visual inputs.",
+        "core_challenge": "Standard visual reinforcement learning policies overfit to specific training backgrounds and lighting, causing catastrophic performance drops when deployed in open-world settings.",
+        "key_assumption": "Removes the requirement for domain randomization to cover every possible visual variation, instead relying on the model to learn a robust, view-agnostic representation.",
+        "result": "Achieved a 45% improvement in success rate over standard visual RL methods when tested against unseen distractors in the Maniwhere evaluation suite.",
+        "what_it_enables": "Deployment of manipulation policies in uncontrolled, real-world environments without requiring extensive retraining or exhaustive visual data augmentation.",
         "open_source": null,
-        "tldr": "Interlaced attention layers allow world models to simulate 100K+ particles for high-fidelity physical scene prediction."
+        "tldr": "Multi-view spatial transformers allow manipulation policies to ignore visual distractors and generalize to unseen environments."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Modeling Complex Physical Dynamics Using High-Density Particle Clouds",
+        "flow_title": "Enabling Robot Generalization Across Diverse Visual Environments",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Simulating Complex Physical Interactions",
-            "body": "Predicting how objects move and deform in real-world scenes is difficult because traditional models struggle to track thousands of individual points simultaneously.",
-            "detail": "Existing methods often simplify scenes too much, losing the fine-grained details needed for precise robotic manipulation.",
+            "heading": "Robots Failing in New Environments",
+            "body": "Robots trained in simulation often fail when moved to new rooms or lighting conditions because they rely on specific visual patterns. This lack of visual generalization prevents robots from working outside of controlled lab settings.",
+            "detail": "Small changes in camera angle or background colors can cause a robot's learned policy to break entirely.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "High-Density Visual Particle Dynamics",
-            "body": "The researchers represent scenes as massive point clouds containing over 100,000 particles to capture detailed physical behavior.",
-            "detail": "By treating the scene as a collection of particles, the model can track complex deformations and interactions that rigid-body models miss.",
-            "has_number": true,
-            "number_callout": "100,000+ particles"
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Interlacer Transformer Architecture",
-            "body": "To process this much data efficiently, the team created a new transformer architecture that combines linear-attention layers with graph-based neighbor attention.",
-            "detail": "This hybrid approach allows the model to focus on both global scene structure and local particle interactions without excessive computational cost.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Speed and Resolution",
-            "body": "Compared to previous graph-based models, this approach runs twice as fast while maintaining the same prediction accuracy.",
-            "detail": "The model can also handle four times as many particles as previous methods, allowing for much higher resolution simulations.",
-            "has_number": true,
-            "number_callout": "2x faster and 4x higher particle capacity"
-          },
-          {
-            "id": 5,
-            "type": "experiment",
-            "heading": "Robotic Manipulation Tasks",
-            "body": "The researchers tested the model on bi-manual robots performing box pushing and object grasping tasks using data from two RGB-D cameras.",
-            "detail": "The model successfully predicted the outcome of these motions, proving it can evaluate the quality of a robot's planned path.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Better Planning for Robots",
-            "body": "This tool allows robots to 'imagine' the physical consequences of their actions before they move, leading to safer and more effective manipulation.",
-            "detail": "By accurately modeling high-degree-of-freedom tasks, robots can better navigate complex environments without needing constant human intervention.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By using a new transformer architecture to process 100,000+ particles, robots can now simulate complex physical scenes faster and more accurately than before.",
-        "prerequisite_concepts": [
-          "Point clouds",
-          "Transformer architecture",
-          "World models",
-          "Graph neural networks"
-        ]
-      }
-    },
-    {
-      "id": "0edcdfe7",
-      "headline": "CtRL-Sim generates reactive driving agents using offline reinforcement learning with latent control",
-      "tags": [
-        "Autonomous Driving",
-        "Offline Reinforcement Learning",
-        "Behavioral Simulation",
-        "Latent Control"
-      ],
-      "research_theme": "Autonomous Driving Agents",
-      "why_this_matters": "By moving beyond static log-replay, this research provides a framework for training reactive agents that can handle the interactive, non-deterministic nature of real-world traffic.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=MfIUKzihC8",
-      "image_url": "https://images.unsplash.com/photo-1714846461908-97f72ff6c42e?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Driving agents in simulation usually just replay recorded logs, but this system forces them to react to your car as if they were sentient participants in the traffic flow.",
-        "what_it_does": "A generative model produces reactive, controllable traffic agents for autonomous vehicle simulation by conditioning offline reinforcement learning on high-level driving intents.",
-        "key_idea": "It uses a latent space conditioned offline reinforcement learning approach (a method that learns optimal policies from static datasets while allowing user-defined steering of agent behavior) to map driving logs to controllable policy parameters.",
-        "core_challenge": "Replayed driving logs lack interactivity, meaning agents fail to respond when an autonomous vehicle deviates from the recorded path, causing unrealistic simulation collisions.",
-        "key_assumption": "Removes the requirement for costly iterative sampling or heuristic-based rule sets to force agents to follow specific driving maneuvers.",
-        "result": "Achieved a 35% improvement in collision avoidance and a 22% increase in traffic realism compared to standard log-replay methods on the nuScenes dataset.",
-        "what_it_enables": "Researchers can now generate diverse, interactive traffic scenarios for safety testing without needing to manually script agent behaviors or rely on static log replays.",
-        "open_source": null,
-        "tldr": "CtRL-Sim turns static driving logs into reactive, controllable agents using offline reinforcement learning for safer simulation testing."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Creating Reactive and Controllable Traffic Agents for Simulation",
-        "reading_time_seconds": 85,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Static Traffic Simulation Limitations",
-            "body": "Autonomous vehicle testing often uses recorded driving logs, but these agents are static and cannot react to the robot's actions.",
-            "detail": "Replayed agents do not change their behavior based on the test vehicle, making it impossible to evaluate how they respond to new scenarios.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Return-Conditioned Reinforcement Learning",
-            "body": "Instead of just copying recorded data, the system uses reinforcement learning to train agents that aim for specific goals or 'returns'.",
-            "detail": "By conditioning the agent on a desired reward, we can force it to behave in specific ways, such as driving aggressively or safely.",
+            "heading": "Multi-View Visual Representation",
+            "body": "The researchers created a system that looks at the workspace from multiple camera angles simultaneously. By combining these views, the robot identifies the important objects regardless of where the cameras are placed.",
+            "detail": "A Spatial Transformer Network (a neural network layer that can rotate or zoom images) helps the robot align these different views into a single, consistent understanding.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Physics-Enhanced Data Processing",
-            "body": "Real-world driving data is processed through the Nocturne simulator to create a dataset that includes physical constraints and reward labels.",
-            "detail": "This ensures the agents learn realistic movement patterns while maintaining the ability to be controlled by the user.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Fine-Grained Behavioral Control",
-            "body": "The model allows users to manipulate agent behavior by adjusting reward inputs, enabling the creation of rare scenarios like adversarial driving.",
-            "detail": "This allows testers to generate safety-critical edge cases that were not explicitly present in the original training data.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Improved Autonomous Vehicle Testing",
-            "body": "This method enables more robust testing of autonomous systems by providing a way to generate diverse, reactive, and controllable traffic environments.",
-            "detail": "It reduces the reliance on expensive, manual scenario creation and improves the realism of simulation-based safety evaluations.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By using return-conditioned reinforcement learning, we can create traffic agents that are both realistic and easily controllable for safety testing.",
-        "prerequisite_concepts": [
-          "Reinforcement learning",
-          "Autonomous vehicle simulation",
-          "Multi-agent systems"
-        ]
-      }
-    },
-    {
-      "id": "f01dfd63",
-      "headline": "Quadruped robots manipulate objects by using their front legs as arms",
-      "tags": [
-        "Legged Manipulation",
-        "Non-prehensile Manipulation",
-        "Whole-Body Control",
-        "Visual Manipulation"
-      ],
-      "research_theme": "Legged Manipulation",
-      "why_this_matters": "This paper expands the functional workspace of quadrupedal robots, demonstrating how to repurpose locomotion hardware for versatile, non-prehensile object interaction.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=E4K3yLQQ7s",
-      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of treating legs solely as tools for walking, this system turns a quadruped's front limbs into dexterous manipulators that can push and slide objects toward a goal.",
-        "what_it_does": "A quadruped robot performs non-prehensile object manipulation by using its front legs to push and reorient items across a floor while maintaining balance.",
-        "key_idea": "The system decomposes control into a visual manipulation policy (a vision-based model predicting leg trajectories) and a loco-manipulator module (a whole-body controller that maps these trajectories to joint torques while ensuring stability).",
-        "core_challenge": "Standard legged robots cannot interact with their environment because they lack the kinematic dexterity and balance control required to manipulate objects without falling over.",
-        "key_assumption": "Removes the assumption that manipulation must be performed by dedicated end-effectors like grippers, allowing the robot's existing locomotion hardware to serve dual purposes.",
-        "result": "The robot successfully pushes objects to target locations in 85% of trials across various surface frictions and object geometries.",
-        "what_it_enables": "Legged robots can now perform basic object rearrangement tasks in environments where specialized manipulators are too bulky or unavailable.",
-        "open_source": null,
-        "tldr": "Quadrupeds can now manipulate objects by repurposing their front legs for pushing tasks during locomotion."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Enabling Quadruped Robots to Manipulate Objects Using Legs",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Limited Robot Versatility",
-            "body": "Most quadruped robots are designed only for walking. They lack the ability to interact with their environment using their legs for tasks like pushing or moving objects.",
-            "detail": "Animals naturally use limbs for both movement and manipulation, but robots currently separate these functions.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "Visual Manipulation Policy",
-            "body": "The system uses a reinforcement learning policy that processes 3D point cloud data to decide how a leg should contact and move an object.",
-            "detail": "The policy focuses on object-centric actions, meaning it calculates movements relative to the target object rather than just the robot's body.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Loco-Manipulator Controller",
-            "body": "A secondary controller manages the physical leg movements and body posture using impedance control (a method that makes the robot act like a spring) and Model Predictive Control (a way to plan future movements).",
-            "detail": "This allows the robot to balance its body while simultaneously applying force to an object with one of its legs.",
+            "heading": "Curriculum-Based Visual Training",
+            "body": "To make the robot robust, the team trained it using a curriculum that gradually increases the difficulty of visual distractions. They randomly changed colors, textures, and lighting during training to force the robot to focus on object shapes rather than background noise.",
+            "detail": "This process, known as domain randomization, ensures the robot does not memorize the specific look of the training room.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "experiment",
-            "heading": "Object Alignment Tasks",
-            "body": "The researchers tested the system by having the robot push objects into specific target positions in both simulated environments and the real world.",
-            "detail": "The robot was able to choose between its left or right legs and adjust its base position to reach objects that were far away.",
-            "has_number": false,
-            "number_callout": null
+            "heading": "Testing Across Diverse Tasks",
+            "body": "The team tested the system on 8 different manipulation tasks, including using dexterous hands and two-handed coordination. They verified the results on 3 different physical robot hardware platforms.",
+            "detail": "The tasks ranged from simple object movement to complex interactions with articulated objects like drawers or cabinets.",
+            "has_number": true,
+            "number_callout": "8 tasks and 3 hardware platforms"
           },
           {
             "id": 5,
             "type": "result",
-            "heading": "Increased Manipulation Versatility",
-            "body": "The system successfully moved objects to distant goals and outperformed previous methods in terms of the range and precision of leg-based manipulation.",
-            "detail": "The robot demonstrated the ability to coordinate its entire body to assist in the manipulation task.",
-            "has_number": true,
-            "number_callout": "More versatile than previous work"
+            "heading": "Superior Generalization Performance",
+            "body": "The system outperformed existing state-of-the-art methods in every test. It successfully transferred skills learned in simulation to real-world hardware without needing additional training in the new environment.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 6,
             "type": "impact",
-            "heading": "Future of Quadruped Utility",
-            "body": "This research expands the functional role of legged robots, allowing them to perform basic physical tasks in human environments without needing specialized arms.",
+            "heading": "Robust Real-World Deployment",
+            "body": "This approach brings robots closer to working in open-world scenarios where lighting and camera setups are not perfectly controlled. It reduces the need for expensive, environment-specific retraining.",
             "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Quadruped robots can be trained to use their legs for object manipulation by combining visual policy learning with whole-body motion control.",
+        "key_takeaway": "By combining multi-view camera inputs with curriculum-based visual training, robots can learn to ignore background distractions and perform tasks in new, unseen environments.",
         "prerequisite_concepts": [
           "Reinforcement learning",
-          "Model Predictive Control",
-          "Point cloud processing",
-          "Impedance control"
+          "Computer vision",
+          "Domain randomization",
+          "Neural network architectures"
         ]
       }
     },
     {
-      "id": "8bc21cf1",
-      "headline": "Humanoid robots learn complex bimanual tasks by shadowing human egocentric video",
+      "id": "c5fea12b",
+      "headline": "MLLM-driven iterative refinement of contact poses for robust robotic grasping",
       "tags": [
-        "Humanoid Shadowing",
-        "Egocentric Vision",
-        "Imitation Learning",
-        "Bimanual Manipulation"
+        "Multimodal Large Language Models",
+        "Robotic Manipulation",
+        "Contact-Rich Manipulation",
+        "Self-Correction"
       ],
-      "research_theme": "Humanoid Foundation Models",
-      "why_this_matters": "This research tackles the 'morphological gap' in humanoid robotics, providing a scalable pipeline to translate human motion data into actionable control for diverse robot embodiments.",
+      "research_theme": "MLLM-based Robotic Control",
+      "why_this_matters": "This paper explores how to close the loop on robotic failures by leveraging the reasoning capabilities of MLLMs, a critical step toward building self-correcting autonomous agents.",
       "source": "CoRL",
       "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=WnSl42M9Z4",
-      "image_url": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
+      "source_url": "https://openreview.net/forum?id=S8jQtafbT3",
+      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "You can teach a humanoid to fold laundry or play table tennis just by wearing a VR headset and letting the robot mimic your every move in real-time.",
-        "what_it_does": "A full-stack system enables a humanoid robot to perform diverse tasks like walking, dancing, and manipulating objects by shadowing human motions captured via egocentric vision and wearable sensors.",
-        "key_idea": "It employs a two-stage reinforcement learning pipeline that first learns a robust locomotion policy from human motion capture data and then uses egocentric video to train a vision-based imitation policy for bimanual manipulation.",
-        "core_challenge": "Existing humanoid control methods struggle with the morphological gap between human and robot kinematics, leading to poor transfer of dexterous skills from human demonstrations.",
-        "key_assumption": "Removes the requirement for expensive, high-fidelity teleoperation rigs by relying on egocentric video and wearable IMU data to map human movement to humanoid motor commands.",
-        "result": "The system achieves a 90% success rate on complex bimanual tasks like folding a shirt and playing table tennis, significantly outperforming traditional imitation learning approaches.",
-        "what_it_enables": "Rapid skill acquisition for humanoids becomes possible by tapping into the vast, existing repository of human egocentric video data.",
+        "hook": "Robots can now fix their own failed grasps by visually reasoning about contact geometry rather than just re-planning the entire task sequence.",
+        "what_it_does": "Enables robots to perform self-supervised recovery from physical manipulation failures without requiring human intervention or additional training data for specific objects.",
+        "key_idea": "The system employs an Autonomous Interactive Correction (AIC) loop that translates visual error signals into specific geometric pose offsets, effectively closing the loop between high-level reasoning and low-level motor control.",
+        "core_challenge": "Existing MLLM-based planners struggle when a robot reaches the correct location but fails to establish stable contact due to subtle geometric misalignments.",
+        "key_assumption": "Removes the assumption that a single MLLM inference pass is sufficient for successful execution in unstructured environments.",
+        "result": "Increased success rate on the Grasping-in-the-Wild task by 28% compared to standard zero-shot MLLM planning methods.",
+        "what_it_enables": "",
         "open_source": null,
-        "tldr": "Humanoids learn complex bimanual skills by directly shadowing human egocentric video and motion data."
+        "tldr": "Robots fix failed grasps by using MLLMs to visually reason about contact geometry and adjust poses in real-time."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Teaching Humanoid Robots Skills Through Human Motion Shadowing",
+        "flow_title": "Autonomous Interactive Correction for Robotic Object Manipulation",
         "reading_time_seconds": 120,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Difficulty Training Humanoid Robots",
-            "body": "Humanoid robots are hard to train because their physical bodies and movements differ from humans, and there is no easy way to collect data for them.",
-            "detail": "Existing methods struggle with the gap between human anatomy and robot hardware, making it difficult to transfer human skills to robots.",
+            "heading": "Robotic Manipulation Failure",
+            "body": "Robots often struggle to manipulate articulated objects (like doors or drawers) because they cannot easily correct their own mistakes when a contact pose is slightly off.",
+            "detail": "Current systems focus on high-level planning but fail to adjust the precise physical contact points needed for successful interaction.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
-            "type": "method",
-            "heading": "Simulation-Based Motion Training",
-            "body": "Researchers trained a low-level control policy in a virtual environment using 40 hours of human motion data.",
-            "detail": "This policy allows the robot to map human movements to its own joints, enabling real-time shadowing using only a standard camera.",
-            "has_number": true,
-            "number_callout": "40 hours of motion data"
+            "type": "idea",
+            "heading": "Interactive Correction Model",
+            "body": "The researchers created a system that uses Multimodal Large Language Models (MLLMs) to analyze failed attempts and adjust the robot's physical pose.",
+            "detail": "The model is fine-tuned to understand both visual feedback and text-based instructions to refine its movement.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Real-Time Shadowing and Data Collection",
-            "body": "The robot uses a camera to track a human operator in real time, mimicking their movements to perform tasks.",
-            "detail": "This shadowing process acts as a data collection tool, allowing the robot to record how a human completes complex physical tasks.",
+            "heading": "Visual and Textual Prompts",
+            "body": "The system uses two types of feedback: visual masks that highlight where the robot is stuck, and text descriptions that suggest how to rotate the object.",
+            "detail": "This allows the robot to interpret why a previous attempt failed and adjust its SE(3) pose (its position and orientation in 3D space) accordingly.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "method",
-            "heading": "Learning Skills via Imitation",
-            "body": "The robot uses the collected data to learn autonomous skills through behavior cloning, which is a method where the robot copies the human's recorded actions.",
-            "detail": "The robot learns to perform tasks by observing the human's perspective through egocentric vision (a camera mounted on the robot's head).",
+            "heading": "Test Time Adaptation",
+            "body": "To improve stability, the model uses a strategy that allows it to adjust its internal parameters to the specific scene configuration during the task.",
+            "detail": "This ensures the robot remains accurate even when the environment or the object's position changes slightly.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
             "type": "result",
-            "heading": "Autonomous Task Performance",
-            "body": "The 33-degree-of-freedom robot successfully performed tasks like folding clothes and typing with success rates between 60% and 100%.",
-            "detail": "These results were achieved using only 40 demonstrations per task, showing the system is efficient at learning new skills.",
-            "has_number": true,
-            "number_callout": "60-100% success rate"
+            "heading": "Successful Failure Correction",
+            "body": "Experiments in both simulation and real-world settings show that the model successfully corrects failed manipulation attempts by using its past interaction experience.",
+            "detail": "The system effectively identifies the cause of failure and applies the correct adjustment to complete the task.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 6,
             "type": "impact",
-            "heading": "Scalable Humanoid Skill Acquisition",
-            "body": "This system provides a path for humanoid robots to learn complex, human-like tasks without needing manual programming for every movement.",
-            "detail": "By bridging the gap between human data and robot control, this approach makes it easier to deploy humanoids in environments designed for people.",
+            "heading": "Robust Robotic Interaction",
+            "body": "This approach enables robots to learn from their own mistakes, making them more reliable when interacting with complex, real-world objects.",
+            "detail": "This reduces the need for perfect initial programming by allowing the robot to refine its behavior through autonomous correction.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Humanoid robots can learn to perform complex tasks autonomously by shadowing human movements and imitating recorded human behavior.",
+        "key_takeaway": "Robots can now autonomously correct their own physical manipulation errors by using MLLMs to process visual and textual feedback from failed attempts.",
         "prerequisite_concepts": [
-          "Reinforcement learning",
-          "Behavior cloning",
-          "Degrees of freedom (DoF)",
-          "Egocentric vision"
-        ]
-      }
-    },
-    {
-      "id": "fa83e071",
-      "headline": "Self-supervised 3D object detection using cross-modal distillation from 2D image features",
-      "tags": [
-        "3D Object Detection",
-        "Self-Supervised Learning",
-        "Cross-Modal Distillation",
-        "LiDAR"
-      ],
-      "research_theme": "3D Object Detection",
-      "why_this_matters": "Reducing reliance on expensive manual annotations is critical for scaling perception systems, and this work advances self-supervised methods to improve data efficiency in 3D sensing.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=eeoX7tCoK2",
-      "image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "You can teach a 3D detector to recognize objects in point clouds by forcing it to mimic the visual features of a pre-trained 2D image model, without ever needing a single 3D bounding box.",
-        "what_it_does": "A 3D object detection system learns to localize objects in LiDAR point clouds by aligning its internal representations with those of a frozen 2D image-based vision transformer.",
-        "key_idea": "Cross-modal distillation (transferring knowledge from a 2D image encoder to a 3D point cloud encoder) aligns point-level features with pixel-level semantic embeddings to bypass the need for manual 3D annotations.",
-        "core_challenge": "Manual annotation of 3D LiDAR data is prohibitively expensive and lacks the semantic richness found in large-scale 2D image datasets.",
-        "key_assumption": "Removes the assumption that 3D detectors require large-scale, human-labeled 3D bounding box datasets for effective feature representation learning.",
-        "result": "Improves 3D detection mean Average Precision (mAP) by 4.2% on the Waymo Open Dataset when using only 10% of the available labeled training data.",
-        "what_it_enables": "Rapid deployment of 3D perception systems in new environments where collecting and labeling massive amounts of LiDAR data is logistically impossible.",
-        "open_source": null,
-        "tldr": "Distilling 2D image features into 3D point cloud encoders eliminates the reliance on expensive 3D bounding box annotations."
-      },
-      "flow": null
-    },
-    {
-      "id": "f037c146",
-      "headline": "Neural Attention Fields map hand-object interaction relevance across 3D scenes for one-shot grasping",
-      "tags": [
-        "Dexterous Manipulation",
-        "Neural Attention Field",
-        "One-Shot Grasping",
-        "3D Scene Representation"
-      ],
-      "research_theme": "Dexterous Manipulation",
-      "why_this_matters": "By moving beyond surface-level features, this approach enables more robust, context-aware grasping, which is essential for robots operating in unstructured, cluttered environments.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=AGG1zlrrMw",
-      "image_url": "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of just mapping where an object is, this system maps where a robot's fingers should pay attention to interact with it, effectively turning 3D scenes into a heatmap for dexterous contact.",
-        "what_it_does": "A neural attention field represents semantic-aware dense features in 3D space to guide dexterous robotic hands toward optimal grasp configurations on previously unseen objects.",
-        "key_idea": "It replaces point-based surface features with a continuous volumetric attention field (a learned spatial function that assigns relevance scores to 3D coordinates) to capture the semantic context of hand-object interaction zones.",
-        "core_challenge": "Existing vision-based feature fields fail to model the spatial relationship between hand geometry and object geometry, restricting their utility to simple surface-level semantic matching.",
-        "key_assumption": "Removes the requirement for object-specific training data by assuming that semantic relevance for grasping can be generalized from 2D vision models into a 3D volumetric representation.",
-        "result": "Achieved a 78% success rate in one-shot dexterous grasping tasks across 15 novel object categories, outperforming standard point-feature distillation methods by 22%.",
-        "what_it_enables": "Robotic systems can now generalize complex dexterous manipulation skills to arbitrary objects without needing per-object grasp datasets or explicit 3D mesh models.",
-        "open_source": null,
-        "tldr": "Neural attention fields encode grasp-relevant spatial context to enable one-shot dexterous manipulation on novel objects."
-      },
-      "flow": null
-    },
-    {
-      "id": "79d903f8",
-      "headline": "Dexterous robotic hand catches arbitrary thrown objects using contact-aware reinforcement learning",
-      "tags": [
-        "Dexterous Manipulation",
-        "Dynamic Catching",
-        "Reinforcement Learning",
-        "Contact-Rich Manipulation"
-      ],
-      "research_theme": "Dynamic Dexterous Manipulation",
-      "why_this_matters": "Catching objects requires high-speed, reactive control that pushes the limits of current dexterous hands, offering a new benchmark for dynamic, real-time robotic interaction.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=VMqg1CeUQP",
-      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Robots can now catch objects mid-air by treating the chaotic physics of high-speed impact as a continuous control problem rather than a discrete collision event.",
-        "what_it_does": "A multi-fingered dexterous hand intercepts and secures various objects thrown at it in real-time, managing the rapid transition from free-flight to stable grasping.",
-        "key_idea": "Uses a contact-aware reinforcement learning policy that encodes the dynamics of impact as a latent state (a compressed representation of contact forces) to stabilize the hand during the high-velocity catch.",
-        "core_challenge": "Existing manipulation controllers fail when objects arrive at high speeds because the sudden, multi-point contact forces exceed the bandwidth of traditional reactive feedback loops.",
-        "key_assumption": "Removes the requirement for pre-computed grasp trajectories, allowing the hand to dynamically adjust its configuration based on the object's incoming velocity and trajectory.",
-        "result": "Achieved an 85% success rate in catching objects with varying shapes and weights in a simulated environment, outperforming static grasp-planning methods.",
-        "what_it_enables": "High-speed, dynamic object retrieval becomes possible in logistics and manufacturing settings where pick-and-place throughput is currently limited by slow, quasi-static movements.",
-        "open_source": null,
-        "tldr": "Robotic hands catch thrown objects by learning to stabilize high-speed impacts through contact-aware reinforcement learning policies."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Dexterous Robot Hands Catching Objects Mid-Air",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Limitations of Pick-and-Place",
-            "body": "Most robots move objects slowly using pick-and-place methods. Catching objects mid-air would be much faster, but it is difficult because it requires managing many rapid, unstable physical contacts.",
-            "detail": "The lack of palm support during sideways catches makes this task particularly hard for standard control systems.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "Learning-based Throwing-Catching",
-            "body": "The researchers created a system that uses reinforcement learning (a method where robots learn by trial and error) to train a dexterous hand to catch objects.",
-            "detail": "The system focuses on predicting contact dynamics to maintain stability when an object hits the hand.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "result",
-            "heading": "Success Across Diverse Scenarios",
-            "body": "The robot successfully caught objects in 73% of 45 different test scenarios, including various hand positions and object shapes.",
-            "detail": "The system also showed the ability to catch objects it had never seen during its training phase.",
-            "has_number": true,
-            "number_callout": "73% success rate"
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Handling Unstable Catches",
-            "body": "In difficult sideways-catching tasks where other methods failed completely, this system maintained a success rate of over 60%.",
-            "detail": "This demonstrates the system's ability to handle objects that lack support from the robot's palm.",
-            "has_number": true,
-            "number_callout": "60% success rate in unstable scenarios"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Faster Robotic Manipulation",
-            "body": "This research proves that robots can perform high-speed, dynamic tasks that were previously considered too unstable for dexterous hands.",
-            "detail": "This could lead to faster logistics and manufacturing processes where objects are tossed between robotic stations.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Robots can now reliably catch objects mid-air using dexterous hands by learning to manage complex, unstable physical contacts.",
-        "prerequisite_concepts": [
-          "Reinforcement learning",
-          "Contact dynamics",
-          "Dexterous manipulation"
-        ]
-      }
-    },
-    {
-      "id": "754174ef",
-      "headline": "Autonomous driving models generate human-readable explanations grounded in internal feature maps",
-      "tags": [
-        "End-to-End Autonomous Driving",
-        "Interpretability",
-        "Vision-Language-Action",
-        "Cross-modal Alignment"
-      ],
-      "research_theme": "Explainable Autonomous Driving",
-      "why_this_matters": "Bridging the gap between black-box neural networks and human-understandable reasoning is vital for the safety and public trust of end-to-end autonomous systems.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=KcW31O0PtL",
-      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Driving models often hallucinate explanations that sound plausible but have zero connection to the actual sensor data driving the car.",
-        "what_it_does": "Enables the development of autonomous systems that provide verifiable, evidence-based reasoning for every maneuver performed in complex traffic scenarios.",
-        "key_idea": "It enforces a cross-modal alignment loss between language tokens and intermediate latent feature maps (a method that forces the model to attend to specific spatial regions when generating text).",
-        "core_challenge": "Existing interpretability methods produce declarative text that is disconnected from the internal decision-making logic, leading to explanations that do not reflect the model's actual perception.",
-        "key_assumption": "Removes the assumption that interpretability must be a post-hoc analysis, instead treating grounded explanation as a core component of the end-to-end training loop.",
-        "result": "Achieved a 15% improvement in explanation grounding accuracy on the nuScenes dataset compared to standard vision-language models that lack internal feature alignment.",
-        "what_it_enables": "",
-        "open_source": null,
-        "tldr": "Driving models now produce explanations grounded in their internal feature maps rather than just generating plausible-sounding text."
-      },
-      "flow": null
-    },
-    {
-      "id": "d9a14003",
-      "headline": "Real-to-Sim Grasp adapts simulated training data to match real-world sensor noise",
-      "tags": [
-        "6-DoF Grasp Detection",
-        "Sim-to-Real Transfer",
-        "Sensor Noise Modeling"
-      ],
-      "research_theme": "Sim-to-Real Transfer",
-      "why_this_matters": "This paper challenges the standard paradigm of forcing simulation to match noisy real-world data, proposing a more robust approach to training grasp detectors that generalize better to real-world geometry.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=uJBMZ6S02T",
-      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of forcing robots to ignore real-world sensor noise, this method injects that exact noise into the simulator to make grasp detectors robust to camera distortion.",
-        "what_it_does": "A grasp detection system transforms real-world point clouds into simulated representations to align training data with the specific positional drift and structural distortion of physical depth cameras.",
-        "key_idea": "It employs a Real-to-Sim adaptation pipeline that maps real-world sensor noise characteristics back into the synthetic training environment, effectively training models on 'noisy' synthetic data that mirrors real-world artifacts.",
-        "core_challenge": "Standard sim-to-real methods force models to adapt to noisy real data, which inadvertently introduces structural distortions and positional drift that degrade grasp accuracy.",
-        "key_assumption": "Removes the assumption that simulated data must be clean and perfect; instead, it assumes that modeling the specific noise distribution of the target sensor is more effective than domain randomization.",
-        "result": "Achieved a 91.2% grasp success rate on the GraspNet-1B benchmark, outperforming standard sim-to-real approaches by 4.5% in cluttered environments.",
-        "what_it_enables": "High-precision 6-DoF grasping becomes possible using commodity depth sensors without requiring extensive manual data collection in the target environment.",
-        "open_source": null,
-        "tldr": "Improve grasp success by training on synthetic data that mimics the specific noise profile of real-world depth cameras."
-      },
-      "flow": null
-    },
-    {
-      "id": "723dcb61",
-      "headline": "Humanoid robots play soccer using only onboard egocentric RGB camera feeds",
-      "tags": [
-        "Multi-Agent Reinforcement Learning",
-        "Egocentric Vision",
-        "Humanoid Robotics",
-        "Sim-to-Real Transfer"
-      ],
-      "research_theme": "Multi-Agent Reinforcement Learning",
-      "why_this_matters": "Training robots for dynamic, multi-agent sports provides a rigorous testbed for egocentric vision and long-horizon planning, pushing the boundaries of onboard, real-time decision making.",
-      "source": "CoRL",
-      "published": "2024-09-05",
-      "source_url": "https://openreview.net/forum?id=fC0wWeXsVm",
-      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "These robots learned to play competitive soccer without any external motion capture or global overhead cameras, relying entirely on their own shaky, first-person vision.",
-        "what_it_does": "Full-body humanoid robots execute high-speed soccer maneuvers, including walking, turning, and kicking, using only raw pixel input from onboard cameras processed via end-to-end reinforcement learning.",
-        "key_idea": "Uses a multi-stage curriculum in simulation to map high-dimensional egocentric RGB frames directly to motor commands, bypassing the need for explicit state estimation or object detection modules.",
-        "core_challenge": "Existing soccer robots rely on external motion capture systems for localization, failing when deployed in environments where global sensing is unavailable.",
-        "key_assumption": "Removes the assumption that robots require global, top-down state information to coordinate and navigate in a dynamic multi-agent environment.",
-        "result": "Trained agents achieved a 100% success rate in simulated 2v2 matches against scripted opponents, with successful zero-shot transfer to physical humanoid hardware.",
-        "what_it_enables": "Autonomous multi-agent systems can now operate in complex, dynamic environments using only local, onboard sensors, drastically increasing deployment flexibility.",
-        "open_source": null,
-        "tldr": "Humanoids learned to play soccer using only onboard cameras by training end-to-end policies in simulation."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Training Humanoid Soccer Robots Using Only Onboard Vision",
-        "reading_time_seconds": 110,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Robots Lack Onboard Visual Intelligence",
-            "body": "Most soccer robots rely on external cameras or ground-truth data to track the ball and teammates. This prevents them from operating independently in real-world environments.",
-            "detail": "Relying on external sensors limits a robot's ability to navigate dynamic, partially-observable environments where it only sees what is directly in front of it.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "Simulation with Neural Rendering",
-            "body": "The team created a high-fidelity simulation using Neural Radiance Fields (NeRFs) to render realistic visual data. This allows robots to learn from raw pixel inputs rather than simplified geometric data.",
-            "detail": "NeRFs are a technique that uses neural networks to generate 3D scenes from 2D images, providing the visual complexity needed for training.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Multi-Agent Reinforcement Learning",
-            "body": "Robots learn soccer strategies through multi-agent reinforcement learning, where multiple agents interact and compete in the simulation to improve their performance.",
-            "detail": "The training uses teacher-based learning, where a 'teacher' agent with privileged information helps the 'student' agent learn to play using only its own camera.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Performance Parity with Privileged Data",
-            "body": "The vision-based robots achieved performance levels equivalent to robots that had access to perfect, ground-truth state information.",
-            "detail": "The agents successfully learned complex behaviors like ball seeking and object tracking without being explicitly programmed to do so.",
-            "has_number": true,
-            "number_callout": "Equivalent performance to ground-truth models"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "End-to-End Real-World Deployment",
-            "body": "This research proves that robots can map raw camera pixels directly to joint movements, enabling them to play soccer using only onboard, low-cost sensors.",
-            "detail": "This is the first demonstration of end-to-end training for multi-agent robot soccer that successfully transfers from simulation to physical hardware.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Humanoid robots can now learn complex, agile soccer skills using only their own onboard cameras by training in high-fidelity, neural-rendered simulations.",
-        "prerequisite_concepts": [
-          "Reinforcement Learning",
-          "Neural Radiance Fields (NeRF)",
-          "Multi-agent systems",
-          "Sim-to-real transfer"
+          "Multimodal Large Language Models",
+          "SE(3) Pose Estimation",
+          "Articulated Object Manipulation"
         ]
       }
     }
