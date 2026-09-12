@@ -1,901 +1,842 @@
 {
-  "generated_at": "2026-09-11T03:07:33.562016+00:00",
+  "generated_at": "2026-09-12T03:09:54.804680+00:00",
   "article_count": 10,
   "articles": [
     {
-      "id": "d07c0934",
-      "headline": "Autonomous vehicle reinforcement learning via parameterized motion skill space optimization",
+      "id": "b3585755",
+      "headline": "Robotic arm throws objects into baskets while navigating around dynamic obstacles",
       "tags": [
-        "Autonomous Driving",
-        "Reinforcement Learning",
-        "Motion Skills",
-        "Expert Priors"
+        "Dynamic Robotic Throwing",
+        "Safe Reinforcement Learning",
+        "Potential Fields",
+        "Obstacle Avoidance"
       ],
-      "research_theme": "Autonomous Driving RL",
-      "why_this_matters": "This work addresses the scalability of RL in dense traffic, a critical hurdle for moving beyond manually tuned driving policies.",
-      "source": "RSS",
-      "published": "2023-05-08",
-      "source_url": "http://arxiv.org/abs/2305.04412v1",
-      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+      "research_theme": "Dynamic Robotic Throwing",
+      "why_this_matters": "This work addresses the challenge of dynamic object manipulation in cluttered spaces, a critical step for robots to move beyond static pick-and-place tasks.",
+      "source": "ICRA",
+      "published": "2026-07-07",
+      "source_url": "http://arxiv.org/abs/2607.06388v1",
+      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of teaching a car how to steer and accelerate, this system learns to select high-level maneuvers from a library of expert-derived motion primitives.",
-        "what_it_does": "An autonomous vehicle navigates dense traffic by selecting parameters for motion skills rather than outputting raw control commands.",
-        "key_idea": "Inverse skill parameter recovery maps expert demonstrations into a latent skill space, allowing the agent to optimize over motion primitives initialized with human priors.",
-        "core_challenge": "Reinforcement learning agents struggle to converge in interactive, dense traffic because raw control spaces are too high-dimensional and sample-inefficient.",
-        "key_assumption": "Removes the assumption that agents must learn control policies from scratch by constraining the action space to a pre-defined set of parameterized motion skills.",
-        "result": "Achieved a 20% higher peak reward in dense traffic scenarios compared to agents learning from scratch without expert priors.",
-        "what_it_enables": "Faster training convergence for complex driving maneuvers like roundabout navigation and highway overtaking in interactive environments.",
+        "hook": "Instead of mapping every obstacle individually, the robot treats the entire workspace as a fluid-like landscape of magnetic-style forces that pull it toward the target and push it away from collisions.",
+        "what_it_does": "A robotic arm executes high-speed throwing motions to place objects into target containers while avoiding randomly positioned obstacles in the environment.",
+        "key_idea": "Uses a potential field state representation (a grid-based encoding where target locations exert attractive forces and obstacles exert repulsive forces) to provide a fixed-dimensional input to a reinforcement learning policy.",
+        "core_challenge": "Existing throwing policies fail in cluttered environments because they cannot generalize to arbitrary obstacle configurations or scale their input space as the number of obstacles increases.",
+        "key_assumption": "Removes the assumption that throwing trajectories must be obstacle-free, shifting the burden from explicit geometric planning to a learned policy conditioned on force-field representations.",
+        "result": "Maintains high throwing success rates in environments with varying obstacle densities where traditional analytic motion kernels fail to identify feasible trajectories.",
+        "what_it_enables": "High-throughput robotic sorting and logistics in dense, unpredictable warehouse environments where direct line-of-sight throwing is frequently obstructed.",
         "open_source": null,
-        "tldr": "Optimizing over parameterized motion skills instead of raw control inputs accelerates learning in dense traffic scenarios."
+        "tldr": "Robot learns to throw objects around obstacles by representing the workspace as a field of attractive and repulsive forces."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Efficient Reinforcement Learning for Autonomous Driving via Skill Priors",
-        "reading_time_seconds": 110,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Inefficient Autonomous Driving Training",
-            "body": "Reinforcement learning agents often struggle to learn safe driving behaviors in dense traffic without requiring massive amounts of training data.",
-            "detail": "Standard methods often fail to converge or require excessive trial-and-error, leading to high collision rates during the learning phase.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Parameterized Motion Skills",
-            "body": "Instead of controlling the vehicle at every tiny time step, the agent learns to select from a set of pre-defined motion skills.",
-            "detail": "By operating in a 'skill space' rather than a raw 'control space', the agent simplifies the decision-making process significantly.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Incorporating Expert Priors",
-            "body": "The system uses expert driving demonstrations to guide the agent, converting human driving data into the same skill space the agent uses.",
-            "detail": "A double initialization technique ensures the agent starts with a baseline understanding of how to drive, rather than starting from random behavior.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Performance Improvement Over Baseline",
-            "body": "The new method achieves a peak reward 20% higher than agents that learn from scratch without expert guidance.",
-            "detail": "Agents without priors suffer from high collision rates and low rewards, whereas this approach stabilizes performance much faster.",
-            "has_number": true,
-            "number_callout": "20% higher peak reward"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Scalable Driving Policies",
-            "body": "This approach allows autonomous vehicles to navigate complex, interactive traffic scenarios more reliably while reducing the data needed for training.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By training agents to choose from parameterized motion skills guided by expert data, autonomous vehicles can learn complex driving tasks more efficiently and safely.",
-        "prerequisite_concepts": [
-          "Reinforcement learning",
-          "Control theory",
-          "Autonomous vehicle path planning"
-        ]
-      }
-    },
-    {
-      "id": "743ab301",
-      "headline": "Robots synthesize contact behaviors by maximizing Fisher Information to characterize object properties",
-      "tags": [
-        "Active Contact Learning",
-        "Optimal Experimental Design",
-        "Fisher Information",
-        "Contact Dynamics"
-      ],
-      "research_theme": "Active Contact Learning",
-      "why_this_matters": "Understanding how to actively maximize information gain from sparse contact data is essential for robots to learn about their physical environment.",
-      "source": "RSS",
-      "published": "2025-05-18",
-      "source_url": "http://arxiv.org/abs/2505.12214v2",
-      "image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of just trying to complete a task, the robot actively pushes objects in ways that minimize uncertainty about their physical properties.",
-        "what_it_does": "A robotic manipulator generates exploratory trajectories that maximize the Fisher Information of contact events to estimate unknown object parameters like mass and friction.",
-        "key_idea": "It treats active sensing as an optimal experimental design problem, using Fisher Information Maximization (a statistical method to quantify the information content of observations) to select contact points that yield the highest sensitivity to object parameters.",
-        "core_challenge": "Contact data is inherently sparse and non-smooth, making traditional gradient-based exploration ineffective at capturing the physical properties of objects.",
-        "key_assumption": "Removes the assumption that exploratory motions must be pre-defined or random, replacing them with a mathematically derived objective for information gain.",
-        "result": "Reduced parameter estimation error by 42% compared to random exploration strategies during object manipulation tasks.",
-        "what_it_enables": "Robots can autonomously learn complex physical models of unknown objects through minimal, high-utility physical interactions.",
-        "open_source": null,
-        "tldr": "Robots learn object properties faster by choosing contact points that maximize information gain through Fisher Information optimization."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Active Contact Learning via Fisher Information Maximization",
+        "flow_title": "Enabling Safe Robotic Throwing in Cluttered Logistics Environments",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Sparse Contact Data",
-            "body": "Robots struggle to learn about objects because contact events are rare and unpredictable. Current methods often fail to gather enough useful data during physical interactions.",
-            "detail": "Contact dynamics are non-smooth, meaning small changes in motion lead to large, sudden changes in force, making them hard to model.",
+            "heading": "Limitations of Current Throwing",
+            "body": "Robots can increase warehouse throughput by throwing objects, but existing methods only work in empty spaces without obstacles.",
+            "detail": "Current systems struggle when walls, bins, or other items block the direct path to a target basket.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "context",
+            "heading": "The Need for Dynamic Placement",
+            "body": "Moving objects by hand is slow and limits the robot's reach, whereas throwing extends the effective workspace beyond the arm's physical limit.",
+            "detail": "In logistics, speed is critical, and throwing allows for faster sorting than complex pick-and-place maneuvers.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "idea",
+            "heading": "Potential Field Representation",
+            "body": "The researchers use a potential field to represent the environment, where the target basket acts as an attractor and obstacles act as repulsors.",
+            "detail": "This approach converts complex spatial layouts into a fixed-dimensional grid, making it easier for the robot to process any number of obstacles.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "method",
+            "heading": "Safe Reinforcement Learning",
+            "body": "The robot is trained using reinforcement learning to maximize throwing accuracy while strictly avoiding collisions with the mapped obstacles.",
+            "detail": "By using the potential field as input, the policy learns to generalize across different obstacle configurations without needing to be retrained for every new layout.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Improved Logistics Throughput",
+            "body": "This method allows robots to operate in real-world, cluttered environments, significantly increasing the speed of automated sorting and fulfillment systems.",
+            "detail": "By enabling safe, obstacle-aware throwing, robots can handle tasks that were previously too slow or physically impossible.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By representing obstacles as repulsive forces in a potential field, robots can learn to throw objects safely in cluttered environments.",
+        "prerequisite_concepts": [
+          "Reinforcement learning",
+          "Potential fields",
+          "Robot kinematics"
+        ]
+      }
+    },
+    {
+      "id": "fe861377",
+      "headline": "WebSocket-based ROS2 communication bridge for secure wide-area network robot operation",
+      "tags": [
+        "ROS2",
+        "Distributed Robotics",
+        "WAN Communication",
+        "WebSocket"
+      ],
+      "research_theme": "Distributed Robotics Systems",
+      "why_this_matters": "Understanding how to bridge ROS2 across WANs is essential for researchers building scalable, remote-operated robotic fleets that operate outside local networks.",
+      "source": "ICRA",
+      "published": "2026-08-25",
+      "source_url": "http://arxiv.org/abs/2608.25102v1",
+      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Standard ROS2 communication breaks over the internet because it relies on local network multicast, effectively trapping robots inside their own office Wi-Fi.",
+        "what_it_does": "Enables bidirectional exchange of ROS2 topics, services, actions, and tf2 transforms across routed WAN environments by encapsulating data within WebSocket streams.",
+        "key_idea": "Replaces multicast-dependent DDS discovery with a client-server WebSocket architecture that acts as a transport-layer mediator, bypassing the need for network-level multicast support.",
+        "core_challenge": "DDS and RTPS protocols fundamentally require IP multicast for participant discovery, which is typically blocked or unsupported across routed WANs and public internet infrastructure.",
+        "key_assumption": "Removes the assumption that robots must reside on the same multicast-capable local network to communicate, allowing for transparent remote interaction without vendor-specific network configurations.",
+        "result": "Maintains lower round-trip latency and higher stability under concurrent loads compared to existing solutions like DDSRouter, rosbridge, and Zenoh.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "ROS2 Connect tunnels ROS2 traffic over WebSockets to bypass multicast restrictions and enable reliable internet-based robot communication."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Enabling Reliable ROS2 Communication Across Wide-Area Networks",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "ROS2 Limited to Local Networks",
+            "body": "ROS2 relies on multicast discovery, a networking method that works well in local offices but is blocked by most routers on the public internet.",
+            "detail": "Because standard ROS2 communication (DDS/RTPS) requires multicast, robots cannot easily talk to each other or remote operators across different network sites.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Optimal Experimental Design",
-            "body": "Instead of moving randomly, the robot chooses actions specifically designed to maximize the information gained from every touch.",
-            "detail": "This uses Fisher Information, a statistical measure that quantifies how much a set of measurements tells us about an unknown parameter.",
+            "heading": "WebSocket-Based Communication Bridge",
+            "body": "The researchers created ROS2 Connect, a tool that replaces multicast discovery with WebSockets, which are standard protocols that pass through almost all modern routers.",
+            "detail": "This allows ROS2 topics, services, and actions to travel over the internet without needing special network-layer configurations.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Contact-Aware Behavior Synthesis",
-            "body": "The robot optimizes its trajectory to prioritize contact points that provide the most clarity about the object's physical properties.",
-            "detail": "By maximizing the Fisher Information matrix, the robot effectively 'asks' the environment the most revealing questions through touch.",
+            "heading": "Secure Remote Access",
+            "body": "The framework includes built-in authentication and authorization, ensuring that only verified users can control the robot over the internet.",
+            "detail": "This adds a layer of security necessary for operating robots in public or heterogeneous network environments.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Improved Parameter Estimation",
-            "body": "The robot identifies object properties like mass and friction with 40% higher accuracy compared to standard exploration strategies.",
-            "detail": "The system successfully reduced the uncertainty in physical parameter estimation by 25% over baseline methods.",
+            "heading": "Lower Latency and Higher Stability",
+            "body": "Tests show that ROS2 Connect maintains lower and more consistent latency compared to existing solutions like DDSRouter or Zenoh, even when handling many parallel data streams.",
+            "detail": "The system was tested with up to 10 parallel topics, showing predictable performance across various message sizes.",
             "has_number": true,
-            "number_callout": "40% higher accuracy"
+            "number_callout": "10 parallel topics"
           },
           {
             "id": 5,
             "type": "impact",
-            "heading": "Autonomous Object Characterization",
-            "body": "This allows robots to learn the physical properties of unknown objects quickly without needing human-provided labels or pre-programmed models.",
-            "detail": "This is a critical step toward robots that can safely manipulate diverse, unfamiliar items in household or industrial settings.",
+            "heading": "Simplified Cloud Robotics",
+            "body": "This tool makes it significantly easier to deploy robots for remote operation and cloud-based coordination without complex network infrastructure changes.",
+            "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots can learn about objects faster by actively choosing movements that maximize the information gained from physical contact.",
+        "key_takeaway": "ROS2 Connect uses WebSockets to bypass network restrictions, allowing robots to communicate reliably and securely over the internet.",
         "prerequisite_concepts": [
-          "Fisher Information",
-          "Optimal control",
-          "Contact dynamics",
-          "Parameter estimation"
+          "ROS2 (Robot Operating System 2)",
+          "DDS (Data Distribution Service)",
+          "WebSockets",
+          "Network Latency"
         ]
       }
     },
     {
-      "id": "d73bd478",
-      "headline": "High-fidelity contact-rich simulation for robotic assembly using Signed Distance Fields",
+      "id": "5e02c725",
+      "headline": "Caspar compiles symbolic Python expressions into high-performance CUDA kernels for nonlinear optimization",
       "tags": [
-        "Contact-Rich Manipulation",
-        "Robotic Assembly",
-        "Physics Simulation",
-        "Reinforcement Learning"
+        "GPU-Accelerated Optimization",
+        "Symbolic Programming",
+        "CUDA Kernel Generation",
+        "Nonlinear Least Squares"
       ],
-      "research_theme": "Robotic Assembly Simulation",
-      "why_this_matters": "Efficiently simulating contact-rich assembly is a bottleneck for applying deep learning to high-precision manufacturing tasks.",
-      "source": "RSS",
-      "published": "2022-05-07",
-      "source_url": "http://arxiv.org/abs/2205.03532v1",
+      "research_theme": "GPU-Accelerated Optimization",
+      "why_this_matters": "Bridging symbolic programming with high-performance CUDA kernels allows researchers to run complex nonlinear optimization in real-time without sacrificing code readability.",
+      "source": "ICRA",
+      "published": "2026-05-28",
+      "source_url": "http://arxiv.org/abs/2605.30583v1",
       "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Standard simulators struggle with the tiny clearances of a nut and bolt, but by replacing triangle-mesh collisions with Signed Distance Fields, this system makes complex assembly tasks computationally tractable.",
-        "what_it_does": "A physics simulation environment enables reinforcement learning for high-precision assembly tasks like peg-in-hole, threaded fastener mating, and gear meshing by modeling contact-rich interactions.",
-        "key_idea": "The system replaces traditional mesh-based collision detection with Signed Distance Fields (SDFs), which represent object surfaces as continuous fields, allowing for efficient and stable contact force calculation during tight-clearance interactions.",
-        "core_challenge": "Existing simulators fail when handling geometrically complex, tight-clearance bodies because naive collision schemes for high-resolution meshes exceed memory and compute limits.",
-        "key_assumption": "Removes the reliance on expensive, custom industrial fixtures by enabling simulation-based policy training that generalizes to contact-rich assembly tasks.",
-        "result": "The system successfully trains reinforcement learning policies for complex assembly tasks like nut-and-bolt mating, which previously required specialized industrial hardware or manual tuning.",
-        "what_it_enables": "Accelerates the development of general-purpose robotic assembly policies by reducing the inductive bias and algorithmic burden required to handle physical contact constraints.",
+        "hook": "Writing custom CUDA kernels for robotics optimization is so painful that researchers often settle for slower, generic solvers, but this library automates the entire compilation process from symbolic math.",
+        "what_it_does": "A library that automatically transforms symbolic expressions into optimized CUDA kernels for solving unconstrained nonlinear optimization problems on GPUs.",
+        "key_idea": "It represents symbolic operations as a Directed Acyclic Bipartite Symbolic Expression Graph (DABSEG) to perform expression reordering and register pressure minimization before generating hardware-specific CUDA code.",
+        "core_challenge": "Manual kernel development is error-prone and labor-intensive, while existing high-level optimization libraries often fail to saturate GPU memory bandwidth or manage register pressure effectively.",
+        "key_assumption": "Removes the requirement for manual C++/CUDA implementation when deploying complex nonlinear solvers on embedded or high-performance GPU hardware.",
+        "result": "Achieved a 5 to 20 times speedup on bundle adjustment tasks compared to the best-performing GPU-accelerated alternatives on the BAL dataset.",
+        "what_it_enables": "Rapid iteration on complex optimization algorithms in Python without sacrificing the raw execution speed typically reserved for hand-tuned C++ kernels.",
         "open_source": null,
-        "tldr": "Factory uses Signed Distance Fields to simulate contact-rich assembly tasks efficiently enough for reinforcement learning training."
+        "tldr": "Caspar compiles symbolic Python math into optimized CUDA kernels, outperforming existing GPU solvers by up to 20x."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Simulating Contact-Rich Robotic Assembly for Faster Learning",
-        "reading_time_seconds": 85,
+        "flow_title": "Accelerating Robotics Optimization with Symbolic CUDA Kernel Generation",
+        "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Assembly Automation Challenges",
-            "body": "Robotic assembly tasks like inserting bolts or connectors are difficult to automate because they involve complex physical contact and tight tolerances.",
-            "detail": "Current industrial methods rely on expensive custom tooling and long setup times, making them inflexible for changing production needs.",
+            "heading": "The GPU Programming Bottleneck",
+            "body": "Writing high-performance GPU code for robotics optimization is difficult because it requires manual, error-prone C++ and CUDA development.",
+            "detail": "Researchers often struggle to bridge the gap between high-level mathematical models and the low-level hardware instructions needed for speed.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Automated Symbolic Compilation",
+            "body": "Caspar allows users to define math in Python and automatically converts those expressions into optimized CUDA kernels.",
+            "detail": "It uses a graph structure called DABSEG to represent operations, which allows the system to handle complex functions with multiple outputs.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Optimizing Memory and Registers",
+            "body": "The system rearranges symbolic math to reduce register pressure (the amount of data stored on the GPU) and uses vectorized memory layouts for faster data access.",
+            "detail": "By tailoring how the GPU accesses memory, the system ensures that hardware resources are used as efficiently as possible.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Significant Speed Gains",
+            "body": "When tested on bundle adjustment tasks (a common robotics problem for mapping), the generated code ran 5 to 20 times faster than existing GPU-accelerated alternatives.",
+            "detail": "This performance was measured against the best-performing existing tools on the standard BAL dataset.",
+            "has_number": true,
+            "number_callout": "5 to 20 times faster"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Accessible High-Performance Robotics",
+            "body": "This tool enables researchers to build complex, fast optimization solvers without needing to be experts in low-level GPU hardware programming.",
+            "detail": "It makes performance-oriented symbolic programming a viable alternative to manual kernel writing for many robotics applications.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Caspar automates the creation of high-speed GPU code from simple Python math, making complex robotics optimization significantly faster and easier to implement.",
+        "prerequisite_concepts": [
+          "Nonlinear least squares",
+          "CUDA kernels",
+          "Symbolic computation",
+          "Bundle adjustment"
+        ]
+      }
+    },
+    {
+      "id": "82b00ddd",
+      "headline": "Multi-agent system generates radiology reports by chaining visual evidence and knowledge graphs",
+      "tags": [
+        "Radiology Report Generation",
+        "Multimodal LLMs",
+        "Knowledge Graphs",
+        "Visual Grounding"
+      ],
+      "research_theme": "Multimodal Medical Perception",
+      "why_this_matters": "Improving visual grounding in medical AI is vital for building reliable autonomous systems that can safely interpret clinical data for diagnostic support.",
+      "source": "ICRA",
+      "published": "2026-06-08",
+      "source_url": "http://arxiv.org/abs/2606.14766v1",
+      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of asking a single model to guess a diagnosis from an image, this system forces four specialized agents to argue over evidence and clinical facts before writing a word.",
+        "what_it_does": "A modular multi-agent pipeline processes medical images and clinical context to generate structured, evidence-grounded radiology reports by explicitly separating visual perception, knowledge graph construction, and report synthesis.",
+        "key_idea": "Decomposes radiology report generation into a coordinated multi-agent process (Vision, Knowledge Graph, Retrieval, and Synthesis) that forces the system to externalize intermediate evidence before drafting the final text.",
+        "core_challenge": "End-to-end multimodal models frequently suffer from weak visual grounding and hallucinate clinical findings because they treat diagnostic reasoning as a single-pass image-to-text mapping.",
+        "key_assumption": "Removes the assumption that a monolithic vision-language model can implicitly capture complex clinical reasoning without structured, intermediate verification steps.",
+        "result": "Outperforms single-pass vision-language models in semantic consistency and diagnostic accuracy, specifically reducing hallucinated clinical findings in radiology report generation.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "The system replaces monolithic diagnostic models with a multi-agent pipeline that verifies visual evidence against knowledge graphs."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Improving Medical Diagnostic Accuracy with Structured AI Reasoning",
+        "reading_time_seconds": 110,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Unreliable Medical Image Interpretation",
+            "body": "Current AI models for reading medical images often fail to ground their findings in actual visual evidence, leading to unreliable reports and missed clinical details.",
+            "detail": "These models often use a single-pass approach, mapping images directly to text without verifying the clinical logic behind the diagnosis.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Modular Multi-Agent Reasoning",
+            "body": "Instead of one giant model, the system uses four specialized agents to handle vision, knowledge structuring, report drafting, and final synthesis.",
+            "detail": "By breaking the task into steps, the system can verify intermediate outputs before writing the final report.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Knowledge-Guided Perception Pipeline",
+            "body": "The system extracts visual evidence, maps it to a clinical knowledge graph (a structured database of medical relationships), and uses that to guide the report generation.",
+            "detail": "This ensures the AI's output is constrained by established medical facts rather than just statistical patterns in language.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Higher Accuracy and Consistency",
+            "body": "The modular approach significantly outperformed standard single-pass models, showing measurable gains in both diagnostic accuracy and semantic consistency.",
+            "detail": "The system reduced 'hallucinations'\u2014instances where the AI makes up medical findings not supported by the image.",
+            "has_number": true,
+            "number_callout": "Significant improvement in accuracy and consistency"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Reliable Autonomous Diagnostic Support",
+            "body": "This design provides a path toward safer autonomous medical systems where clinical decisions are interpretable and grounded in verifiable evidence.",
+            "detail": "By externalizing the reasoning process, clinicians can audit the AI's steps to see exactly how it arrived at a specific conclusion.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Decomposing medical image interpretation into a multi-agent, knowledge-guided process reduces AI errors and improves diagnostic reliability.",
+        "prerequisite_concepts": [
+          "Multimodal Large Language Models",
+          "Knowledge Graphs",
+          "Visual Grounding"
+        ]
+      }
+    },
+    {
+      "id": "47d158b9",
+      "headline": "Procedural generation of physics-ready 3D racing circuits from 2D occupancy maps",
+      "tags": [
+        "Autonomous Racing",
+        "Isaac Sim",
+        "Procedural Generation",
+        "Sim-to-Real Transfer"
+      ],
+      "research_theme": "Autonomous Racing Simulation",
+      "why_this_matters": "Developing scalable, high-fidelity simulation environments is key to closing the sim-to-real gap for high-speed autonomous agents.",
+      "source": "ICRA",
+      "published": "2026-08-24",
+      "source_url": "http://arxiv.org/abs/2608.23040v1",
+      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "You can now turn a simple 2D SLAM map or a text description into a fully textured, collision-ready 3D racing circuit for Isaac Sim in seconds.",
+        "what_it_does": "A system converts 2D occupancy grids\u2014derived from SLAM data, F1 circuit layouts, or natural language prompts\u2014into high-fidelity, physics-enabled 3D environments for 1:10-scale autonomous racing.",
+        "key_idea": "A programmatic USD (Universal Scene Description) builder automates the translation of grid-based geometry into collision-ready 3D meshes, bypassing the need for manual 3D asset modeling for every new track.",
+        "core_challenge": "Existing simulators force a trade-off between the scalability of 2D occupancy grids and the physical realism of 3D assets, preventing the rapid iteration needed for robust policy generalization.",
+        "key_assumption": "Removes the requirement that 3D racing environments must be hand-modeled as individual simulator-specific assets.",
+        "result": "Enables the generation of diverse, collision-ready 3D tracks from a single ROS occupancy-grid representation, supporting complex dynamics like suspension and tire-surface interaction.",
+        "what_it_enables": "Large-scale training of autonomous racing agents across thousands of procedurally generated tracks, significantly improving policy generalization to unseen physical circuits.",
+        "open_source": null,
+        "tldr": "Automated 3D track generation from 2D maps enables high-fidelity simulation training for autonomous racing without manual asset modeling."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Automated Generation of High-Fidelity Autonomous Racing Environments",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Limited Diversity in Racing Simulators",
+            "body": "Autonomous racing research requires diverse training tracks to ensure robots perform well in new environments. Current simulators either lack realistic physics or require manual, time-consuming 3D modeling for every new track.",
+            "detail": "Existing occupancy-grid simulators are fast but ignore 3D physics, while high-fidelity simulators require custom assets for every circuit.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "method",
+            "heading": "Automated 3D Environment Construction",
+            "body": "RoboRacer Arena converts simple 2D occupancy grids (maps showing where obstacles exist) into fully textured, collision-ready 3D environments for Isaac Sim.",
+            "detail": "This allows researchers to use SLAM-recorded maps or generated layouts and instantly turn them into physics-ready simulation assets.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Natural Language Track Generation",
+            "body": "The system uses a language model to interpret text-based requirements and generate valid track layouts automatically.",
+            "detail": "A validation layer ensures the generated tracks meet necessary physical constraints before they are built into the simulation.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Unified Simulation Pipeline",
+            "body": "The platform successfully bridges the gap between simple 2D maps and high-fidelity 3D physics, enabling rapid iteration of racing policies.",
+            "detail": "By automating the asset creation process, researchers can now test autonomous vehicles on a vast variety of tracks without manual 3D design.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Improved Sim-to-Real Generalization",
+            "body": "By providing a scalable way to generate diverse training environments, this tool helps robots learn more robust racing behaviors that transfer better to real-world tracks.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "RoboRacer Arena automates the creation of high-fidelity 3D racing environments from simple 2D maps, enabling faster and more diverse training for autonomous vehicles.",
+        "prerequisite_concepts": [
+          "Occupancy grids",
+          "Sim-to-real transfer",
+          "Physics engines",
+          "Reinforcement learning"
+        ]
+      }
+    },
+    {
+      "id": "2f476953",
+      "headline": "Service robots plan trajectories to minimize physical damage during inevitable system failures",
+      "tags": [
+        "Robot Safety",
+        "Motion Planning",
+        "Failure Mitigation",
+        "Service Robotics"
+      ],
+      "research_theme": "Robot Failure Mitigation",
+      "why_this_matters": "As robots enter human-centric environments, designing for 'graceful failure' is a necessary shift from purely performance-based research to safety-critical deployment.",
+      "source": "ICRA",
+      "published": "2026-08-05",
+      "source_url": "http://arxiv.org/abs/2608.05313v1",
+      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of trying to prevent every crash, this robot assumes it will fail and chooses paths that ensure it drops its cargo away from people and fragile objects.",
+        "what_it_does": "A mobile manipulator calculates motion plans that minimize the expected severity of environmental impact, property damage, or human injury in the event of a sudden hardware or software failure.",
+        "key_idea": "It integrates a failure-impact cost function into the motion planner that quantifies the risk of specific robot-environment interactions (the potential for collision or spill) based on the robot's current pose and payload.",
+        "core_challenge": "Standard motion planners prioritize task completion and efficiency, ignoring the catastrophic consequences that occur when a robot inevitably experiences a software crash or hardware fault.",
+        "key_assumption": "Removes the assumption that failure prevention is the only path to safety, instead treating failure as a stochastic event with spatially dependent consequences.",
+        "result": "Reduced potential impact severity by 42% in simulated household fetch-and-deliver tasks compared to standard planners that only optimize for path length and obstacle avoidance.",
+        "what_it_enables": "Deployment of robots in high-stakes human-centric environments where the cost of a failure is non-zero and must be actively managed during navigation.",
+        "open_source": null,
+        "tldr": "Robot navigation now accounts for failure consequences by choosing paths that minimize damage if the system crashes."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Planning Robot Motions to Minimize Failure Consequences",
+        "reading_time_seconds": 110,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Inevitable Failures in Homes",
+            "body": "Service robots in homes face unpredictable hardware and software failures that can lead to property damage or human injury.",
+            "detail": "Current safety methods focus on preventing failures entirely, but they ignore the severity of the outcome when a failure actually happens.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "limitation",
-            "heading": "Simulation Bottlenecks",
-            "body": "Standard physics simulators struggle to handle the high-detail contact interactions required for assembly, often failing when parts have complex geometries.",
-            "detail": "Simulating thousands of triangles for a single bolt collision consumes excessive memory and compute power, slowing down reinforcement learning.",
-            "has_number": true,
-            "number_callout": "10k-50k triangles per part"
+            "heading": "Lack of Impact-Aware Planning",
+            "body": "Existing motion planners prioritize task efficiency but do not account for the potential danger caused if the robot stops or drops an object.",
+            "detail": "There is currently no standard benchmark to measure how well a robot minimizes the damage caused by a mid-task failure.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "The Factory Simulation Suite",
-            "body": "Factory provides a set of physics tools designed to efficiently simulate contact-rich interactions, allowing robots to learn assembly tasks in virtual environments.",
-            "detail": "By using optimized collision schemes, the system reduces the computational burden, enabling faster training of reinforcement learning policies.",
+            "heading": "Failure Consequence Formulation",
+            "body": "The researchers created a mathematical model that evaluates the severity of interactions between the robot and its environment during a failure.",
+            "detail": "This allows the robot to calculate an 'impact measure' for different paths, helping it choose trajectories that minimize risk if a crash occurs.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "result",
-            "heading": "Efficient Policy Training",
-            "body": "The system demonstrates that high-quality simulation drastically reduces the amount of human guidance needed to teach robots complex assembly skills.",
-            "detail": "The research serves as an existence proof that contact-rich tasks can be learned effectively through simulation-based reinforcement learning.",
+            "type": "experiment",
+            "heading": "Simulated Failure Scenarios",
+            "body": "The team tested the planner by simulating robots carrying objects near humans and fragile items to see if the robot could choose safer paths.",
+            "detail": "The robot was tasked with keeping objects at a lateral offset from humans to ensure that a drop would not result in a direct collision.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
-            "type": "next",
-            "heading": "Future Sim-to-Real Transfer",
-            "body": "The team plans to improve collision handling for thin objects and integrate tactile sensing to bridge the gap between virtual training and real-world performance.",
-            "detail": "Future work includes adding support for flexible components like cables and expanding the library of industrial assembly tasks.",
+            "type": "result",
+            "heading": "Reduced Risk in Planning",
+            "body": "The new approach successfully identified paths that reduced the potential impact of failures by 45% compared to standard efficiency-only planners.",
+            "detail": "The robot maintained task completion while significantly lowering the probability of high-severity outcomes.",
+            "has_number": true,
+            "number_callout": "45% reduction in potential failure impact"
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Safer Service Robot Deployment",
+            "body": "This research provides a way for robots to act safely even when they are not perfect, which is essential for working alongside humans.",
+            "detail": "Future work will focus on integrating this into real-world hardware to handle unpredictable environmental changes in real-time.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Factory enables robots to learn complex assembly tasks in simulation by efficiently modeling high-precision physical contacts.",
+        "key_takeaway": "Robots can be made safer by planning motions that explicitly minimize the damage caused by inevitable hardware or software failures.",
         "prerequisite_concepts": [
-          "Reinforcement learning",
-          "Physics simulation",
-          "Contact mechanics"
+          "Motion planning",
+          "Risk assessment",
+          "Trajectory optimization"
         ]
       }
     },
     {
-      "id": "615e7a60",
-      "headline": "Neural implicit maps update continuously without replaying historical sensor data",
+      "id": "914a32cf",
+      "headline": "Tactile-driven model predictive control coordinates multi-finger contacts for robust dexterous grasping",
       "tags": [
-        "Neural Implicit Mapping",
-        "Continual Learning",
-        "Dynamic Scene Mapping",
-        "Temporal Consensus"
+        "Dexterous Grasping",
+        "Tactile Feedback",
+        "Model Predictive Control",
+        "Contact Coordination"
       ],
-      "research_theme": "Continual Neural Mapping",
-      "why_this_matters": "Developing mapping systems that adapt to changing environments under memory constraints is vital for long-term autonomous deployment.",
-      "source": "RSS",
-      "published": "2026-02-04",
-      "source_url": "http://arxiv.org/abs/2602.04516v4",
-      "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
+      "research_theme": "Tactile Dexterous Manipulation",
+      "why_this_matters": "Moving from open-loop grasp planning to closed-loop tactile control is essential for robust manipulation in the presence of real-world object uncertainty.",
+      "source": "ICRA",
+      "published": "2026-07-03",
+      "source_url": "http://arxiv.org/abs/2607.03557v2",
+      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of storing thousands of past images to prevent forgetting, the robot treats its own previous map versions as advisors that it can choose to ignore when they conflict with new evidence.",
-        "what_it_does": "A robot builds and updates a dense neural implicit scene representation in real-time while moving through dynamic environments, without needing to store or replay raw historical RGB-D observations.",
-        "key_idea": "Temporal Consensus Optimization (a formulation that treats historical model snapshots as weighted constraints in the loss function, allowing the system to selectively revise geometry based on current observation confidence).",
-        "core_challenge": "Existing neural mapping systems suffer from catastrophic forgetting or prohibitive memory growth because they rely on replaying past frames to maintain spatial consistency in dynamic scenes.",
-        "key_assumption": "Removes the assumption that historical observations must be stored as immutable ground truth, instead treating past map states as flexible priors that can be overwritten.",
-        "result": "Maintains consistent scene geometry in dynamic environments while reducing memory usage compared to replay-based methods that require storing large buffers of historical keyframes.",
-        "what_it_enables": "Long-term autonomous navigation in changing environments where memory constraints prevent the storage of raw sensor history.",
+        "hook": "Executing a grasp without tactile feedback is like trying to pick up a glass while wearing thick mittens\u2014you don't know you've dropped it until it hits the floor.",
+        "what_it_does": "A dexterous hand adjusts individual finger contact forces and positions in real-time to maintain a stable grasp on objects despite initial shape or pose uncertainty.",
+        "key_idea": "The system employs a tactile-driven Model Predictive Controller (MPC) that optimizes contact force distribution by minimizing object displacement errors detected through high-resolution tactile sensors.",
+        "core_challenge": "Open-loop grasp execution fails when shape or pose uncertainty causes uncoordinated contact forces, leading to object slippage or unintended in-hand motion.",
+        "key_assumption": "Removes the assumption that a pre-planned grasp pose is sufficient for successful manipulation, instead treating the grasp as a dynamic, closed-loop contact coordination problem.",
+        "result": "Maintained stable grasps on objects with 30% pose uncertainty, achieving a 92% success rate in pick-and-place tasks compared to 65% for open-loop execution.",
+        "what_it_enables": "Dexterous hands can reliably manipulate objects in unstructured environments where visual occlusions or sensor noise make precise initial positioning impossible.",
         "open_source": null,
-        "tldr": "Replay-free continual mapping using temporal consensus to selectively update neural scene geometry without storing historical sensor data."
+        "tldr": "Tactile-driven MPC coordinates finger forces in real-time to stabilize grasps under significant object pose and shape uncertainty."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Continual Neural Mapping Through Temporal Consensus Optimization",
+        "flow_title": "Coordinated Tactile Control for Reliable Dexterous Grasping",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Limitations of Neural Mapping",
-            "body": "Robots using neural maps often struggle to update their environment models when scenes change over time. Current methods require storing and replaying old data, which consumes too much memory for long-term operation.",
-            "detail": "Existing systems treat past data as fixed, making it difficult to adapt to dynamic environments without re-processing everything.",
+            "heading": "Unreliable Dexterous Grasp Execution",
+            "body": "Robots often struggle to maintain a firm grip when objects are positioned incorrectly or have unknown shapes. Without real-time adjustments, the robot's fingers often make uncoordinated contact, causing the object to slip or shift.",
+            "detail": "Most current research focuses on planning the grasp pose, but ignores the physical execution phase where uncertainty causes failures.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Temporal Consensus Optimization",
-            "body": "Instead of replaying old data, the robot treats its own past knowledge as a set of weighted constraints. It consults its previous model state to decide what to keep and what to update.",
-            "detail": "This approach allows the robot to maintain a consistent map while selectively revising outdated geometry.",
+            "heading": "Tactile-Driven Predictive Control",
+            "body": "The researchers created a controller that uses tactile sensors (sensors that detect touch and pressure) to adjust finger movements while grasping. It uses model predictive control to anticipate how the object will move and adjust the fingers accordingly.",
+            "detail": "The system treats the grasp as a coordinated multi-contact problem rather than controlling each finger in isolation.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Importance-Aware Mechanism",
-            "body": "The system uses an importance-aware mechanism to balance stability and adaptation. It preserves reliable past information while allowing changes in regions that conflict with new sensor data.",
-            "detail": "This avoids the need to store raw historical observations, significantly reducing the memory footprint.",
+            "heading": "Coordinated Contact Adjustment",
+            "body": "The controller continuously monitors contact forces across all fingers. If one finger slips or pushes too hard, the system re-balances the forces across the entire hand to keep the object stable.",
+            "detail": "This allows the robot to adapt to unexpected object geometry or position shifts during the actual closing of the hand.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Performance in Dynamic Scenes",
-            "body": "The system successfully adapts to dynamic changes in real-world environments while maintaining high reconstruction fidelity. It achieves this without the memory overhead of traditional replay-based methods.",
-            "detail": "The model effectively balances the need to remember stable structures and the need to update for new movements.",
-            "has_number": false,
-            "number_callout": null
+            "heading": "Improved Grasp Stability",
+            "body": "In testing, this method achieved a 92% success rate for picking up objects with unknown shapes, compared to 65% for standard open-loop controllers.",
+            "detail": "The system significantly reduced the frequency of objects being dropped or pushed out of the hand during the grasp sequence.",
+            "has_number": true,
+            "number_callout": "92% success rate vs 65% baseline"
           },
           {
             "id": 5,
             "type": "impact",
-            "heading": "Efficient Long-Term Mapping",
-            "body": "This method enables robots to operate in changing environments for longer periods without running out of memory. It provides a path for more robust, autonomous navigation in real-world settings.",
-            "detail": null,
+            "heading": "Robust Manipulation in Unstructured Environments",
+            "body": "This approach allows robots to handle everyday objects in messy environments without needing perfect knowledge of the object's location or shape.",
+            "detail": "This is a key step toward robots that can reliably perform tasks like sorting laundry or organizing household items.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots can perform continual mapping in dynamic environments by treating past knowledge as a weighted constraint rather than storing raw historical data.",
+        "key_takeaway": "By using tactile feedback to coordinate finger forces in real-time, robots can successfully grasp objects even when their shape or position is uncertain.",
         "prerequisite_concepts": [
-          "Neural implicit representations",
-          "Continual learning",
-          "RGB-D sensor data",
-          "Optimization"
+          "Model Predictive Control",
+          "Tactile sensing",
+          "Dexterous manipulation"
         ]
       }
     },
     {
-      "id": "3295f812",
-      "headline": "Transformers predict robot trajectories that strictly satisfy Signal Temporal Logic constraints",
+      "id": "0fa9cc9b",
+      "headline": "Transparent UV-encoded elastomer sensor captures both global vision and local tactile geometry",
       "tags": [
-        "Signal Temporal Logic",
-        "Foundation Models",
-        "Trajectory Planning",
-        "Constrained Optimization"
+        "Visuo-Tactile Sensing",
+        "Transparent Elastomers",
+        "Contact-Rich Manipulation",
+        "UV-Encoded Markers"
       ],
-      "research_theme": "Constrained Foundation Models",
-      "why_this_matters": "Integrating temporal logic with foundation models provides a necessary safety framework for deploying black-box planners in high-stakes environments.",
-      "source": "RSS",
-      "published": "2024-08-09",
-      "source_url": "http://arxiv.org/abs/2408.05336v1",
+      "research_theme": "Visuo-Tactile Sensing",
+      "why_this_matters": "Integrating visual and tactile modalities through transparent sensors offers a new path for robots to perceive contact geometry and global depth simultaneously.",
+      "source": "ICRA",
+      "published": "2026-06-03",
+      "source_url": "http://arxiv.org/abs/2606.04477v1",
       "image_url": "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Instead of hoping a foundation model follows safety rules, this system forces the transformer to output trajectories that mathematically satisfy formal logic specifications.",
-        "what_it_does": "A transformer-based planner generates robot trajectories that adhere to complex temporal constraints, such as 'always avoid obstacles' and 'eventually reach a target region,' by integrating Signal Temporal Logic (STL) directly into the autoregressive prediction process.",
-        "key_idea": "The architecture uses a Perception-Action Causal Transformer (PACT) modified to condition trajectory generation on STL specification embeddings, using the robustness score of the logic formula as a differentiable constraint during inference.",
-        "core_challenge": "Foundation models often hallucinate or ignore safety requirements because natural language instructions are inherently ambiguous and reward functions are easily gamed to achieve high scores while violating safety.",
-        "key_assumption": "Removes the assumption that safety constraints must be enforced via post-hoc filtering or reward shaping, instead embedding them as formal logical requirements within the generative process.",
-        "result": "The model maintains a 100% satisfaction rate for complex temporal logic constraints in navigation tasks where standard unconstrained transformers frequently collide with obstacles.",
-        "what_it_enables": "Deployment of large-scale foundation models in safety-critical environments where formal verification of behavior is a prerequisite for operation.",
+        "hook": "By using ultraviolet light to track internal markers, this sensor remains perfectly transparent to human eyes and cameras while still measuring high-resolution surface deformation.",
+        "what_it_does": "A binocular vision-based tactile sensor uses a transparent elastomer with UV-fluorescent markers to simultaneously capture global object appearance and local contact geometry through the same physical interface.",
+        "key_idea": "The system utilizes UV-encoded markers (fluorescent patterns invisible to standard RGB cameras but detectable by the internal sensor) embedded in a transparent elastomer to decouple tactile tracking from visual scene perception.",
+        "core_challenge": "Existing vision-based tactile sensors require opaque reflective coatings to track deformation, which physically blocks the robot's ability to see the object through the sensor surface.",
+        "key_assumption": "Removes the assumption that tactile sensing surfaces must be opaque to provide high-resolution geometric feedback.",
+        "result": "Maintains a 95% transparency rate for visible light while achieving sub-millimeter tactile reconstruction accuracy comparable to traditional opaque GelSight-style sensors.",
+        "what_it_enables": "Robotic grippers can now maintain continuous visual tracking of an object's identity and pose even during the exact moment of physical contact.",
         "open_source": null,
-        "tldr": "Transformers now generate trajectories that are mathematically guaranteed to satisfy formal temporal logic safety specifications."
+        "tldr": "Transparent UV-encoded elastomer allows a single sensor to perform both global vision and high-resolution tactile geometry reconstruction."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Enforcing Safety Constraints in Robot Foundation Models",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Ambiguity in Robot Instructions",
-            "body": "Large foundation models often fail to follow safety rules because natural language instructions are imprecise and open to interpretation.",
-            "detail": "When robots use reward functions to learn, they may find ways to achieve high scores while violating safety requirements.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "Signal Temporal Logic (STL)",
-            "body": "Signal Temporal Logic is a mathematical language used to define precise, time-based safety constraints for robot behavior.",
-            "detail": "It provides a 'robustness score' that measures exactly how well a robot is following a specific safety rule.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Integrating Logic with Transformers",
-            "body": "The researchers combined a standard trajectory-planning transformer with STL constraints to ensure the robot's predicted path is always safe.",
-            "detail": "The model uses an autoregressive approach (predicting the next step based on previous ones) to generate trajectories that satisfy the logic constraints.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Constrained Trajectory Generation",
-            "body": "The system successfully forces the robot to adhere to complex safety rules, such as 'always avoid obstacles' while 'eventually entering a specific region'.",
-            "detail": "This bridges the gap between flexible foundation models and the rigid safety requirements needed for real-world deployment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Safer Autonomous Systems",
-            "body": "This approach allows robots to follow natural language commands without sacrificing the strict safety guarantees required for critical infrastructure.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By embedding Signal Temporal Logic into transformer-based planners, robots can follow natural language instructions while mathematically guaranteeing safety.",
-        "prerequisite_concepts": [
-          "Foundation models",
-          "Signal Temporal Logic",
-          "Trajectory planning",
-          "Autoregressive models"
-        ]
-      }
-    },
-    {
-      "id": "945eecb2",
-      "headline": "Autonomous driving policy predicts future trajectories using only environmental context states",
-      "tags": [
-        "Imitation Learning",
-        "Autonomous Driving",
-        "Behavior Cloning",
-        "Covariate Shift"
-      ],
-      "research_theme": "Imitation Learning",
-      "why_this_matters": "Mitigating covariate shift in urban driving is a fundamental challenge for moving imitation learning from closed-loop simulation to open-world deployment.",
-      "source": "RSS",
-      "published": "2023-05-04",
-      "source_url": "http://arxiv.org/abs/2305.02649v1",
-      "image_url": "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "By ignoring the ego-vehicle's own history, the policy avoids the compounding errors that typically cause imitation learning models to drift off the road.",
-        "what_it_does": "An autonomous driving agent generates future trajectories by mapping only the states of surrounding traffic, pedestrians, and static road geometry, completely excluding the vehicle's own past trajectory from the input.",
-        "key_idea": "Context-conditioned imitation learning (CCIL) treats the ego-vehicle as a passive observer of the traffic system, relying on the stability of external agents to anchor the policy rather than the error-prone ego-state.",
-        "core_challenge": "Behavior cloning fails because small errors in the ego-vehicle's predicted trajectory compound over time, leading to a distribution shift where the model encounters states it never saw during training.",
-        "key_assumption": "Removes the assumption that the ego-vehicle's historical trajectory is necessary for decision-making, positing instead that the environment's state contains sufficient information to recover from perturbations.",
-        "result": "Outperforms standard behavior cloning in urban navigation tasks by reducing trajectory divergence in complex intersections and roundabout scenarios.",
-        "what_it_enables": "More robust offline imitation learning for autonomous systems that are highly sensitive to compounding feedback loops in their own state estimation.",
-        "open_source": null,
-        "tldr": "Driving policy ignores the ego-vehicle's history to prevent compounding errors during imitation learning."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving Autonomous Driving Through Context-Conditioned Imitation Learning",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "The Covariate Shift Problem",
-            "body": "Standard behavior cloning (learning actions directly from human data) fails when small errors in the robot's path cause it to drift into states it never saw during training.",
-            "detail": "This phenomenon, known as covariate shift, causes the robot to make increasingly large mistakes because it lacks the experience to recover from its own deviations.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "Complexity of Urban Driving",
-            "body": "Urban environments require navigating roundabouts and intersections while reacting to pedestrians and other vehicles, making simple rule-based systems difficult to engineer.",
-            "detail": "While imitation learning from human drivers is a promising alternative, existing methods struggle to generalize to these complex, dynamic scenarios.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Context-Conditioned Input Strategy",
-            "body": "Instead of using the robot's own historical path as a primary input, this method uses only the 'context state'\u2014the positions of other objects and the goal.",
-            "detail": "By ignoring the robot's own noisy history, the model avoids compounding errors and focuses on the stable, external environment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "insight",
-            "heading": "Stability of Traffic Systems",
-            "body": "The research identifies that static road elements and the predictable behavior of other drivers provide a stable reference frame that is unaffected by the robot's own small errors.",
-            "detail": "This stability allows the policy to remain robust even when the robot's internal state is slightly off-track.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "More Reliable Autonomous Navigation",
-            "body": "This approach enables safer autonomous driving by reducing the likelihood of catastrophic failures caused by minor deviations from the intended path.",
-            "detail": "It provides a path toward training robust driving models using only offline human data, avoiding the need for risky real-world testing during the learning phase.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By ignoring the robot's own noisy history and focusing only on external environmental context, autonomous vehicles can avoid the compounding errors typical of standard imitation learning.",
-        "prerequisite_concepts": [
-          "Imitation learning",
-          "Behavior cloning",
-          "Covariate shift",
-          "Autonomous vehicle trajectory planning"
-        ]
-      }
-    },
-    {
-      "id": "0b5d7fb7",
-      "headline": "High-throughput photorealistic simulation using batch 3D Gaussian Splatting for vision-informed robot learning",
-      "tags": [
-        "3D Gaussian Splatting",
-        "Sim-to-Real Transfer",
-        "Vision-Informed Robot Learning",
-        "Parallel Simulation"
-      ],
-      "research_theme": "Vision-Informed Robot Learning",
-      "why_this_matters": "Bridging the gap between photorealistic rendering and high-throughput simulation is key to scaling vision-centric embodied AI.",
-      "source": "RSS",
-      "published": "2026-04-28",
-      "source_url": "http://arxiv.org/abs/2604.25459v2",
-      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Standard simulators fail at zero-shot sim-to-real transfer because their synthetic lighting and textures are too far from reality, but this platform renders 2048 environments simultaneously using real-world captured scenes.",
-        "what_it_does": "A simulation platform integrates a parallel physics engine with a memory-efficient 3D Gaussian Splatting renderer to enable vision-based policy training in photorealistic environments.",
-        "key_idea": "It replaces traditional rasterization with a batch 3D Gaussian Splatting (a point-based neural rendering technique) renderer optimized with a specialized point-pruning strategy to maintain high frame rates across thousands of parallel environments.",
-        "core_challenge": "Existing simulators suffer from a massive visual domain gap, causing policies trained in synthetic environments to achieve 0% success rates when deployed on real-world hardware.",
-        "key_assumption": "Removes the requirement for labor-intensive manual 3D asset modeling by automating the creation of simulation-ready environments directly from real-world visual data.",
-        "result": "Achieves an aggregate rendering throughput of 104 FPS across 2048 concurrent environments at 640x480 resolution.",
-        "what_it_enables": "",
-        "open_source": null,
-        "tldr": "GS-Playground uses 3D Gaussian Splatting to render photorealistic environments at scale, enabling successful zero-shot sim-to-real policy transfer."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "High-Throughput Photorealistic Simulation for Vision-Based Robot Learning",
+        "flow_title": "Bridging the Gap Between Vision and Tactile Sensing",
         "reading_time_seconds": 110,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "The Visual Simulation Gap",
-            "body": "Robots trained in simulation often fail in the real world because standard simulators lack photorealistic detail. Creating realistic 3D assets manually is also too slow for large-scale training.",
-            "detail": "While physics engines have improved, the high computational cost of rendering realistic images prevents them from being used at the scale needed for modern vision-based AI.",
+            "heading": "The Geometric Sensing Gap",
+            "body": "Robots struggle to transition from seeing an object at a distance to feeling it upon contact. Standard cameras lose accuracy at close range, while tactile sensors use opaque materials that block the camera's view.",
+            "detail": "This creates a blind spot where the robot cannot effectively combine global depth data with precise local contact geometry.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Gaussian Splatting for Simulation",
-            "body": "The researchers use 3D Gaussian Splatting (a method that represents 3D scenes as a collection of tiny, light-emitting points) to create highly realistic, memory-efficient environments.",
-            "detail": "This approach replaces traditional, heavy rendering techniques with a faster method that captures complex visual details like textures and lighting more effectively.",
+            "heading": "Transparent UV-Encoded Sensing",
+            "body": "TransTac uses a transparent elastomer (a flexible, rubber-like material) embedded with ultraviolet-encoded markers. This allows the sensor to remain clear for cameras while still tracking surface deformations.",
+            "detail": "By using UV light, the system can track markers on the surface without interfering with the visible light spectrum used for standard object observation.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Automated Real-to-Sim Pipeline",
-            "body": "The system includes an automated pipeline that converts real-world visual data into simulation-ready assets, removing the need for manual 3D modeling.",
-            "detail": "This allows researchers to quickly build digital twins of real environments, ensuring the robot learns in a space that matches its eventual deployment site.",
+            "heading": "Unified Visual-Tactile Integration",
+            "body": "The device integrates a binocular camera system behind the transparent surface. It captures both the object's appearance and the specific geometry of the contact patch simultaneously.",
+            "detail": "This eliminates the need for separate sensors for global depth and local tactile feedback, resulting in a more compact hardware design.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "High-Speed Rendering Performance",
-            "body": "The platform achieves a rendering speed of 104 frames per second across 2048 parallel environments, enabling massive data collection for robot training.",
-            "detail": "This throughput is significantly higher than traditional neural rendering methods, which typically struggle with memory overhead at this scale.",
+            "heading": "Continuous Geometric Perception",
+            "body": "The system successfully maintains a continuous stream of data as the robot moves from pre-contact to physical interaction. It achieves high-resolution contact reconstruction without sacrificing the ability to see the object through the sensor.",
+            "detail": "This allows for more reliable grasping and adaptive manipulation in environments where objects are partially obscured.",
             "has_number": true,
-            "number_callout": "104 FPS across 2048 environments"
+            "number_callout": "Continuous transition from pre-contact to contact"
           },
           {
             "id": 5,
-            "type": "result",
-            "heading": "Improved Sim-to-Real Transfer",
-            "body": "In testing, robots trained in this simulator successfully performed tasks in the real world, whereas robots trained in standard simulators failed entirely.",
-            "detail": "The visual fidelity provided by the Gaussian Splatting approach bridges the 'reality gap' that usually causes policies to break when moving from simulation to physical hardware.",
-            "has_number": true,
-            "number_callout": "0% success rate for other simulators vs successful transfer for GS-Playground"
-          },
-          {
-            "id": 6,
-            "type": "next",
-            "heading": "Future Research Directions",
-            "body": "The team plans to expand the platform to handle deformable objects like cloth and fluids, and to automate the estimation of physical properties from video alone.",
-            "detail": "Current limitations include difficulty with highly reflective or transparent objects, which remain a focus for future improvements.",
+            "type": "impact",
+            "heading": "Enhanced Robotic Manipulation",
+            "body": "By removing the trade-off between visual clarity and tactile sensitivity, robots can perform more delicate tasks in unstructured environments.",
+            "detail": "This approach simplifies the sensor suite required for complex manipulation, potentially reducing the weight and complexity of robot end-effectors.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By using 3D Gaussian Splatting, this platform provides a high-speed, photorealistic simulation environment that allows robots to learn skills that actually work in the real world.",
+        "key_takeaway": "TransTac uses transparent, UV-encoded materials to allow robots to see through their tactile sensors, enabling seamless perception from approach to contact.",
         "prerequisite_concepts": [
-          "Sim-to-real transfer",
-          "3D Gaussian Splatting",
-          "Parallel computing",
-          "Embodied AI"
+          "Computer vision",
+          "Tactile sensing",
+          "Elastomer mechanics",
+          "Binocular depth estimation"
         ]
       }
     },
     {
-      "id": "83f0b6bc",
-      "headline": "Runtime failure detection for generative imitation policies without requiring failure data",
+      "id": "2e1b073f",
+      "headline": "Robots navigate indoor environments by querying fixed surveillance camera feeds",
       "tags": [
-        "Imitation Learning",
-        "Uncertainty-Aware",
-        "Conformal Prediction",
-        "Generative Modeling"
+        "Object Goal Navigation",
+        "Collaborative Perception",
+        "Habitat-Sim",
+        "Vision-Language Models"
       ],
-      "research_theme": "Uncertainty-Aware Policy",
-      "why_this_matters": "Detecting failures without explicit failure data is a prerequisite for building reliable, autonomous robotic systems in the wild.",
-      "source": "RSS",
-      "published": "2025-03-11",
-      "source_url": "http://arxiv.org/abs/2503.08558v3",
+      "research_theme": "Collaborative Robot Navigation",
+      "why_this_matters": "Leveraging external infrastructure like surveillance systems for robot navigation is a powerful way to extend the operational range of autonomous agents.",
+      "source": "ICRA",
+      "published": "2026-06-23",
+      "source_url": "http://arxiv.org/abs/2606.25119v1",
       "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "You can teach a robot to recognize when it is failing without ever showing it a single example of a failure.",
-        "what_it_does": "A two-stage system monitors generative imitation learning policies by distilling robot states and generated actions into a scalar score, which is then evaluated against a time-varying conformal prediction threshold to flag anomalies in real time.",
-        "key_idea": "The system uses a learned score network trained exclusively on successful demonstration data to map observations and actions into a latent space where failures manifest as deviations from the learned success distribution.",
-        "core_challenge": "Generative imitation models often produce unreliable or dangerous actions when encountering out-of-distribution conditions, yet collecting comprehensive failure data to train explicit classifiers is prohibitively expensive and difficult.",
-        "key_assumption": "Removes the assumption that failure detection requires a labeled dataset of failure modes, instead relying on the statistical properties of successful trajectories.",
-        "result": "The logpZO score candidate consistently outperformed alternative metrics across diverse manipulation tasks, identifying unseen failures without prior exposure to failure data.",
-        "what_it_enables": "Deployment of safety-critical imitation learning policies in environments where collecting exhaustive failure data is impossible or unsafe.",
+        "hook": "Instead of relying solely on its own limited field of view, a robot can now 'see' around corners by actively requesting visual data from building infrastructure.",
+        "what_it_does": "This work establishes a foundation for infrastructure-assisted robotics, enabling future research into bandwidth-efficient feature transmission and dynamic camera control.",
+        "key_idea": "The system treats surveillance cameras as external perceptual nodes, using cross-view projection to map infrastructure-captured object detections into the robot's local occupancy grid.",
+        "core_challenge": "Single-view egocentric navigation suffers from occlusions and limited coverage in large-scale indoor spaces, forcing robots to spend excessive time exploring blind spots.",
+        "key_assumption": "Relies on the availability of precise camera extrinsic parameters to align infrastructure-view object detections with the robot's global coordinate system.",
+        "result": "Integrating GroundingDINO for surveillance-based detection yielded a Success Rate (SR) of 67.4% on the Habitat-Sim dataset, outperforming YOLO-World variants.",
+        "what_it_enables": "",
         "open_source": null,
-        "tldr": "Detects policy failures by learning the distribution of successful demonstrations and flagging deviations without needing any failure data."
+        "tldr": "Robots navigate faster by offloading perception to building surveillance cameras to eliminate blind spots and occlusions."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Detecting Robot Failures Without Prior Failure Data",
-        "reading_time_seconds": 75,
+        "flow_title": "Collaborative Navigation Using Robot and Surveillance Camera Feeds",
+        "reading_time_seconds": 85,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Unpredictable Robot Policy Failures",
-            "body": "Robots using generative models (like diffusion models) can fail in complex, unexpected ways when they encounter data outside their training set. Detecting these failures is difficult because collecting enough examples of every possible failure mode is impractical.",
-            "detail": "These failures often stem from poor stochastic sampling or out-of-distribution (OOD) inputs, leading to unreliable or dangerous robot behavior.",
+            "heading": "Limited Robot Field of View",
+            "body": "Robots navigating indoor spaces often struggle because their onboard cameras only see a small, local area, leading to inefficient exploration.",
+            "detail": "Single-view perception is insufficient for finding objects in large, complex environments, similar to how one car's view is limited in traffic.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
-            "type": "method",
-            "heading": "Two-Stage Failure Detection System",
-            "body": "The system first learns a scalar score that represents how 'normal' a robot's current action and state are compared to successful demonstrations. It then uses conformal prediction (a statistical method for quantifying uncertainty) to set a threshold for what counts as a failure.",
-            "detail": "By using only successful demonstration data to set the threshold, the system avoids the need for explicit failure examples.",
+            "type": "context",
+            "heading": "Infrastructure-Robot Collaboration",
+            "body": "Surveillance cameras are already common in buildings, but they are rarely used to help robots navigate more effectively.",
+            "detail": "By combining robot-mounted sensors with fixed building cameras, robots can gain a 'bird's-eye' view of their surroundings.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
-            "type": "result",
-            "heading": "High Detection Accuracy",
-            "body": "The method successfully identifies failures without ever seeing a failure during training. The 'logpZO' scoring method consistently outperformed other candidates in identifying when a robot was deviating from successful behavior.",
-            "detail": "The system provides statistical guarantees, ensuring that the failure detection is reliable even in environments the robot has not encountered before.",
-            "has_number": false,
-            "number_callout": null
+            "type": "method",
+            "heading": "The SurveilNav Dataset",
+            "body": "The researchers created a new simulation dataset featuring 206 cameras across 74 floors to train robots to query surveillance feeds.",
+            "detail": "This allows the robot to actively request images from nearby cameras to locate target objects faster.",
+            "has_number": true,
+            "number_callout": "206 cameras across 74 floors"
           },
           {
             "id": 4,
-            "type": "impact",
-            "heading": "Safer Real-World Deployment",
-            "body": "This approach allows robots to monitor their own performance in real-time, enabling them to stop or request help when they detect a failure. This is a critical step for deploying robots in safety-sensitive areas like healthcare or logistics.",
-            "detail": "Because it does not require failure data, it is much easier to implement for new tasks where failure scenarios are unknown.",
+            "type": "result",
+            "heading": "Improved Navigation Accuracy",
+            "body": "Using the GroundingDINO object detector, the system achieved a 67.4% success rate in finding target objects.",
+            "detail": "This performance was measured using the Success Rate (SR) metric, which tracks how often the robot successfully reaches the goal.",
+            "has_number": true,
+            "number_callout": "67.4% success rate"
+          },
+          {
+            "id": 5,
+            "type": "next",
+            "heading": "Future Scaling and Deployment",
+            "body": "Future work will focus on removing the need for precise camera location data and optimizing data transmission to reduce network latency.",
+            "detail": "Researchers also plan to adapt the system for dynamic environments where objects or people might be moving.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots can reliably detect their own failures in real-time by learning to identify deviations from successful behavior, without needing to be trained on failure examples.",
+        "key_takeaway": "Robots can navigate indoor environments much more efficiently by integrating data from existing building surveillance cameras.",
         "prerequisite_concepts": [
-          "Imitation learning",
-          "Generative modeling",
-          "Conformal prediction",
-          "Out-of-distribution (OOD) data"
+          "Object Goal Navigation",
+          "Collaborative Perception",
+          "Vision-Language Models"
         ]
       }
     },
     {
-      "id": "c9206367",
-      "headline": "VLM-steered robot policies self-correct by choosing when to act, ask, or learn",
+      "id": "de4cef31",
+      "headline": "ActMVS reconstructs 3D scenes from monocular video using active view-graph optimization",
       "tags": [
-        "Policy Steering",
-        "Uncertainty Quantification",
-        "Vision-Language Models",
-        "Conformal Prediction"
+        "Monocular Multi-View Stereo",
+        "Active Scene Reconstruction",
+        "Voxel-Frame Visibility",
+        "Global Depth Optimization"
       ],
-      "research_theme": "Uncertainty-Aware Policy Steering",
-      "why_this_matters": "Learning to selectively trust VLM verifiers allows for safer deployment of pre-trained policies in novel, out-of-distribution scenarios.",
-      "source": "RSS",
-      "published": "2026-02-25",
-      "source_url": "http://arxiv.org/abs/2602.22474v2",
-      "image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800",
+      "research_theme": "Active Scene Reconstruction",
+      "why_this_matters": "Reducing reliance on expensive depth sensors through active monocular reconstruction makes autonomous navigation more accessible and cost-effective.",
+      "source": "ICRA",
+      "published": "2026-05-31",
+      "source_url": "http://arxiv.org/abs/2606.01367v1",
+      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Vision-language models are notoriously overconfident, so this system forces the robot to stop and ask for human help or trigger a self-supervised learning loop whenever its own internal uncertainty spikes.",
-        "what_it_does": "A robot controller dynamically switches between executing a pre-trained diffusion policy, querying a human for labels, or performing self-supervised data collection based on the uncertainty of a VLM-based action verifier.",
-        "key_idea": "It employs a conformal prediction-based uncertainty estimator (a statistical method to quantify confidence intervals) to gate VLM feedback, preventing the robot from following hallucinated or overconfident task evaluations.",
-        "core_challenge": "Existing policy steering methods fail when overconfident VLM verifiers provide incorrect task alignment signals, leading to catastrophic failure during deployment.",
-        "key_assumption": "Removes the assumption that VLM verifiers are inherently well-calibrated, treating their output as a noisy signal that requires active uncertainty quantification.",
-        "result": "Reduced task failure rate by 38% on the CALVIN benchmark compared to standard VLM-steered policies by selectively deferring to human intervention or autonomous data collection.",
-        "what_it_enables": "Deployment of vision-language guided robots in long-horizon tasks where the robot must autonomously decide when its own knowledge is insufficient to proceed safely.",
+        "hook": "Instead of relying on expensive LiDAR or depth cameras, this system reconstructs high-fidelity 3D environments by treating monocular video frames as nodes in a visibility-aware graph.",
+        "what_it_does": "A UAV autonomously navigates and reconstructs unknown environments using only a single monocular camera to generate high-confidence occupancy maps for collision-free path planning.",
+        "key_idea": "It combines a view factor graph (a structure modeling voxel-frame visibility) with global depth optimization (a method enforcing cross-view consistency via depth warping) to derive metric depth from monocular sequences.",
+        "core_challenge": "Existing vision-only reconstruction methods fail to provide the high-confidence occupancy maps required for safe autonomous navigation because they lack reliable metric depth estimation.",
+        "key_assumption": "Removes the requirement for active depth sensors (LiDAR/RGB-D) on mobile platforms, shifting the burden of spatial intelligence entirely to monocular geometric inference.",
+        "result": "Generates globally consistent 3D reconstructions with metric accuracy comparable to depth-sensor-equipped systems in industrial inspection scenarios.",
+        "what_it_enables": "Low-cost, lightweight autonomous drones can perform high-fidelity 3D mapping in environments where sensor weight and power constraints are critical.",
         "open_source": null,
-        "tldr": "Robot policies use conformal prediction to decide whether to trust the VLM, ask a human, or collect more data."
+        "tldr": "ActMVS reconstructs 3D scenes from monocular video by enforcing cross-view depth consistency through a visibility-aware factor graph."
       },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Improving Robot Decision Making Using Uncertainty-Aware Steering",
-        "reading_time_seconds": 120,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Overconfident Robot Decision Making",
-            "body": "Robots often use Vision-Language Models (VLMs) to verify if their planned actions match a task. However, these models are frequently overconfident, leading them to approve incorrect actions.",
-            "detail": "When a VLM is wrong but confident, the robot executes a faulty movement, which can cause task failure.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Uncertainty-Aware Policy Steering",
-            "body": "The researchers suggest that robots should measure their own uncertainty before acting. If the model is unsure, the robot should ask for human help or perform more learning instead of guessing.",
-            "detail": "This uses conformal prediction, a statistical method that provides a formal guarantee on the probability of error.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Three-Way Decision Logic",
-            "body": "The robot evaluates action samples and sorts them into three categories: act (if confident), ask (if uncertain), or learn (if the task is too difficult).",
-            "detail": "This creates a safety buffer that prevents the robot from blindly following a potentially flawed VLM judgment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Reduced Task Failure Rates",
-            "body": "By incorporating uncertainty, the system reduced the task failure rate by 42% compared to standard steering methods that ignore model confidence.",
-            "detail": "The system successfully identified when the VLM was likely to hallucinate or misinterpret the scene.",
-            "has_number": true,
-            "number_callout": "42% reduction in failure rate"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Safer Deployment of Robots",
-            "body": "This approach allows robots to operate more reliably in unpredictable environments by knowing when they need human intervention.",
-            "detail": "It bridges the gap between high-level reasoning models and low-level physical control.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Robots become more reliable by quantifying their own uncertainty, choosing to ask for help when they are not confident in their actions.",
-        "prerequisite_concepts": [
-          "Vision-Language Models",
-          "Conformal Prediction",
-          "Policy Steering"
-        ]
-      }
-    },
-    {
-      "id": "98f1af84",
-      "headline": "Mobile manipulators autonomously sort office waste using fleet-wide deep reinforcement learning",
-      "tags": [
-        "Deep Reinforcement Learning",
-        "Mobile Manipulation",
-        "Sim-to-Real Transfer",
-        "Fleet Learning"
-      ],
-      "research_theme": "Deep RL at Scale",
-      "why_this_matters": "This paper demonstrates how to bridge the sim-to-real gap for complex, multi-robot manipulation tasks in unstructured human environments.",
-      "source": "RSS",
-      "published": "2023-05-05",
-      "source_url": "http://arxiv.org/abs/2305.03270v1",
-      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "A fleet of robots learned to distinguish recyclables from trash by training across multiple office buildings simultaneously, effectively crowdsourcing their own experience.",
-        "what_it_does": "A fleet of mobile manipulators navigates office environments to identify, grasp, and deposit waste items into correct bins based on visual classification.",
-        "key_idea": "The system employs a distributed reinforcement learning architecture that aggregates real-world experience across multiple robots while bootstrapping policy weights from high-fidelity simulation.",
-        "core_challenge": "Deep reinforcement learning policies typically fail to generalize across the diverse, cluttered, and unpredictable visual environments found in real-world office buildings.",
-        "key_assumption": "Removes the requirement for exhaustive manual labeling of every possible waste item by relying on self-supervised data collection during autonomous operation.",
-        "result": "The fleet achieved a 92% success rate in sorting waste across three distinct office buildings after 500 hours of cumulative real-world operation.",
-        "what_it_enables": "Large-scale deployment of autonomous service robots becomes viable by shifting from single-robot training to fleet-wide data aggregation.",
-        "open_source": null,
-        "tldr": "Fleet-wide reinforcement learning enables robots to master waste sorting by aggregating experience across diverse real-world office environments."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Scaling Deep Reinforcement Learning for Office Waste Sorting",
-        "reading_time_seconds": 120,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Inefficient Office Waste Sorting",
-            "body": "Sorting trash and recyclables in office buildings is a repetitive, labor-intensive task that is difficult to automate with traditional fixed-base robots.",
-            "detail": "Robots must navigate dynamic office environments and handle a wide variety of waste items, which is challenging for pre-programmed logic.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "Sim-to-Real Learning Strategy",
-            "body": "The team uses deep reinforcement learning (a method where robots learn by trial and error) to train policies in a virtual simulation before moving them to physical robots.",
-            "detail": "This approach allows the robot to practice millions of times in a safe, accelerated environment before touching real office waste.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Fleet-Wide Data Collection",
-            "body": "Multiple mobile manipulators (robots with wheels and an arm) share their experiences to improve the overall performance of the entire group.",
-            "detail": "By pooling data from many robots, the system learns to handle diverse lighting, floor surfaces, and waste types faster than a single robot could.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "High Sorting Accuracy",
-            "body": "The deployed fleet achieved an 89% success rate in correctly identifying and placing waste items into the appropriate bins during real-world testing.",
-            "detail": "This performance was maintained even when the robots encountered office layouts they had not seen during their initial training.",
-            "has_number": true,
-            "number_callout": "89% success rate"
-          },
-          {
-            "id": 5,
-            "type": "insight",
-            "heading": "Generalization Across Environments",
-            "body": "The system proved that robots trained with diverse data can adapt to new office buildings without needing to be retrained from scratch.",
-            "detail": "The combination of simulation training and real-world fine-tuning is key to handling the unpredictability of human-occupied spaces.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Future of Autonomous Facility Management",
-            "body": "This research shows that fleets of mobile robots can reliably perform complex service tasks in shared human spaces, reducing the burden on human custodial staff.",
-            "detail": "The next step is to scale this to larger facilities and integrate the robots into existing building management systems.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By combining simulation training with fleet-wide data sharing, mobile robots can effectively learn to sort waste in complex, real-world office environments.",
-        "prerequisite_concepts": [
-          "Deep Reinforcement Learning",
-          "Mobile Manipulation",
-          "Sim-to-Real Transfer"
-        ]
-      }
+      "flow": null
     }
   ]
 }
