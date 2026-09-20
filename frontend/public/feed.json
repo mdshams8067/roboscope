@@ -1,944 +1,277 @@
 {
-  "generated_at": "2026-09-19T03:15:03.822380+00:00",
-  "article_count": 10,
+  "generated_at": "2026-09-20T03:32:58.258677+00:00",
+  "article_count": 3,
   "articles": [
     {
-      "id": "ab5c1204",
-      "headline": "Decentralized robots predict shared future latent states without explicit consensus protocols",
+      "id": "b4f4b1e8",
+      "headline": "Recti-Q restores robustness in quantized edge vision models by correcting feature-space distortions",
       "tags": [
-        "Decentralized JEPA",
-        "Collective-State Prediction",
-        "Multi-Agent Coordination",
-        "Latent Representation Learning"
+        "Post-Training Quantization",
+        "Edge Robotics",
+        "Out-of-Distribution Robustness",
+        "Feature-Space Rectification"
       ],
-      "research_theme": "Decentralized JEPA",
-      "why_this_matters": "This addresses the challenge of achieving global coordination in multi-robot systems without a central controller, which is essential for scalable, robust swarm autonomy.",
-      "source": "ICRA",
-      "published": "2026-07-30",
-      "source_url": "http://arxiv.org/abs/2607.28443v3",
-      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
+      "research_theme": "Edge Robotics Perception",
+      "why_this_matters": "This work addresses the critical gap between model compression and robustness, showing you how to maintain reliable perception under distribution shifts when deploying on resource-constrained hardware.",
+      "source": "IROS",
+      "published": "2026-07-20",
+      "source_url": "http://arxiv.org/abs/2607.18540v2",
+      "image_url": "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Individual robots learn to predict the exact same future latent state as their teammates without ever exchanging predictions or agreeing on a common goal.",
-        "what_it_does": "Enables scalable multi-agent coordination in environments where communication bandwidth prevents sharing full observation histories or centralized model updates.",
-        "key_idea": "CS-JEPA (Collective-State Joint-Embedding Predictive Architecture) trains encoders to map heterogeneous local observations into a shared latent space by minimizing prediction error against a global objective without requiring consensus loss or centralized pooling.",
-        "core_challenge": "Decentralized systems struggle to maintain coherent future planning when agents possess partial observability and cannot afford the communication overhead of output-level consensus.",
-        "key_assumption": "Removes the requirement for explicit agreement loss or centralized state estimation to achieve alignment in decentralized multi-agent latent spaces.",
-        "result": "Maintains latent state alignment across agents with 15% higher prediction accuracy than decentralized baselines on the Multi-Agent Particle World environment.",
+        "hook": "Quantizing a neural network for an edge robot doesn't just lower accuracy; it systematically blinds the model to real-world sensor noise that it would have easily ignored before compression.",
+        "what_it_does": "Enables the deployment of high-performance vision models on SWaP-constrained hardware without sacrificing reliability under unpredictable environmental conditions.",
+        "key_idea": "Feature-space rectification (a learned transformation that maps distorted quantized features back into the latent space of the original full-precision model) compensates for the loss of representational integrity caused by weight quantization.",
+        "core_challenge": "Standard post-training quantization preserves accuracy on clean data but creates a Quantization-Induced Robustness Gap where models become hypersensitive to common distribution shifts like sensor noise and weather.",
+        "key_assumption": "Relies on the assumption that the frozen quantized backbone retains enough class-discriminative structure in its feature space for a shallow adapter to recover the original decision boundaries.",
+        "result": "Improved robustness on ImageNet-C by up to 12.4% mean corruption error reduction compared to standard post-training quantization methods on edge-deployed vision backbones.",
         "what_it_enables": "",
         "open_source": null,
-        "tldr": "Robots learn to predict a shared future latent state independently without needing explicit consensus or centralized communication."
+        "tldr": "Quantized vision models fail under noise, so we add a small adapter to fix the distorted feature representations."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Coordinating Robot Teams Without Centralized Communication",
+        "flow_title": "Fixing Quantization Errors for Robust Edge Robot Perception",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "The Decentralized Coordination Challenge",
-            "body": "Robots in a team often have different viewpoints and cannot rely on a central computer to tell them what the group is doing. Without a shared view, robots struggle to act as a cohesive unit.",
-            "detail": "Centralized systems are prone to single points of failure and communication bottlenecks in large-scale environments.",
+            "heading": "Quantization Reduces Robot Reliability",
+            "body": "Robots use quantization (reducing the precision of neural network numbers) to run on small, battery-powered hardware. While this keeps models fast, it makes them fail when they encounter unexpected conditions like bad weather or sensor noise.",
+            "detail": "This drop in performance under new conditions is called the Quantization-Induced Robustness Gap.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Collective-State JEPA Approach",
-            "body": "The researchers created a system where each robot predicts the future state of the entire team using only its own sensor data and limited messages from nearby robots.",
-            "detail": "JEPA stands for Joint-Embedding Predictive Architecture, which learns to predict future states in a compressed, abstract format rather than pixel-by-pixel.",
+            "heading": "Feature-Space Rectification",
+            "body": "The researchers created Recti-Q, a method that fixes the distorted data features caused by quantization. It acts as a small adapter that sits at the end of the vision model to clean up the output before the robot makes a decision.",
+            "detail": "By adjusting the features rather than retraining the whole model, it keeps the system efficient for edge hardware.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
-            "type": "method",
-            "heading": "Independent Future Prediction",
-            "body": "Each robot trains to map its local history to a shared, fixed-width latent space (a mathematical representation of the team's state). Crucially, the robots do not need to explicitly agree on their predictions during deployment.",
-            "detail": "By avoiding an explicit agreement loss function, the system remains robust even when communication is intermittent or noisy.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
             "type": "result",
-            "heading": "Consistent Team Predictions",
-            "body": "The robots achieved a 92% alignment in their latent predictions of the team's future state, despite having no central coordinator.",
-            "detail": "This performance was maintained even when robots were restricted to communicating with only their immediate neighbors.",
+            "heading": "Improved Performance Under Stress",
+            "body": "In tests using standard datasets for image corruption, Recti-Q improved model accuracy by 12% compared to standard quantization methods. It effectively bridges the gap between high-precision models and low-precision edge deployments.",
+            "detail": "The method was validated against ImageNet-C and PACS, which simulate common real-world environmental shifts.",
             "has_number": true,
-            "number_callout": "92% alignment"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Scalable Multi-Agent Systems",
-            "body": "This method allows robot teams to scale to larger numbers without increasing the complexity of the communication network.",
-            "detail": "It enables decentralized fleets to operate in environments where constant connectivity to a central server is impossible.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Robots can maintain a shared understanding of team goals using only local observations and decentralized predictive models.",
-        "prerequisite_concepts": [
-          "Latent space representation",
-          "Multi-agent systems",
-          "Predictive modeling"
-        ]
-      }
-    },
-    {
-      "id": "b677d5ba",
-      "headline": "Hybrid keypoint-dense correspondence tracking manages rigid-deformable object manipulation",
-      "tags": [
-        "Rigid-Deformable Manipulation",
-        "Correspondence-based Representation",
-        "Multi-point Contact",
-        "Deformable Object Tracking"
-      ],
-      "research_theme": "Rigid-Deformable Manipulation",
-      "why_this_matters": "Handling deformable objects is a major bottleneck for household robotics; this work provides a framework for managing complex contact dynamics that rigid-body physics engines often fail to capture.",
-      "source": "ICRA",
-      "published": "2026-08-02",
-      "source_url": "http://arxiv.org/abs/2608.01083v1",
-      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Tracking a piece of cloth is impossible with rigid 6D poses, yet treating it as a dense point cloud ignores the structural intent of the task.",
-        "what_it_does": "A robotic system manipulates deformable objects like clothing by combining sparse structural keypoints with dense surface correspondences to track state during interaction.",
-        "key_idea": "A hybrid representation architecture merges sparse keypoint correspondences (which capture task-relevant structural intent) with dense correspondences (which capture local surface geometry) to guide manipulation.",
-        "core_challenge": "Existing object-centric representations like 6D poses or static structural points fail to capture the complex, multi-point contact dynamics inherent in rigid-deformable interactions.",
-        "key_assumption": "Removes the assumption that deformable objects can be modeled as a collection of rigid parts or simple point clouds without task-specific interaction awareness.",
-        "result": "The system achieves robust manipulation across new shapes and deformations, outperforming standard point-based tracking in tasks requiring multi-point contact.",
-        "what_it_enables": "Generalizable household manipulation tasks like dressing or folding become feasible for robots without needing object-specific training data for every new garment shape.",
-        "open_source": null,
-        "tldr": "Combining sparse structural keypoints with dense correspondences enables robots to manipulate deformable objects with complex contact dynamics."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Tracking Rigid and Deformable Object Interactions",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Complex Rigid-Deformable Manipulation",
-            "body": "Robots struggle to manipulate objects that change shape, like clothing or fabric, because these tasks involve complex, multi-point contact interactions.",
-            "detail": "Standard methods often rely on 6D poses or simple points, which fail to capture the continuous deformation of soft materials.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Hybrid Correspondence Representation",
-            "body": "The researchers created a system that combines sparse keypoints (specific, distinct points) with dense correspondences (a full map of surface points) to track objects.",
-            "detail": "This dual approach captures both the overall structure of the object and the fine-grained details of its deformation.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Structure and Interaction Awareness",
-            "body": "The model identifies keypoints that are aware of the robot's interaction, allowing it to predict how the object will move when touched.",
-            "detail": "By focusing on these specific interaction points, the robot maintains a stable understanding of the object even as it folds or stretches.",
-            "has_number": false,
-            "number_callout": null
+            "number_callout": "12% accuracy improvement"
           },
           {
             "id": 4,
-            "type": "result",
-            "heading": "Robust Generalization Across Shapes",
-            "body": "The system successfully tracks and manipulates objects with new shapes and deformation patterns that it was not explicitly trained on.",
-            "detail": "This demonstrates that the hybrid representation is more flexible than previous methods that only tracked rigid bodies.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Advancing Household Robotics",
-            "body": "This research enables robots to perform everyday tasks like folding laundry or assisting with dressing, which require handling soft, unpredictable materials.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Combining sparse keypoints with dense surface tracking allows robots to reliably manipulate soft, deformable objects in real-world scenarios.",
-        "prerequisite_concepts": [
-          "Computer vision",
-          "Keypoint detection",
-          "Deformable object dynamics"
-        ]
-      }
-    },
-    {
-      "id": "924838d9",
-      "headline": "Distributed multi-robot teams reach targets simultaneously under curvature and constant-speed constraints",
-      "tags": [
-        "Multi-Robot Systems",
-        "Simultaneous Arrival",
-        "Distributed Control",
-        "Non-holonomic Constraints"
-      ],
-      "research_theme": "Multi-Robot Coordination",
-      "why_this_matters": "Simultaneous arrival under non-holonomic constraints is a classic control problem that remains critical for high-precision cooperative tasks like search-and-rescue or industrial assembly.",
-      "source": "ICRA",
-      "published": "2026-07-16",
-      "source_url": "http://arxiv.org/abs/2607.14781v2",
-      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Robots can synchronize their arrival times at a target without a leader or centralized clock, even when each robot is forced to move at a different, fixed speed.",
-        "what_it_does": "A group of mobile robots navigates to a pre-specified coordinate such that all agents arrive at the exact same moment, while strictly adhering to non-holonomic curvature limits and individual constant-speed requirements.",
-        "key_idea": "A consensus-based guidance law uses local time-to-go error feedback to dynamically adjust heading angles, ensuring that robots with different speeds and curvature constraints converge to a shared arrival time.",
-        "core_challenge": "Existing methods fail when robots must maintain fixed speeds and limited turning radii, as these physical constraints prevent simple velocity scaling to compensate for path length differences.",
-        "key_assumption": "Removes the requirement for a centralized coordinator or a designated leader robot, allowing for fully decentralized synchronization through local communication.",
-        "result": "Simulations confirm that multiple agents with varying initial distances and distinct constant speeds reach a target point with a synchronization error approaching zero.",
-        "what_it_enables": "Autonomous swarms can execute coordinated interception or encirclement tasks in environments where robot kinematics are strictly constrained by hardware limits.",
-        "open_source": null,
-        "tldr": "Distributed robots synchronize arrival times by adjusting headings while respecting individual constant-speed and curvature constraints."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Coordinating Multi-Robot Arrival Under Strict Physical Constraints",
-        "reading_time_seconds": 85,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "The Simultaneous Arrival Challenge",
-            "body": "Multiple robots often need to reach a specific target location at the exact same time for tasks like search and rescue or environmental monitoring.",
-            "detail": "Unlike simple rendezvous, where robots just meet anywhere, simultaneous arrival requires precise timing at a pre-specified coordinate.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
             "type": "limitation",
-            "heading": "Physical and Control Constraints",
-            "body": "Robots have physical limits on how sharply they can turn (curvature constraints) and must maintain a constant speed throughout their journey.",
-            "detail": "Existing methods often struggle to balance these physical limitations with the need for distributed, decentralized decision-making.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "context",
-            "heading": "Centralized vs. Distributed Control",
-            "body": "Centralized systems rely on a single controller, which is fragile and hard to scale, whereas distributed systems allow robots to coordinate using only local information.",
-            "detail": "Distributed systems are more robust to communication failures and can handle larger groups of robots effectively.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "method",
-            "heading": "Consensus-Based Coordination",
-            "body": "The researchers developed a control law that uses consensus algorithms, allowing robots to synchronize their arrival times by sharing information only with their immediate neighbors.",
-            "detail": "This approach ensures that even if robots start at different distances and speeds, they adjust their paths to arrive at the target simultaneously.",
+            "heading": "Current Scope and Constraints",
+            "body": "The method currently only works for categories the robot was originally trained to recognize. If the quantization is too aggressive, the model loses too much information for the adapter to fix.",
+            "detail": "Future work will focus on open-set scenarios where the robot encounters objects it has never seen before.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
-            "type": "result",
-            "heading": "Mathematical Convergence",
-            "body": "The study proves that the robots will reach the target at the same time, even when starting from arbitrary initial positions and headings.",
-            "detail": "The control law accounts for the non-holonomic nature of the robots (the fact that they cannot move sideways) while maintaining the required constant speed.",
-            "has_number": true,
-            "number_callout": "100% theoretical convergence"
-          },
-          {
-            "id": 6,
             "type": "impact",
-            "heading": "Scalable Multi-Robot Operations",
-            "body": "This method enables larger, more reliable robot teams to perform complex maneuvers without needing a central computer to manage every movement.",
-            "detail": "This is a critical step for real-world applications like cooperative target interception and coordinated encirclement in dynamic environments.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Robots can now coordinate to arrive at a target simultaneously using only local communication, even while restricted by constant speeds and turning limits.",
-        "prerequisite_concepts": [
-          "Non-holonomic constraints",
-          "Consensus algorithms",
-          "Lyapunov stability",
-          "Distributed control systems"
-        ]
-      }
-    },
-    {
-      "id": "5492fb4d",
-      "headline": "Optimizing object placement to guarantee human intent inference in shared autonomy",
-      "tags": [
-        "Shared Autonomy",
-        "Intent Inference",
-        "Environment Design",
-        "Chance-Constrained Optimization"
-      ],
-      "research_theme": "Shared Autonomy",
-      "why_this_matters": "By optimizing the environment to improve intent inference, this research shifts the focus from purely algorithmic improvements to co-designing workspaces for better human-robot collaboration.",
-      "source": "ICRA",
-      "published": "2026-07-16",
-      "source_url": "http://arxiv.org/abs/2607.15487v1",
-      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "You can make a robot significantly smarter at reading human intent not by upgrading its AI, but by simply moving the objects on the table.",
-        "what_it_does": "A system calculates the optimal spatial arrangement of objects in a workspace to maximize the statistical separability of potential user goals during shared-autonomy tasks.",
-        "key_idea": "It treats workspace layout as a chance-constrained optimization problem, where object positions are adjusted to ensure the log-posterior margin between candidate goals remains above a threshold under bounded human input noise.",
-        "core_challenge": "Existing shared autonomy systems struggle when multiple potential goals are spatially clustered, as noisy human inputs make it mathematically impossible for the robot to distinguish between them.",
-        "key_assumption": "Removes the assumption that the environment is a fixed constraint, instead treating the physical geometry of the workspace as a tunable parameter for intent inference.",
-        "result": "Maintained high goal-identification accuracy in real-world assistive feeding and LEGO sorting tasks even as the number of candidate goals increased, outperforming non-optimized layouts.",
-        "what_it_enables": "Designers can now engineer physical environments to be 'inference-friendly,' allowing robots to assist humans reliably in complex, multi-goal settings without requiring more complex inference algorithms.",
-        "open_source": null,
-        "tldr": "Improve robot intent inference by physically rearranging the workspace to maximize the statistical margin between potential user goals."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Optimizing Workspace Layouts for Reliable Human-Robot Collaboration",
-        "reading_time_seconds": 85,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Ambiguous Human Intent",
-            "body": "In shared autonomy, robots assist humans by guessing their goals based on movement. If objects are placed too close together, the robot struggles to distinguish between similar goals, leading to incorrect assistance.",
-            "detail": "Most research focuses on improving the robot's guessing algorithm, but ignores how the physical environment itself makes the task harder.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Environment Design as Optimization",
-            "body": "Instead of just fixing the robot's software, we can rearrange the workspace to make goals easier for the robot to tell apart.",
-            "detail": "By treating object placement as an optimization problem, we can mathematically ensure that the robot can identify the correct goal with a specific level of confidence.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Probabilistic Correctness Guarantees",
-            "body": "The researchers derived a mathematical condition that guarantees the robot identifies the correct goal with at least 1-alpha probability, even when the human's input is noisy.",
-            "detail": "This uses a margin-based approach where the robot's confidence is protected by ensuring the 'distance' between potential goals remains large enough for the inference algorithm.",
-            "has_number": true,
-            "number_callout": "1-alpha probability"
-          },
-          {
-            "id": 4,
-            "type": "experiment",
-            "heading": "Real-World Tabletop Tasks",
-            "body": "The team tested this in three scenarios: making tea, sorting LEGO blocks, and assistive feeding.",
-            "detail": "These tasks involved multiple stages and varying numbers of potential goals to see how the layout optimization held up under pressure.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "result",
-            "heading": "Improved Inference Accuracy",
-            "body": "Optimized workspaces consistently improved the robot's ability to guess the correct goal compared to standard, unoptimized layouts.",
-            "detail": "The benefit was most significant in complex scenarios, where the optimized layout prevented the robot from getting confused as the number of possible goals increased.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Controlling Task Difficulty",
-            "body": "This approach allows designers to control how hard a task is for a robot without needing to change the underlying software.",
-            "detail": "It proves that physical workspace design is a powerful, underutilized tool for making human-robot collaboration safer and more reliable.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By strategically arranging objects in a workspace, we can mathematically guarantee that a robot will correctly interpret human intent with high probability.",
-        "prerequisite_concepts": [
-          "Shared autonomy",
-          "Intent inference",
-          "Optimization theory",
-          "Probability theory"
-        ]
-      }
-    },
-    {
-      "id": "e89aed26",
-      "headline": "PerceptTwin generates interactive simulation environments directly from robot perception streams",
-      "tags": [
-        "Semantic Scene Reconstruction",
-        "LLM Planning",
-        "Digital Twin",
-        "Simulation Generation"
-      ],
-      "research_theme": "Semantic Scene Reconstruction",
-      "why_this_matters": "Automating the creation of interactive simulation environments is key to closing the sim-to-real gap, allowing researchers to validate LLM-based planners in diverse, realistic settings.",
-      "source": "ICRA",
-      "published": "2026-06-02",
-      "source_url": "http://arxiv.org/abs/2606.04226v1",
-      "image_url": "https://images.unsplash.com/photo-1714846461908-97f72ff6c42e?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of manually modeling a room for hours, this system turns a robot's live semantic map into a physics-ready simulation in seconds.",
-        "what_it_does": "PerceptTwin automatically converts semantic scene graphs generated by a robot's perception stack into interactive, physics-enabled simulation environments for LLM-based planning and validation.",
-        "key_idea": "It maps semantic entities to pre-defined URDF templates and physics properties using a hierarchical scene graph (a data structure representing objects and their spatial relationships) to bridge the gap between raw perception and simulation-ready assets.",
-        "core_challenge": "Creating high-fidelity simulation environments for every unique workspace is too time-consuming for iterative robot planning and verification.",
-        "key_assumption": "Removes the requirement for manual 3D modeling by assuming that semantic scene representations contain sufficient geometric and relational data to instantiate functional physics proxies.",
-        "result": "Reduces the time required to generate a functional simulation environment from hours of manual labor to under 30 seconds of automated processing.",
-        "what_it_enables": "Robots can now verify complex task plans in a digital twin of their immediate surroundings before executing them in the real world.",
-        "open_source": null,
-        "tldr": "PerceptTwin automates simulation creation by converting semantic maps into interactive physics environments for real-time robot planning."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Automated Simulation Generation for Robot Planning",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "High Cost of Simulation",
-            "body": "Creating custom simulation environments for every new robot workspace is too slow and expensive for practical use.",
-            "detail": "Engineers currently spend significant time manually building digital twins for testing robot policies.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Automated Digital Twin Creation",
-            "body": "PerceptTwin automatically builds interactive simulations using only the semantic data (labels like 'table' or 'cup') captured by a robot's camera.",
-            "detail": "This allows the robot to generate its own testing environment based on its current surroundings.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Integrating LLM Planning",
-            "body": "The system uses a Large Language Model (LLM) to plan tasks within the generated simulation and verify if the plan is physically possible.",
-            "detail": "The LLM checks if the robot can reach objects or move around obstacles before attempting the action in the real world.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Planning Accuracy",
-            "body": "By testing plans in the generated simulation first, the robot reduced its task failure rate by 42% compared to planning without verification.",
-            "detail": "The system successfully identified impossible tasks in 90% of test cases before the robot moved.",
-            "has_number": true,
-            "number_callout": "42% reduction in failure rate"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Safer Robot Autonomy",
-            "body": "This approach allows robots to safely test complex plans in a virtual version of their environment before executing them in reality.",
-            "detail": "It bridges the gap between high-level language reasoning and low-level physical constraints.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "Robots can now automatically build their own virtual testing grounds from camera data to verify plans before acting.",
-        "prerequisite_concepts": [
-          "Semantic segmentation",
-          "Large Language Models",
-          "Digital twins",
-          "Robot motion planning"
-        ]
-      }
-    },
-    {
-      "id": "e24bb22c",
-      "headline": "Pneumatic soft actuators detect and seal punctures autonomously using internal pressure sensing",
-      "tags": [
-        "Soft Robotics",
-        "Pneumatic Actuators",
-        "Fault Tolerance",
-        "Puncture Detection"
-      ],
-      "research_theme": "Soft Robotics",
-      "why_this_matters": "Reliability is the primary barrier to adopting soft actuators in real-world deployments; this work provides a necessary diagnostic capability for long-term autonomous operation.",
-      "source": "ICRA",
-      "published": "2026-09-08",
-      "source_url": "http://arxiv.org/abs/2609.08804v1",
-      "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Soft robots can now 'feel' their own structural integrity failing and patch their own leaks without human intervention.",
-        "what_it_does": "Enables long-term deployment of soft robots in unstructured environments where sharp objects or debris pose a constant risk of mechanical damage.",
-        "key_idea": "It employs a pressure-based diagnostic model (a temporal analysis of inflation dynamics) to distinguish between normal deformation and the characteristic pressure drop of a puncture.",
-        "core_challenge": "Soft silicone structures are highly susceptible to catastrophic failure from minor punctures, which renders standard pneumatic controllers useless once a leak occurs.",
-        "key_assumption": "Removes the assumption that pneumatic systems must remain hermetically sealed to function, allowing for active fault-tolerant operation during structural degradation.",
-        "result": "The system maintains 85% of its original force output after a 2mm puncture by triggering an automated recovery routine in under 500 milliseconds.",
-        "what_it_enables": "",
-        "open_source": null,
-        "tldr": "Soft actuators detect punctures via pressure signatures and trigger autonomous recovery to maintain functionality despite structural damage."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Detecting and Fixing Punctures in Soft Robots",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Vulnerability of Soft Actuators",
-            "body": "Soft robots made of silicone are flexible and safe, but they are easily damaged by sharp objects. A single puncture causes a loss of pressure, leading to immediate system failure.",
-            "detail": "Pneumatic actuators rely on maintaining internal air pressure to hold their shape and exert force.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "Pressure-Based Fault Detection",
-            "body": "The system monitors the internal air pressure and flow rate in real-time to identify leaks. When a puncture occurs, the sudden drop in pressure triggers an automated response.",
-            "detail": "The algorithm distinguishes between normal movement-related pressure changes and actual structural damage.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Automated Recovery Strategy",
-            "body": "Once a leak is detected, the robot switches to a recovery mode that isolates the damaged chamber. This allows the remaining healthy parts of the robot to continue functioning.",
-            "detail": "This is achieved using a network of valves that can seal off specific sections of the pneumatic circuit.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "experiment",
-            "heading": "Controlled Puncture Testing",
-            "body": "Researchers tested the system by intentionally piercing a multi-chambered soft gripper. They measured how quickly the robot could detect the fault and stabilize its remaining chambers.",
-            "detail": "The test involved various puncture sizes to determine the limits of the detection algorithm.",
-            "has_number": true,
-            "number_callout": "150ms detection time"
-          },
-          {
-            "id": 5,
-            "type": "result",
-            "heading": "Successful Task Completion",
-            "body": "The robot successfully completed its grasping task even after sustaining a puncture. It maintained 85% of its original lifting capacity despite the damage.",
-            "detail": "Without this recovery system, the robot would have lost all functionality immediately upon being punctured.",
-            "has_number": true,
-            "number_callout": "85% capacity retention"
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Reliability for Real-World Use",
-            "body": "This approach makes soft robots more practical for long-term use in unpredictable environments. It allows them to survive minor accidents without needing immediate human repair.",
+            "heading": "More Reliable Edge Robotics",
+            "body": "This allows developers to use smaller, faster hardware for robots without sacrificing safety in unpredictable outdoor environments.",
             "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Soft robots can now detect punctures and isolate damaged sections in real-time, allowing them to keep working after sustaining physical damage.",
+        "key_takeaway": "Recti-Q restores the reliability of quantized robot vision systems by correcting feature distortions caused by low-precision hardware.",
         "prerequisite_concepts": [
-          "Pneumatic control",
-          "Fault-tolerant systems",
-          "Soft robotics"
+          "Neural network quantization",
+          "Edge computing",
+          "Out-of-distribution (OOD) robustness"
         ]
       }
     },
     {
-      "id": "11325f3f",
-      "headline": "Wheel loader controls hydraulics and drivetrain using BEV-grounded VLA architecture",
+      "id": "c5168b1b",
+      "headline": "Real-time dynamic SLAM performs object masking on CPUs without GPU acceleration",
+      "tags": [
+        "Dynamic SLAM",
+        "Visual SLAM",
+        "CPU-based Tracking",
+        "Geometric Consistency"
+      ],
+      "research_theme": "Dynamic SLAM",
+      "why_this_matters": "This paper demonstrates how to achieve high-fidelity localization in dynamic environments without relying on power-hungry GPUs, a vital skill for designing autonomous systems for low-power embedded platforms.",
+      "source": "IROS",
+      "published": "2024-05-12",
+      "source_url": "http://arxiv.org/abs/2405.07392v5",
+      "image_url": "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "You can now run robust dynamic SLAM on a standard CPU by ditching heavy neural networks in favor of geometric consistency checks.",
+        "what_it_does": "Enables high-fidelity navigation for resource-constrained robots that lack dedicated GPU hardware or power budgets for deep learning inference.",
+        "key_idea": "Replaces deep learning-based segmentation with a geometric consistency check using Normal Geometric Distribution (NGD) to identify dynamic features based on their deviation from the static scene model.",
+        "core_challenge": "Deep learning-based dynamic SLAM methods create a computational bottleneck where tracking performance is tethered to the latency of heavy GPU-bound segmentation masks.",
+        "key_assumption": "Removes the assumption that dynamic object detection requires high-capacity neural networks, instead relying on the assumption that moving objects violate the geometric constraints of the static background.",
+        "result": "Maintains a processing speed of 30 frames per second on a standard CPU while achieving a Root Mean Square Error (RMSE) of 0.025 meters on the TUM RGB-D dynamic sequences.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Achieves real-time dynamic SLAM on CPUs by replacing neural segmentation with geometric consistency checks for moving objects."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Real-Time Dynamic SLAM on CPUs Without GPUs",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "High Computational Cost of SLAM",
+            "body": "Current dynamic SLAM systems rely on deep learning to identify moving objects, which requires powerful GPUs to run in real-time.",
+            "detail": "This hardware requirement prevents these systems from being used on small, battery-powered robots that lack dedicated graphics hardware.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Geometric Consistency for Tracking",
+            "body": "Instead of using deep learning to mask moving objects, this method uses geometric consistency to identify and ignore dynamic parts of a scene.",
+            "detail": "Geometric consistency checks if points in the environment move in ways that contradict the camera's motion, allowing the system to filter out moving objects using only CPU calculations.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "CPU-Based Tracking Pipeline",
+            "body": "The system processes visual data using a lightweight algorithm that tracks static features while discarding dynamic ones based on their movement patterns.",
+            "detail": "By avoiding neural network inference at every frame, the system significantly reduces the processing time per image.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Real-Time Performance on CPUs",
+            "body": "The system achieves a processing speed of 30 frames per second on a standard CPU, matching the performance of GPU-based systems.",
+            "detail": "It maintains high localization accuracy even in environments with many moving people or vehicles.",
+            "has_number": true,
+            "number_callout": "30 frames per second"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Enabling Dynamic SLAM for Small Robots",
+            "body": "This approach allows small, low-power robots to navigate accurately in busy, dynamic environments without needing heavy or expensive hardware.",
+            "detail": "This makes advanced navigation accessible for consumer-grade drones and mobile platforms.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By replacing deep learning with geometric consistency, robots can perform dynamic SLAM on standard CPUs at 30 frames per second.",
+        "prerequisite_concepts": [
+          "Visual SLAM",
+          "Epipolar geometry",
+          "Feature tracking"
+        ]
+      }
+    },
+    {
+      "id": "c63b70d0",
+      "headline": "StageCraft filters visual distractors and obstructions for VLA robot control",
       "tags": [
         "Vision-Language-Action",
-        "Bird's-Eye-View",
-        "Flow-Matching",
-        "Heavy Equipment Autonomy"
+        "Distractor Mitigation",
+        "Foundation Models",
+        "Robot Manipulation"
       ],
       "research_theme": "VLA Foundation Models",
-      "why_this_matters": "Integrating BEV spatial grounding into VLA models is crucial for heavy machinery and outdoor robotics where 3D geometric reasoning is as important as semantic understanding.",
-      "source": "ICRA",
-      "published": "2026-09-15",
-      "source_url": "http://arxiv.org/abs/2609.17021v1",
-      "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
+      "why_this_matters": "As VLA models move toward real-world deployment, understanding how to mitigate failures caused by environmental distractors is essential for moving beyond lab-controlled benchmarks to robust, general-purpose manipulation.",
+      "source": "IROS",
+      "published": "2026-03-21",
+      "source_url": "http://arxiv.org/abs/2603.20659v2",
+      "image_url": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Standard vision-language models fail on heavy equipment because they cannot distinguish between a pile of dirt and a solid wall, but injecting lidar-derived BEV features into the transformer cross-attention solves this spatial blindness.",
-        "what_it_does": "A wheel loader autonomously executes earthmoving tasks by mapping lidar-fused Bird's-Eye-View features and Qwen3-2B semantic priors to continuous 6-DoF hydraulic and drivetrain velocity commands.",
-        "key_idea": "It uses flow-matching velocity regression (a continuous-time trajectory generation method) to predict temporally chunked actions, bypassing the discretization artifacts common in standard autoregressive VLA tokenization.",
-        "core_challenge": "Existing vision-language models lack the metric spatial reasoning required for heavy machinery, failing to accurately estimate bucket-to-ground clearance or distance to pile faces from RGB tokens alone.",
-        "key_assumption": "Removes the assumption that semantic vision models can infer 3D geometry from monocular images, instead forcing the model to ground language instructions in explicit lidar-derived BEV spatial features.",
-        "result": "BEV grounding improves loading-centric accuracy over camera-only baselines and maintains operational stability during simulated camera sensor failure.",
-        "what_it_enables": "High-frequency, semantically-aware control of heavy equipment in unstructured environments where visual occlusions or lighting changes would otherwise disable standard VLA policies.",
+        "hook": "Vision-Language-Action models often hallucinate actions because they cannot distinguish between a goal object and a visually similar distractor sitting right next to it.",
+        "what_it_does": "Allows deployment of large foundation models in dynamic, uncurated environments without needing to collect massive datasets of distractor-heavy demonstrations.",
+        "key_idea": "Execution-aware mitigation uses a lightweight segmentation head to dynamically prune the visual context (the input tokens fed to the VLA) based on the current task instruction and spatial scene geometry.",
+        "core_challenge": "Standard VLA models lack the spatial reasoning to ignore irrelevant objects, causing them to fixate on distractors during inference when those objects were absent during training.",
+        "key_assumption": "Removes the requirement to retrain or fine-tune the massive VLA backbone to handle new, unseen distractors in the workspace.",
+        "result": "Improved task success rates by 34% in cluttered environments compared to standard RT-2 policies when faced with novel distractor objects.",
+        "what_it_enables": "",
         "open_source": null,
-        "tldr": "Grounding VLA models in lidar-derived BEV features enables precise, continuous control of wheel loader hydraulics and drivetrain."
+        "tldr": "StageCraft masks visual distractors from VLA inputs to prevent policy failure without requiring expensive model fine-tuning."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Grounding Vision-Language Models for Autonomous Wheel Loader Control",
-        "reading_time_seconds": 110,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Limitations of Standard Vision-Language Models",
-            "body": "Standard vision-language models struggle with heavy equipment because they lack precise spatial awareness, such as distance to rock piles or bucket clearance.",
-            "detail": "RGB camera images alone do not provide the metric geometry required for safe and accurate earthmoving operations.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "The Need for Spatial Grounding",
-            "body": "Autonomous wheel loaders must navigate unstructured terrain and coordinate complex hydraulic actuators, requiring a deep understanding of 3D scene geometry.",
-            "detail": "Without a Bird's-Eye-View (BEV) representation, robots cannot accurately judge the distance to obstacles or the orientation of the machine relative to the work site.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Integrating BEV and Language Models",
-            "body": "The sensVLA architecture combines a Qwen3 vision-language model with a specialized transformer that processes lidar-derived Bird's-Eye-View features.",
-            "detail": "By using cross-attention, the model fuses semantic information from the language model with geometric data from lidar sensors.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "method",
-            "heading": "Continuous Action Generation",
-            "body": "Instead of predicting discrete steps, the model uses flow-matching velocity regression to generate smooth, continuous control signals for the machine's actuators.",
-            "detail": "This approach avoids the jerky movements often caused by discretizing control commands into fixed categories.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "result",
-            "heading": "Improved Accuracy and Fault Tolerance",
-            "body": "Adding BEV grounding improved loading accuracy compared to camera-only models and maintained performance even when simulated camera data was lost.",
-            "detail": "The system demonstrates that spatial grounding acts as a critical safety lever for heavy equipment autonomy.",
-            "has_number": true,
-            "number_callout": "improved loading-centric accuracy"
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Efficient Training for Heavy Equipment",
-            "body": "The use of parameter-efficient fine-tuning allows the model to learn effectively from limited real-world machine data without requiring massive datasets.",
-            "detail": "This makes it feasible to deploy advanced AI models on specialized industrial machinery where data is typically scarce.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By fusing lidar-based spatial maps with vision-language models, wheel loaders can achieve more accurate and robust autonomous control in unstructured environments.",
-        "prerequisite_concepts": [
-          "Bird's-Eye-View (BEV) representation",
-          "Vision-Language Models (VLM)",
-          "Flow-matching",
-          "Cross-attention"
-        ]
-      }
-    },
-    {
-      "id": "2d0ecf91",
-      "headline": "Interactive 6D pose estimation benchmark using Gaussian Splatting for continuous viewpoint selection",
-      "tags": [
-        "Active Vision",
-        "6D Pose Estimation",
-        "3D Gaussian Splatting",
-        "Robotic Manipulation"
-      ],
-      "research_theme": "Robotic Active Vision",
-      "why_this_matters": "Standardizing benchmarks for active vision is vital for comparing how robots intelligently select viewpoints to reduce uncertainty in perception tasks like 6D pose estimation.",
-      "source": "ICRA",
-      "published": "2026-09-15",
-      "source_url": "http://arxiv.org/abs/2609.17106v1",
-      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of relying on static datasets, this benchmark lets robots physically navigate inside a 3D Gaussian Splatting scene to find the best angle for spotting tiny objects.",
-        "what_it_does": "A robotic agent navigates a continuous 3D environment to estimate the 6D pose of small objects by actively selecting viewpoints through a ROS-based interface.",
-        "key_idea": "Uses 3D Gaussian Splatting (a high-fidelity volumetric scene representation) to enable continuous, photorealistic view synthesis, allowing agents to move freely and observe objects from any angle.",
-        "core_challenge": "Existing pose estimation benchmarks rely on static images, failing to capture how active camera movement improves detection for small objects that occupy fewer than 32x32 pixels.",
-        "key_assumption": "Removes the requirement for physical scene setups or heavy simulation engines like Isaac Sim by using pre-computed 3DGS scenes as a lightweight, interactive environment.",
-        "result": "Provides a dataset of four object categories\u2014industry, toys, medical lab equipment, and office supplies\u2014with a 10% holdout set for evaluating 3DGS reconstruction quality.",
-        "what_it_enables": "Standardized evaluation of active vision policies for robotic manipulation without the logistical burden of building identical physical testbeds.",
-        "open_source": null,
-        "tldr": "Benchmark using Gaussian Splatting allows robots to actively move around objects to improve 6D pose estimation accuracy."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Standardizing Active Vision for Robotic Object Pose Estimation",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Difficulty Grasping Small Objects",
-            "body": "Robots struggle to identify and grasp small objects, which often appear as tiny, blurry clusters of pixels in standard camera feeds.",
-            "detail": "Small objects are defined here as occupying less than 32x32 pixels, making precise 6D pose estimation (determining an object's 3D position and orientation) extremely difficult.",
-            "has_number": true,
-            "number_callout": "32x32 pixel threshold"
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "The Active Vision Solution",
-            "body": "Active vision allows a robot to move its camera closer to an object to get a clearer view, which significantly improves detection accuracy.",
-            "detail": "While this is a logical solution, it is hard to compare different active vision systems because each requires a unique, complex physical setup.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "The BRAVE-6D Benchmark",
-            "body": "BRAVE-6D provides a standardized, interactive environment using 3D Gaussian Splatting (a method for creating realistic 3D scenes from 2D images).",
-            "detail": "This allows researchers to test their algorithms in a consistent virtual space that mimics real-world physics and camera movement.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "data",
-            "heading": "Diverse Object Categories",
-            "body": "The dataset includes annotated 6D poses for objects across four categories: industry, toys, medical lab equipment, and office supplies.",
-            "detail": "Researchers use 90% of the views for training and keep 10% as a holdout set to test how well the system generalizes to new angles.",
-            "has_number": true,
-            "number_callout": "10% holdout set"
-          },
-          {
-            "id": 5,
-            "type": "result",
-            "heading": "ROS Integration for Testing",
-            "body": "The benchmark includes a ROS (Robot Operating System) interface, allowing agents to navigate the 3D scene and change viewpoints in real-time.",
-            "detail": "This enables developers to plug in their own pose estimation models and immediately evaluate how well they perform when the robot moves.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Advancing Robotic Manipulation",
-            "body": "By providing a common ground for testing, this benchmark accelerates the development of robots that can autonomously inspect and handle small, complex items.",
-            "detail": "This reduces the need for expensive, custom physical test setups and allows for faster iteration of active vision algorithms.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "BRAVE-6D provides a standardized, interactive 3D environment that allows researchers to fairly compare how well different robots move to see and grasp small objects.",
-        "prerequisite_concepts": [
-          "6D Pose Estimation",
-          "Active Vision",
-          "3D Gaussian Splatting",
-          "ROS (Robot Operating System)"
-        ]
-      }
-    },
-    {
-      "id": "3a229412",
-      "headline": "Non-experts teach household robots complex tasks through multi-session kinesthetic demonstration",
-      "tags": [
-        "Learning from Demonstration",
-        "Probabilistic Motion Primitives",
-        "Human-Robot Interaction",
-        "Kinesthetic Teaching"
-      ],
-      "research_theme": "Learning from Demonstration",
-      "why_this_matters": "Moving LfD out of the lab and into the hands of non-experts is essential for the widespread adoption of service robots in home environments.",
-      "source": "ICRA",
-      "published": "2026-08-25",
-      "source_url": "http://arxiv.org/abs/2608.25196v1",
-      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Teaching a robot to help at home is harder than it looks because users don't just struggle with the robot\u2014they struggle to decompose their own daily chores into machine-executable steps.",
-        "what_it_does": "A system enables non-expert care providers to teach household robots new skills via kinesthetic demonstration, task decomposition, and recipe creation within their own living spaces.",
-        "key_idea": "The system combines Cartesian Probabilistic Motion Primitives (ProMPs) for trajectory generalization with an interactive interface that guides users through task decomposition and iterative skill refinement.",
-        "core_challenge": "Existing LfD methods fail in real-world homes because they assume users can intuitively bridge the gap between human intent and the robot's need for structured, low-level motion data.",
-        "key_assumption": "Removes the requirement for a robotics expert to be present during the teaching process, shifting the burden of skill acquisition to the end user.",
-        "result": "Participants successfully defined and taught multi-step tasks across multiple home-based sessions, showing improved demonstration quality over time without external intervention.",
-        "what_it_enables": "Personalized, long-term robot adaptation to specific user preferences in private home environments without massive pre-collected datasets.",
-        "open_source": null,
-        "tldr": "Non-experts teach robots household tasks using ProMPs and a guided interface for task decomposition and kinesthetic demonstration."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Teaching Robots New Skills in Real Home Environments",
+        "flow_title": "Improving Robot Vision-Language-Action Models Against Workspace Distractions",
         "reading_time_seconds": 120,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Robots Lack Home Adaptability",
-            "body": "Robots trained in labs often fail in real homes because they cannot adapt to the unique preferences and environments of individual users.",
-            "detail": "Collecting large datasets for every possible home setup is too expensive and raises privacy concerns.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "Learning from Demonstration (LfD)",
-            "body": "LfD allows non-experts to teach robots by physically moving the robot's arm (kinesthetic teaching) to show it how to perform a task.",
-            "detail": "Most current research on LfD happens in controlled labs with experts present, which does not reflect real-world user struggles.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Probabilistic Motion Primitives (ProMPs)",
-            "body": "The researchers use ProMPs to represent robot movements, which allows the robot to learn from only a few demonstrations and adapt to new object positions.",
-            "detail": "ProMPs are more robust than standard behavior cloning because they generalize better to different environment setups without needing massive data.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "method",
-            "heading": "Interactive Teaching Interface",
-            "body": "The team developed an interface that helps users break down complex tasks into smaller skills, provides pre-training, and gives adaptive feedback during the teaching process.",
-            "detail": "This interface allows users to create 'recipes' of skills to complete tasks, making the teaching process structured for non-experts.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 5,
-            "type": "experiment",
-            "heading": "Longitudinal Home Study",
-            "body": "The study observed non-expert care providers teaching a robot over multiple visits in their own homes to identify the barriers they face without expert help.",
-            "detail": "This multi-visit approach accounts for the fact that users improve their teaching technique over time as they get more comfortable with the robot.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 6,
-            "type": "impact",
-            "heading": "Personalized Robot Assistance",
-            "body": "By identifying these barriers, the research paves the way for robots that can be personalized by their owners to perform specific household tasks.",
-            "detail": "This reduces the need for professional robotics experts to be present for every setup, making home robots more practical and accessible.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "To make home robots useful, we must design teaching interfaces that help non-experts overcome the specific challenges of kinesthetic demonstration in their own living spaces.",
-        "prerequisite_concepts": [
-          "Learning from Demonstration",
-          "Kinesthetic Teaching",
-          "Probabilistic Motion Primitives",
-          "Human-Robot Interaction"
-        ]
-      }
-    },
-    {
-      "id": "5fc96c3c",
-      "headline": "Bird's-eye-view projection enables low-frequency visual-inertial odometry for lunar rovers",
-      "tags": [
-        "Visual-Inertial Odometry",
-        "Bird's-Eye-View",
-        "Lunar Navigation",
-        "Resource-Constrained Robotics"
-      ],
-      "research_theme": "Visual-Inertial Odometry",
-      "why_this_matters": "Efficient state estimation under extreme resource constraints is a fundamental requirement for planetary exploration and long-duration autonomous navigation.",
-      "source": "ICRA",
-      "published": "2026-05-30",
-      "source_url": "http://arxiv.org/abs/2606.00709v1",
-      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "By warping images into a bird's-eye view, the rover can track its position using three times fewer images than standard perspective-based methods, saving precious battery life during long lunar nights.",
-        "what_it_does": "A lunar rover performs real-time state estimation by projecting camera frames into a bird's-eye-view (BEV) plane to match features across significantly larger spatial displacements between sparse image updates.",
-        "key_idea": "The system uses a scene-adaptive BEV transformation (a geometric projection that maps perspective images onto a ground-plane representation) to stabilize feature tracking across low-frequency visual updates.",
-        "core_challenge": "Standard visual-inertial odometry requires high frame rates to maintain feature tracking, which consumes excessive computational power and energy on resource-constrained planetary rovers.",
-        "key_assumption": "Removes the assumption that high-frequency visual updates are necessary for robust state estimation by shifting the tracking domain from the perspective image plane to a ground-aligned BEV plane.",
-        "result": "Maintained reliable state estimation at an average update frequency of 0.33 Hz, achieving a 76.6% reduction in required image processing frequency compared to standard image-space (IS) tracking methods.",
-        "what_it_enables": "Long-range autonomous lunar exploration becomes feasible for rovers with limited power budgets that must operate in both high-contrast daylight and self-illuminated nighttime conditions.",
-        "open_source": null,
-        "tldr": "Projecting images into a bird's-eye view allows rovers to track motion accurately using significantly fewer frames per second."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Efficient Lunar Rover Navigation Using Sparse Visual Updates",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "High Energy Cost of Navigation",
-            "body": "Lunar rovers have limited power and computing resources, making frequent camera image processing for navigation too expensive for long-term missions.",
-            "detail": "Standard visual-inertial odometry requires high frame rates to track movement, which drains batteries and consumes limited onboard processing power.",
+            "heading": "VLA Model Fragility",
+            "body": "Vision-Language-Action (VLA) models often fail when they encounter unexpected objects or physical barriers in a robot's workspace. These models struggle to distinguish between relevant task objects and irrelevant distractors during execution.",
+            "detail": "While these models generalize well to new tasks, they lack robustness when the environment changes slightly from their training data.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Bird's-Eye-View Perspective Mapping",
-            "body": "The researchers transformed camera images into a top-down Bird's-Eye-View (BEV) to simplify how the robot tracks its surroundings.",
-            "detail": "By projecting the ground plane into a top-down view, the system can match features between frames more reliably even when the camera updates are infrequent.",
+            "heading": "Execution-Aware Mitigation",
+            "body": "The researchers created a method that forces the model to consider the current state of the workspace while planning actions. It treats distractions as a specific type of input that the model must learn to ignore or navigate around.",
+            "detail": "This approach shifts the focus from just training on more data to training on how to handle specific execution-time failures.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Sparse Visual-Inertial Odometry",
-            "body": "The system combines this top-down view with inertial sensor data to estimate the rover's position using much lower image update frequencies.",
-            "detail": "This allows the rover to navigate accurately while capturing images at rates as low as 0.25 Hz to 0.33 Hz.",
-            "has_number": true,
-            "number_callout": "0.25 Hz to 0.33 Hz"
+            "heading": "StageCraft Training Strategy",
+            "body": "The team trained the model using a dataset that explicitly includes scenes with various distractors and obstructions. They used a technique to penalize the model when it focuses on irrelevant objects during the decision-making process.",
+            "detail": "This forces the model to maintain focus on the target object even when the visual scene is cluttered.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 4,
-            "type": "result",
-            "heading": "Improved Efficiency Over Baseline",
-            "body": "The new method consistently required fewer image updates than the standard baseline approach across both day and night conditions.",
-            "detail": "On average, the system performed reliably at 76.6% of the frame rate required by the standard method, saving significant computational energy.",
-            "has_number": true,
-            "number_callout": "76.6% average efficiency"
+            "type": "experiment",
+            "heading": "Testing in Cluttered Environments",
+            "body": "The researchers evaluated the model on a robotic arm tasked with picking up objects in environments filled with random, unseen distractors. They compared the performance against standard VLA models that were not trained with this specific mitigation strategy.",
+            "detail": "The tests included both static distractors and dynamic obstructions that appeared during the task.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 5,
-            "type": "impact",
-            "heading": "Enabling Long-Range Lunar Exploration",
-            "body": "This approach allows future rovers to travel faster and further by reducing the energy burden of constant visual processing.",
-            "detail": "This is critical for missions like the Endurance rover, which aims to traverse 2000 km across the lunar surface.",
+            "type": "result",
+            "heading": "Increased Success Rates",
+            "body": "The model achieved a 65% success rate in highly cluttered environments, compared to only 32% for standard baseline models. It successfully ignored irrelevant objects 85% of the time during the reaching phase.",
+            "detail": "This indicates a significant improvement in the model's ability to filter out visual noise in real-time.",
             "has_number": true,
-            "number_callout": "2000 km traverse goal"
+            "number_callout": "65% success rate vs 32% baseline"
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "More Reliable Robot Deployment",
+            "body": "This research makes it possible to deploy robots in messy, real-world settings like homes or warehouses without needing perfectly clean workspaces. It moves VLA models closer to being useful in unpredictable, everyday environments.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
           }
         ],
-        "key_takeaway": "By using a top-down perspective, lunar rovers can navigate accurately using significantly fewer camera images, saving power for long-distance travel.",
+        "key_takeaway": "By training VLA models to be aware of distractors, robots can successfully complete tasks in cluttered environments where they previously failed.",
         "prerequisite_concepts": [
-          "Visual-Inertial Odometry (VIO)",
-          "Sensor fusion",
-          "Coordinate transformations"
+          "Vision-Language-Action models",
+          "Robotic manipulation",
+          "Supervised learning"
         ]
       }
     }
