@@ -1,5 +1,948 @@
 {
-  "generated_at": "2026-11-07T04:44:58.594297+00:00",
-  "article_count": 0,
-  "articles": []
+  "generated_at": "2026-11-08T04:37:33.168210+00:00",
+  "article_count": 10,
+  "articles": [
+    {
+      "id": "eaec32ec",
+      "headline": "Riemannian trajectory optimization for rigid bodies on matrix Lie groups",
+      "tags": [
+        "Trajectory Optimization",
+        "Lie Group Variational Integrator",
+        "Riemannian Optimization",
+        "Rigid Body Dynamics"
+      ],
+      "research_theme": "Trajectory Optimization",
+      "why_this_matters": "This work addresses the geometric constraints of rigid body dynamics, providing a more stable and efficient way to optimize motion on Lie groups.",
+      "source": "RSS",
+      "published": "2025-05-05",
+      "source_url": "http://arxiv.org/abs/2505.02323v1",
+      "image_url": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Standard rotation representations like quaternions force you to manage artificial constraints or singularities, but this method treats the rotation group as its natural geometric home to speed up convergence.",
+        "what_it_does": "Computes dynamically feasible trajectories for multi-rigid body systems, such as drones and 7-DOF manipulators, by performing optimization directly on the manifold of matrix Lie groups.",
+        "key_idea": "Integrates Lie group variational integrators with a Riemannian Interior Point Method (a constrained optimization algorithm that respects the manifold's curvature) to compute exact closed-form derivatives.",
+        "core_challenge": "Traditional trajectory optimization models rigid body dynamics in generalized coordinates, which suffer from slow convergence and topological violations when mapping between Euclidean space and rotation groups.",
+        "key_assumption": "Removes the need for artificial constraints like unit-norm requirements for quaternions or double-cover handling by operating natively on the Lie group manifold.",
+        "result": "Achieved successful docking for 82 out of 100 randomly sampled drone poses while maintaining linear computational complexity relative to the kinematic chain depth.",
+        "what_it_enables": "Faster, more stable motion planning for complex kinematic chains where maintaining the intrinsic topological structure of rotation is critical for convergence.",
+        "open_source": null,
+        "tldr": "Optimizing trajectories directly on Lie groups avoids quaternion constraints and scales linearly with robot degrees of freedom."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Optimizing Robot Motion on Matrix Lie Groups",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Rotation Representation Challenges",
+            "body": "Standard methods for planning robot motion often struggle with rotation because representing 3D orientations mathematically can lead to singularities or violations of the rotation group's structure.",
+            "detail": "Using generalized coordinates on complex manifolds often results in slow convergence and computationally expensive derivative calculations during optimization.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "method",
+            "heading": "Lie Group Dynamics Integration",
+            "body": "This approach models multi-body robot dynamics directly on matrix Lie groups (mathematical structures that represent continuous symmetry) to ensure the rotation geometry is preserved by construction.",
+            "detail": "By using a Lie group variational integrator, the system conserves energy and maintains the correct topological structure throughout the optimization process.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Riemannian Interior Point Optimization",
+            "body": "The researchers developed a line-search Riemannian Interior Point Method to solve trajectory optimization problems while respecting the constraints of the rotation manifold.",
+            "detail": "The method derives exact closed-form second-order expansions of the dynamics, which allows for faster and more stable optimization.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Linear Computational Scaling",
+            "body": "The complexity of evaluating the derivatives scales linearly with the number of rigid bodies or the depth of a kinematic chain.",
+            "detail": "This linear scaling ensures the method remains efficient even as the complexity of the robot system increases.",
+            "has_number": true,
+            "number_callout": "Linear scaling w.r.t. DOF"
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "High Success Rate in Docking",
+            "body": "In a drone docking task, the proposed method successfully reached the target in 82 out of 100 tested scenarios.",
+            "detail": "The method was compared against standard quaternion-based integrators, demonstrating superior handling of the rotation manifold.",
+            "has_number": true,
+            "number_callout": "82 out of 100 cases"
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Efficient Motion Planning",
+            "body": "This framework provides a faster, mathematically robust way to plan motions for complex robots like manipulators without the typical pitfalls of coordinate-based rotation representations.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By performing trajectory optimization directly on matrix Lie groups, robots can plan motions more efficiently while naturally preserving the geometric properties of 3D rotations.",
+        "prerequisite_concepts": [
+          "Lie groups",
+          "Trajectory optimization",
+          "Riemannian manifolds",
+          "Kinematic chains"
+        ]
+      }
+    },
+    {
+      "id": "922905ce",
+      "headline": "Robo3R predicts metric-scale 3D scene geometry from RGB images for manipulation",
+      "tags": [
+        "3D Perception",
+        "Robotic Manipulation",
+        "Metric-Scale Reconstruction",
+        "Feed-Forward Models"
+      ],
+      "research_theme": "3D Perception",
+      "why_this_matters": "Improving metric consistency in 3D reconstruction is essential for robots to move beyond qualitative scene understanding toward precise physical interaction.",
+      "source": "RSS",
+      "published": "2026-02-10",
+      "source_url": "http://arxiv.org/abs/2602.10101v2",
+      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Standard depth sensors fail on transparent or reflective objects, but this model reconstructs precise 3D geometry using only RGB images and robot state data.",
+        "what_it_does": "A feed-forward neural network generates accurate, metric-scale 3D scene geometry directly from monocular RGB images and robot base frame states to guide physical manipulation.",
+        "key_idea": "It employs a feed-forward architecture trained on the Robo3R-4M synthetic dataset to map visual features into a consistent 3D representation without iterative optimization or multi-view fusion.",
+        "core_challenge": "Depth sensors introduce significant noise and material-dependent artifacts, while existing reconstruction models lack the metric precision required for high-stakes physical interaction.",
+        "key_assumption": "Removes the requirement for active depth sensing or multi-view consistency, relying instead on learned priors from large-scale synthetic data.",
+        "result": "Achieved superior performance in absolute translation accuracy at a threshold of 0.01 meters (ATA@0.01) compared to existing feed-forward reconstruction models.",
+        "what_it_enables": "Robotic systems can now perform precise manipulation in environments where traditional depth cameras are unreliable or unavailable.",
+        "open_source": null,
+        "tldr": "Robo3R reconstructs metric-scale 3D scenes from RGB images to enable precise manipulation without relying on noisy depth sensors."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Improving Robotic 3D Perception for Precise Object Manipulation",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Unreliable Robot 3D Perception",
+            "body": "Robots struggle to interact with objects because current depth sensors are noisy and sensitive to material types like glass or metal.",
+            "detail": "Existing reconstruction models often lack the metric precision (exact physical measurements) needed for reliable grasping and manipulation.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "The Robo3R Reconstruction Model",
+            "body": "Robo3R is a feed-forward model that predicts accurate, metric-scale 3D geometry directly from standard camera images and robot state data.",
+            "detail": "By using a feed-forward approach, the system processes visual data quickly without needing iterative optimization steps.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "data",
+            "heading": "Training on Large-Scale Data",
+            "body": "The model was trained on Robo3R-4M, a massive synthetic dataset containing 4 million scenes designed specifically for robotic perception tasks.",
+            "detail": "Synthetic data allows the model to learn from perfect ground-truth geometry, which is difficult to capture in real-world environments.",
+            "has_number": true,
+            "number_callout": "4 million scenes"
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Superior Geometric Accuracy",
+            "body": "In tests, Robo3R outperformed existing models by providing higher accuracy in translation and rotation for complex objects like 1.5 mm-diameter ropes.",
+            "detail": "The model achieved high precision at a threshold of 0.01 meters, proving it can handle fine-grained manipulation tasks.",
+            "has_number": true,
+            "number_callout": "0.01 meters accuracy threshold"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Enabling Reliable Physical Interaction",
+            "body": "This research provides a path for robots to perform complex tasks in unstructured environments where traditional depth sensors fail.",
+            "detail": "By improving the accuracy of 3D scene understanding, robots can grasp and manipulate objects with much higher success rates.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Robo3R enables robots to perceive 3D environments with high metric accuracy using only camera images, overcoming the limitations of noisy depth sensors.",
+        "prerequisite_concepts": [
+          "3D Reconstruction",
+          "Computer Vision",
+          "Metric-scale geometry",
+          "Feed-forward neural networks"
+        ]
+      }
+    },
+    {
+      "id": "37794e46",
+      "headline": "KinDER evaluates robot physical reasoning across 25 procedurally generated kinematic environments",
+      "tags": [
+        "Embodied AI",
+        "Physical Reasoning",
+        "Kinematic Constraints",
+        "Procedural Generation"
+      ],
+      "research_theme": "Embodied AI Benchmarks",
+      "why_this_matters": "Standardized benchmarks for physical reasoning are critical for evaluating whether agents truly understand dynamics or are merely overfitting to visual patterns.",
+      "source": "RSS",
+      "published": "2026-04-28",
+      "source_url": "http://arxiv.org/abs/2604.25788v2",
+      "image_url": "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Most robots fail not because they lack vision, but because they cannot predict how their own physical constraints interact with the geometry of a cluttered room.",
+        "what_it_does": "Standardizes how researchers measure a robot's ability to generalize physical reasoning across different embodiments and task constraints.",
+        "key_idea": "It uses procedural generation to create diverse, parameterized physical puzzles that require agents to map high-level task goals to specific kinematic configurations (the set of joint angles and velocities that satisfy physical constraints).",
+        "core_challenge": "Existing benchmarks often rely on static visual recognition, failing to capture whether a robot understands the underlying physical laws governing its own movement and object manipulation.",
+        "key_assumption": "Moves away from fixed, hand-designed training scenarios by assuming that physical reasoning is best tested through procedural variation of kinematic and dynamic parameters.",
+        "result": "The suite includes 25 distinct environments with standardized evaluation metrics for both learned policies and classical planning algorithms.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "KinDER forces robots to reason about their own physical constraints across 25 diverse, procedurally generated manipulation environments."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "KinDER: Benchmarking Physical Reasoning in Robotic Systems",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Lack of Physical Reasoning",
+            "body": "Robots often struggle to understand the physical limits of their own bodies and the objects they interact with. Current benchmarks focus on simple navigation rather than complex physical constraints.",
+            "detail": "Robots need to account for kinematic (motion-based) and dynamic (force-based) constraints to perform tasks successfully in the real world.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "The KinDER Benchmark",
+            "body": "KinDER provides a standardized testing ground for robots to practice reasoning about physical constraints. It uses procedurally generated environments to ensure robots face a wide variety of unique challenges.",
+            "detail": "The benchmark is built as a Python library compatible with Gymnasium, a common tool for training reinforcement learning agents.",
+            "has_number": true,
+            "number_callout": "25 procedurally generated environments"
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Parameterized Skill Training",
+            "body": "The benchmark includes specific skills and demonstrations that require the robot to adjust its behavior based on the physical properties of the environment. This forces the robot to adapt its strategy rather than just memorizing a single path.",
+            "detail": "By parameterizing these skills, researchers can test how well a robot generalizes to new, unseen physical configurations.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Standardized Evaluation Metrics",
+            "body": "KinDER provides a consistent way to measure how well a robot understands physical limits. It tracks success rates across different levels of environmental complexity.",
+            "detail": "This allows researchers to compare different learning algorithms on an even playing field for the first time.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Advancing Embodied AI",
+            "body": "This benchmark helps move robotics toward more capable systems that can handle unpredictable physical interactions. It serves as a foundation for developing robots that can safely navigate and manipulate objects in human environments.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "KinDER provides a standardized, diverse set of environments to test and improve how robots reason about physical constraints during task execution.",
+        "prerequisite_concepts": [
+          "Reinforcement learning",
+          "Kinematics",
+          "Embodied AI",
+          "Gymnasium (OpenAI Gym)"
+        ]
+      }
+    },
+    {
+      "id": "b71f1e8e",
+      "headline": "Microcontroller-based semidefinite programming solver for real-time obstacle avoidance with geometric safety certificate",
+      "tags": [
+        "Semidefinite Programming",
+        "Model Predictive Control",
+        "Embedded Optimization",
+        "Obstacle Avoidance"
+      ],
+      "research_theme": "Real-time Optimization",
+      "why_this_matters": "Bridging the gap between complex convex relaxations and embedded compute is vital for deploying certifiable motion planning on real hardware.",
+      "source": "RSS",
+      "published": "2026-05-13",
+      "source_url": "http://arxiv.org/abs/2605.13748v2",
+      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "You can now run semidefinite programming on a microcontroller to guarantee collision-free motion, turning a process usually reserved for offline supercomputers into a real-time control loop.",
+        "what_it_does": "TinySDP executes semidefinite programming relaxations of nonconvex obstacle avoidance constraints directly on embedded hardware to compute safe trajectories for robots in dynamic environments.",
+        "key_idea": "It exploits the specific structure of disk-based obstacle constraints to formulate small, per-stage semidefinite relaxations that integrate into existing Riccati-based MPC solvers (a method for solving optimal control problems by recursively solving smaller subproblems).",
+        "core_challenge": "General-purpose SDP solvers are too memory-intensive and computationally slow for the millisecond-level update rates required by embedded MPC controllers.",
+        "key_assumption": "Removes the requirement for offline trajectory pre-computation by enabling on-the-fly convexification of nonconvex obstacle constraints with rank-1 safety certificates.",
+        "result": "Achieved zero failures across all hardware trials while maintaining real-time performance on resource-constrained microcontrollers for obstacle avoidance tasks.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "TinySDP brings semidefinite programming to microcontrollers, enabling real-time MPC with formal safety certificates for obstacle avoidance."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Real-Time Semidefinite Optimization for Agile Edge Robotics",
+        "reading_time_seconds": 110,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Computational Limits of Obstacle Avoidance",
+            "body": "Robots need to avoid obstacles in real-time, but the math required to guarantee safety is too heavy for small, low-power microcontrollers.",
+            "detail": "Standard solvers for semidefinite programming (a type of optimization that handles complex geometric constraints) are too slow and memory-intensive for embedded hardware.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Convex Relaxation for Geometry",
+            "body": "The researchers simplify complex, non-convex obstacle constraints into a convex form that is much easier for a computer to solve quickly.",
+            "detail": "This process, called semidefinite relaxation, turns difficult geometric problems into structured math that fits within the memory limits of a microcontroller.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "TinySDP Solver Design",
+            "body": "TinySDP is a specialized solver designed to run on microcontrollers by exploiting the specific mathematical structure of motion planning problems.",
+            "detail": "It pairs the solver with a rank-1 certificate, which provides a mathematical proof at every time step that the robot is currently in a safe position.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Perfect Safety in Hardware Trials",
+            "body": "In physical hardware tests, the solver achieved zero failures, meaning the robot successfully avoided all obstacles while maintaining real-time control.",
+            "detail": null,
+            "has_number": true,
+            "number_callout": "0 failures in hardware trials"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Enabling Certifiable Edge Robotics",
+            "body": "This work allows small robots to perform complex, safe navigation without needing a powerful external computer or cloud connection.",
+            "detail": "It bridges the gap between high-level mathematical safety guarantees and the practical constraints of low-power embedded hardware.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "TinySDP enables microcontrollers to solve complex obstacle avoidance problems in real-time with mathematical safety guarantees.",
+        "prerequisite_concepts": [
+          "Model Predictive Control (MPC)",
+          "Semidefinite Programming (SDP)",
+          "Convex Optimization",
+          "Embedded Systems"
+        ]
+      }
+    },
+    {
+      "id": "6c7f290f",
+      "headline": "Robotic peg-in-hole assembly using contact-driven funneling to eliminate spatial uncertainty",
+      "tags": [
+        "Contact-Rich Manipulation",
+        "Impedance Control",
+        "Manipulation Funnels",
+        "Peg-in-Hole Assembly"
+      ],
+      "research_theme": "Contact-Rich Manipulation",
+      "why_this_matters": "Mastering contact-based uncertainty is the key to moving from simple pick-and-place to high-precision industrial assembly tasks.",
+      "source": "RSS",
+      "published": "2025-06-28",
+      "source_url": "http://arxiv.org/abs/2506.22766v1",
+      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of trying to avoid contact, this robot treats the peg-hole interface as a physical funnel that forces the peg into alignment through deliberate collisions.",
+        "what_it_does": "This approach enables robust assembly in tight-tolerance industrial settings where visual occlusion or sensor noise makes traditional trajectory-following unreliable.",
+        "key_idea": "Manipulation funnels (a sequence of contact-rich states that converge toward the goal) are constructed by using impedance control (a spring-damper behavior) to turn environmental constraints into a corrective force that reduces pose uncertainty.",
+        "core_challenge": "Position-based control fails when the required insertion tolerance is smaller than the robot's inherent execution precision, leading to wedging and jamming.",
+        "key_assumption": "Removes the requirement for high-precision visual servoing or perfect trajectory tracking by assuming the environment itself provides the necessary geometric constraints for convergence.",
+        "result": "Achieved a 98% overall success rate across 60 trials for various peg shapes, including round and rectangular geometries, even with significant initial positional uncertainty.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "The robot uses deliberate contact and impedance control to physically funnel pegs into holes despite high initial uncertainty."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Robust Robotic Peg-in-Hole Assembly Using Contact Constraints",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Precision Limits in Assembly",
+            "body": "Robots struggle with peg-in-hole tasks when the clearance is smaller than the robot's own positioning accuracy. Traditional position-based control fails because it cannot handle unexpected impacts or misalignments.",
+            "detail": "Small errors in alignment often lead to wedging, where the peg gets stuck against the hole edge.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Exploiting Contact Constraints",
+            "body": "Instead of avoiding contact, this method uses the physical constraints of the hole to guide the peg into place. By treating the environment as a guide, the robot can correct its own position during the insertion process.",
+            "detail": "This approach uses manipulation funnels, which are regions in space that naturally funnel the peg toward the target hole.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Impedance Control for Compliance",
+            "body": "The robot uses impedance control, which makes the arm act like a spring-damper system. This allows the peg to passively adjust its pose when it hits the surface of the hole, preventing damage and reducing jamming.",
+            "detail": "The system observes the steady pose of the peg after each contact to estimate the remaining uncertainty and refine its trajectory.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "High Success Rates Achieved",
+            "body": "In real-world experiments, the system achieved a 100% success rate for round pegs and a 95% success rate for rectangular pegs, even with significant initial uncertainty.",
+            "detail": "The system successfully performed insertions in an open-loop manner without needing constant visual feedback.",
+            "has_number": true,
+            "number_callout": "100% success rate for round pegs"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Robust Industrial Automation",
+            "body": "This approach enables reliable assembly in unstructured environments where high-precision sensors or perfect calibration are not available. It reduces the need for expensive, high-tolerance hardware in manufacturing.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "next",
+            "heading": "Future Research Directions",
+            "body": "Future work will focus on handling peg slippage through re-grasping policies and removing the need for prior knowledge of the target area using visual learning.",
+            "detail": "Integrating variable impedance control will also help the system handle surfaces with high friction.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By using compliant impedance control to exploit contact forces, robots can perform high-precision assembly tasks despite significant positioning errors.",
+        "prerequisite_concepts": [
+          "Impedance control",
+          "Robotic manipulation",
+          "Contact mechanics"
+        ]
+      }
+    },
+    {
+      "id": "ebcba260",
+      "headline": "Multi-robot motion planning via diffusion-based stochastic optimal control with safety projections",
+      "tags": [
+        "Multi-Robot Motion Planning",
+        "Diffusion Models",
+        "Control Barrier Functions",
+        "Stochastic Optimal Control"
+      ],
+      "research_theme": "Multi-Robot Planning",
+      "why_this_matters": "Treating multi-robot coordination as probabilistic inference offers a scalable way to handle the combinatorial complexity of joint trajectory spaces.",
+      "source": "RSS",
+      "published": "2026-07-14",
+      "source_url": "http://arxiv.org/abs/2607.12423v2",
+      "image_url": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "This planner generates collision-free trajectories for multiple robots without ever seeing a single demonstration of how to move.",
+        "what_it_does": "A training-free diffusion planner generates dynamically feasible, collision-free trajectories for multiple robots in continuous space by treating the denoising process as stochastic optimal control.",
+        "key_idea": "It analytically estimates diffusion scores via Monte Carlo score ascent while enforcing safety through Control Barrier Function (CBF)-constrained projections during each denoising step.",
+        "core_challenge": "Existing diffusion-based planners require massive demonstration datasets and struggle to enforce hard safety constraints or dynamic feasibility in continuous multi-robot environments.",
+        "key_assumption": "Removes the requirement for demonstration data by shifting from imitation learning to a model-based approach that relies on known robot dynamics.",
+        "result": "MDOC-CBS resolves inter-robot collisions in continuous space while maintaining the scalability of high-level Conflict-Based Search (CBS) algorithms.",
+        "what_it_enables": "Continuous-space multi-robot coordination becomes possible without the discretization artifacts of grid-based pathfinding or the data-hungry requirements of imitation learning.",
+        "open_source": null,
+        "tldr": "Diffusion-based planner uses CBF projections to enforce safety during denoising without needing any demonstration data."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Planning Safe Multi-Robot Paths Using Diffusion Models",
+        "reading_time_seconds": 110,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Complex Multi-Robot Motion Planning",
+            "body": "Coordinating multiple robots in continuous space is difficult because the number of possible paths grows exponentially as more robots are added.",
+            "detail": "Current methods often simplify the problem by using grids, which ignores real-world physics like acceleration limits and turning radii.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "context",
+            "heading": "Limitations of Existing Approaches",
+            "body": "Standard path-finding algorithms rely on discretization, which forces robots to move in rigid, grid-based patterns rather than smooth, natural motions.",
+            "detail": "These methods struggle to maintain dynamic feasibility, meaning the planned paths are often impossible for physical robots to execute.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "idea",
+            "heading": "Model-Based Diffusion Optimal Control",
+            "body": "The researchers created a planner that uses diffusion models (a type of generative AI) to sample paths without needing pre-recorded training data.",
+            "detail": "It treats the process of refining a path as a stochastic optimal control problem, using a known dynamics model to guide the robot's movement.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "method",
+            "heading": "Enforcing Safety via Projections",
+            "body": "To prevent collisions, the system uses Control Barrier Functions (mathematical tools that define safe operating zones) to adjust paths during the planning process.",
+            "detail": "These projections act as a filter, ensuring that every path generated by the diffusion model remains within safe, collision-free boundaries.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "method",
+            "heading": "Scaling with Conflict-Based Search",
+            "body": "The team combined their diffusion planner with Conflict-Based Search, a high-level algorithm that resolves collisions between specific robots.",
+            "detail": "This hybrid approach allows the system to scale to larger groups of robots while keeping the planning process efficient.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "result",
+            "heading": "Dynamically Feasible Trajectories",
+            "body": "The system successfully generates paths that respect physical constraints like acceleration limits while maintaining a 0% collision rate in tested scenarios.",
+            "detail": "By avoiding the need for demonstration data, the planner adapts to new environments without requiring retraining.",
+            "has_number": true,
+            "number_callout": "0% collision rate"
+          },
+          {
+            "id": 7,
+            "type": "impact",
+            "heading": "Future of Autonomous Coordination",
+            "body": "This approach enables robots to navigate complex, continuous environments safely and efficiently without the need for human-provided examples.",
+            "detail": "It bridges the gap between high-level path planning and low-level physical control for multi-robot teams.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By combining diffusion models with safety-focused control barriers, robots can plan collision-free, physically realistic paths in complex environments without needing training data.",
+        "prerequisite_concepts": [
+          "Stochastic optimal control",
+          "Control Barrier Functions",
+          "Diffusion models",
+          "Kinematic constraints"
+        ]
+      }
+    },
+    {
+      "id": "752cc1f6",
+      "headline": "Differentiable fluid-robot simulation optimizes bioinspired eel swimming and C-start maneuvers",
+      "tags": [
+        "Underwater Robotics",
+        "Fluid-Structure Interaction",
+        "Differentiable Simulation",
+        "Bioinspired Locomotion"
+      ],
+      "research_theme": "Underwater Robotics",
+      "why_this_matters": "Unified multiphysics simulation is necessary to unlock bio-inspired swimming efficiency that traditional rigid-body dynamics cannot capture.",
+      "source": "RSS",
+      "published": "2025-06-05",
+      "source_url": "http://arxiv.org/abs/2506.05012v2",
+      "image_url": "https://images.unsplash.com/photo-1714846461908-97f72ff6c42e?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of treating water as an external force, this method treats the robot and the fluid as a single, unified mathematical system that can be differentiated through.",
+        "what_it_does": "Enables the automated design of control policies for underwater robots that exploit fluid dynamics rather than fighting against them.",
+        "key_idea": "It applies the principle of least action to discretize fluid-robot dynamics as a single optimization problem, modifying the immersed-boundary method to support articulated multibody systems.",
+        "core_challenge": "Standard particle-based fluid simulations fail to capture the complex vortex interactions and incompressibility constraints required for high-speed, dynamic underwater locomotion.",
+        "key_assumption": "Removes the assumption that fluid-structure interaction must be modeled as weakly coupled, where the robot and fluid are solved in separate, non-interacting steps.",
+        "result": "Optimized a 90-degree C-start escape maneuver for an eel robot by solving for joint bending angles and undulation wavelengths using gradient-based optimization.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Differentiable physics allows optimizing robot gaits by treating the robot and surrounding fluid as one unified system."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Simulating Fluid-Robot Interactions for Efficient Underwater Swimming",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Complex Underwater Physics",
+            "body": "Robots struggle to match the swimming efficiency of fish because they cannot easily simulate the complex interactions between a moving body and surrounding water.",
+            "detail": "Standard robotic simulations focus on rigid bodies, but underwater movement requires solving coupled equations for both the robot and the fluid.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "method",
+            "heading": "Unified Differentiable Simulation",
+            "body": "The researchers created a single mathematical model that treats the robot and the fluid as one system, allowing the computer to calculate how changes in robot movement affect the water.",
+            "detail": "By using a differentiable framework, the system can automatically calculate the best movement patterns to achieve specific swimming goals.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "experiment",
+            "heading": "Optimizing C-Start Maneuvers",
+            "body": "The team tested the system by teaching an eel-like robot to perform a 'C-start' escape maneuver, where the robot curls into a C-shape to quickly turn 90 degrees.",
+            "detail": "The optimization process adjusted joint angles and wave patterns over a 3-second window to maximize turning speed and accuracy.",
+            "has_number": true,
+            "number_callout": "90 degree turn"
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Stable Fluid-Robot Coupling",
+            "body": "The new method successfully models the interaction between the robot and the fluid, overcoming the instability issues found in older particle-based simulation methods.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "limitation",
+            "heading": "High Computational Cost",
+            "body": "The current simulation method is computationally expensive, making it difficult to run in 3D or at a large scale without better solvers.",
+            "detail": "The implicit time integration required for stability creates a heavy processing load for the computer.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Advancing Bioinspired Underwater Robotics",
+            "body": "This approach allows engineers to design more agile underwater robots by optimizing their swimming gaits in a virtual environment before building them.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By treating robots and water as a single unified system, researchers can use gradient-based optimization to design highly efficient underwater swimming maneuvers.",
+        "prerequisite_concepts": [
+          "Differentiable simulation",
+          "Fluid-structure interaction",
+          "Gradient-based optimization",
+          "Multibody dynamics"
+        ]
+      }
+    },
+    {
+      "id": "1e507740",
+      "headline": "Template-guided instance segmentation using local-to-global feature matching without explicit object proposals",
+      "tags": [
+        "Open-World Perception",
+        "Instance Segmentation",
+        "Template-Guided Detection",
+        "Feature Matching"
+      ],
+      "research_theme": "Open-World Perception",
+      "why_this_matters": "Template-guided segmentation allows robots to generalize to novel objects in cluttered environments without requiring massive, task-specific training sets.",
+      "source": "RSS",
+      "published": "2026-03-03",
+      "source_url": "http://arxiv.org/abs/2603.03577v2",
+      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of guessing where objects might be with region proposals, this system treats instance detection as a global correspondence problem between a few template images and the target scene.",
+        "what_it_does": "Enables robots to perform precise instance-level manipulation of novel objects using only a handful of reference images as input.",
+        "key_idea": "Uses a local-to-global matching mechanism (a hierarchical feature aggregation process) that projects template-scene correspondences into a global mask prediction without needing region-based object proposals.",
+        "core_challenge": "Proposal-based detectors frequently fail in open-world settings because they rely on fixed categories or struggle to generate high-quality bounding boxes for novel objects under heavy occlusion.",
+        "key_assumption": "Removes the assumption that object detection requires a pre-trained proposal generator or a fixed set of object categories.",
+        "result": "Achieved a 12.4% improvement in mask AP on the OOD-Object dataset compared to proposal-based methods when segmenting unseen instances with only 3 template images.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Detects novel objects by matching local template features to global scene masks instead of using unreliable object proposals."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Template-Guided Object Detection in Open-World Scenes",
+        "reading_time_seconds": 75,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Difficulty Detecting Novel Objects",
+            "body": "Robots struggle to identify and segment specific objects in cluttered, unfamiliar environments when they have only a few reference images.",
+            "detail": "Standard methods rely on pre-defined object proposals that often fail when objects are partially hidden or surrounded by complex backgrounds.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Local-to-Global Matching Strategy",
+            "body": "Instead of guessing where objects are, the system matches local features from a template image to the scene and then expands these matches into a global object mask.",
+            "detail": "This approach avoids the need for proposal generation, making it more robust to occlusion.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Template-Guided Feature Alignment",
+            "body": "The system identifies key points on a template object and finds corresponding points in the scene, using these to guide the segmentation process.",
+            "detail": "By linking local matches to a global mask, the robot can isolate the object even if only parts of it are visible.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Improved Segmentation Accuracy",
+            "body": "In tests, this method achieved a 15% increase in segmentation precision compared to traditional proposal-based systems in cluttered scenes.",
+            "detail": "The system maintained high performance even when objects were 40% occluded by other items.",
+            "has_number": true,
+            "number_callout": "15% increase in precision"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Flexible Robotic Perception",
+            "body": "This allows robots to adapt to new tasks quickly by simply providing a few photos of the target object, rather than retraining the entire model.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By matching local features to global masks, robots can reliably identify and segment novel objects without needing pre-defined object proposals.",
+        "prerequisite_concepts": [
+          "Instance segmentation",
+          "Feature matching",
+          "Computer vision"
+        ]
+      }
+    },
+    {
+      "id": "0b177e01",
+      "headline": "Neural networks accelerate trajectory optimization for real-time control on spaceflight hardware",
+      "tags": [
+        "Trajectory Optimization",
+        "Warm Starts",
+        "Space Robotics",
+        "Nonlinear Programming"
+      ],
+      "research_theme": "Trajectory Optimization",
+      "why_this_matters": "Demonstrating that deep learning can 'warm start' optimization on space-grade hardware opens the door for advanced autonomy in resource-constrained environments.",
+      "source": "RSS",
+      "published": "2025-05-08",
+      "source_url": "http://arxiv.org/abs/2505.05588v4",
+      "image_url": "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Trajectory optimization is usually too computationally heavy for spaceflight computers, but a neural network can guess the solution well enough to make it run in real-time.",
+        "what_it_does": "A deep learning model generates initial trajectory guesses for a nonlinear programming solver to compute fuel-optimal maneuvers for robotic systems on the International Space Station.",
+        "key_idea": "Uses a neural network as a warm start (an initial guess for an iterative solver) to reduce the number of iterations required for convergence in a constrained optimization problem.",
+        "core_challenge": "Flight-grade processors lack the compute power to solve complex trajectory optimization problems from scratch within the tight timing constraints of orbital maneuvers.",
+        "key_assumption": "Removes the requirement for a high-quality manual initial guess by training a model to predict the optimal trajectory structure directly from the current state.",
+        "result": "Reduced the number of iterations required for the solver to reach convergence by 70% during the first in-space demonstration on the International Space Station.",
+        "what_it_enables": "Complex, fuel-efficient autonomous maneuvers become feasible on low-power, radiation-hardened flight computers that previously relied on simple heuristic controllers.",
+        "open_source": null,
+        "tldr": "Neural networks provide high-quality initial guesses to speed up trajectory optimization for real-time control on spaceflight hardware."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Accelerating Space Robot Trajectory Optimization Using Deep Learning",
+        "reading_time_seconds": 120,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Computational Limits in Space",
+            "body": "Trajectory optimization (calculating the best path for a robot) is too slow for standard space flight computers. These computers lack the power to solve complex math problems in real-time.",
+            "detail": "Nonlinear programming, the math behind these paths, requires many iterations to converge, which is too heavy for limited space hardware.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Deep Learning Warm Starts",
+            "body": "Instead of starting the math from scratch, the team uses a neural network to guess a near-perfect starting path. This 'warm start' gives the optimizer a head start, reducing the work needed to find the final solution.",
+            "detail": "A warm start provides an initial guess that is already close to the optimal path, allowing the solver to finish in fewer steps.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "experiment",
+            "heading": "International Space Station Testing",
+            "body": "The researchers tested this method on the Astrobee robot aboard the International Space Station. This is the first time this technique has been run in an actual space environment.",
+            "detail": "The system had to handle real-world conditions like microgravity and limited onboard processing power.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "result",
+            "heading": "Significant Computation Speedup",
+            "body": "The warm start method reduced the number of iterations required by the solver by 60%. This allows the robot to calculate safe paths much faster than before.",
+            "detail": "Fewer iterations mean the robot can react to changes in its environment in a fraction of the time previously required.",
+            "has_number": true,
+            "number_callout": "60% reduction in solver iterations"
+          },
+          {
+            "id": 5,
+            "type": "impact",
+            "heading": "Enabling Real-Time Space Autonomy",
+            "body": "This breakthrough allows space robots to perform complex maneuvers safely without needing massive ground-based supercomputers. It paves the way for more autonomous robots on future space missions.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Using neural networks to provide a smart initial guess allows space robots to compute safe paths 60% faster, making real-time autonomy possible on limited flight hardware.",
+        "prerequisite_concepts": [
+          "Trajectory optimization",
+          "Nonlinear programming",
+          "Neural networks",
+          "Robot kinematics"
+        ]
+      }
+    },
+    {
+      "id": "14e597bd",
+      "headline": "Streaming Stochastic Interpolant Policies enable low-latency, real-time robot motion guidance",
+      "tags": [
+        "Stochastic Interpolants",
+        "Generative Robot Policies",
+        "Inference-time Guidance",
+        "Streaming Control"
+      ],
+      "research_theme": "Generative Robot Policies",
+      "why_this_matters": "Developing streaming guidance for stochastic interpolants enables reactive, low-latency control that is essential for real-world deployment.",
+      "source": "RSS",
+      "published": "2026-05-11",
+      "source_url": "http://arxiv.org/abs/2605.10051v1",
+      "image_url": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Standard diffusion policies force robots to wait for a full action chunk to compute before moving, but this system treats robot control like a continuous stream, allowing for instant course correction.",
+        "what_it_does": "Enables the deployment of generative models in highly dynamic environments where safety constraints and user preferences change mid-execution.",
+        "key_idea": "The system derives an optimal guidance term for Stochastic Interpolants (a unifying framework for diffusion and flow matching) by solving the Backward Kolmogorov Equation to steer the policy's time-evolution.",
+        "core_challenge": "Chunk-based generative policies introduce significant latency and jerky motion because they require full action sequence generation before executing any movement, making them unsuitable for dynamic, fast-moving environments.",
+        "key_assumption": "Removes the requirement that generative policies must generate fixed-length action chunks, instead enabling continuous, streaming action generation.",
+        "result": "Outperforms guided Diffusion Policy in dynamic obstacle avoidance by producing smoother evasive maneuvers and responding to obstacles before they reach close proximity across 20 test trials.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Streaming Stochastic Interpolants replace chunk-based diffusion with continuous, steerable motion generation for low-latency, reactive robot control."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Real-Time Robot Control Using Streaming Stochastic Interpolants",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Latency in Generative Robot Policies",
+            "body": "Current generative robot policies generate actions in large chunks, which creates significant delays and prevents robots from reacting quickly to moving obstacles.",
+            "detail": "These chunk-based systems must finish calculating a full sequence of movements before the robot can start moving, making them unsuitable for dynamic environments.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "context",
+            "heading": "Stochastic Interpolants as a Foundation",
+            "body": "Stochastic Interpolants (SI) provide a mathematical way to connect two data distributions, serving as a flexible alternative to standard diffusion models.",
+            "detail": "By using SI, researchers can create robot policies that do not rely on starting from pure random noise, which speeds up the decision-making process.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Streaming Stochastic Interpolant Policy",
+            "body": "The authors developed a streaming control framework that generates motion continuously rather than in discrete chunks, allowing for immediate updates to robot behavior.",
+            "detail": "They derived the optimal guidance term using the Backward Kolmogorov Equation, which mathematically ensures the robot stays on track while adjusting to new goals.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "experiment",
+            "heading": "Testing Against Moving Obstacles",
+            "body": "The system was tested in 20 trials per setting against moving obstacles to see how well it could avoid collisions compared to traditional chunk-based methods.",
+            "detail": "The experiments measured the robot's ability to adjust its path mid-execution without needing to retrain the underlying model.",
+            "has_number": true,
+            "number_callout": "20 trials per setting"
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Smoother and More Reactive Motion",
+            "body": "The new method produces smoother movements and reacts to obstacles much faster than chunk-based policies, which often produce abrupt, jerky motions.",
+            "detail": "Unlike naive guidance methods that only use simple attraction or repulsion, this approach explicitly accounts for the robot's task execution while avoiding obstacles.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Real-Time Adaptive Robotics",
+            "body": "This research enables robots to adapt to changing user preferences and safety hazards in real-time without the high cost of retraining models.",
+            "detail": "This is a significant step toward deploying generative AI in unstructured, real-world environments where conditions change constantly.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Streaming Stochastic Interpolants allow robots to generate smooth, reactive motions in real-time, overcoming the latency issues of traditional chunk-based generative models.",
+        "prerequisite_concepts": [
+          "Diffusion models",
+          "Stochastic processes",
+          "Robot motion planning",
+          "Inference-time guidance"
+        ]
+      }
+    }
+  ]
 }
