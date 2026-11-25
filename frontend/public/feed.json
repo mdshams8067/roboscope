@@ -1,918 +1,973 @@
 {
-  "generated_at": "2026-11-24T08:38:41.663115+00:00",
+  "generated_at": "2026-11-25T07:11:47.939234+00:00",
   "article_count": 10,
   "articles": [
     {
-      "id": "c492011e",
-      "headline": "Calibrating fisheye polarization cameras by modeling incidence-dependent lens transmission and analyzer errors",
+      "id": "effea6bb",
+      "headline": "Photorealistic social navigation simulator integrating NVIDIA Isaac Gym with ROS2-based control",
       "tags": [
-        "Polarization Vision",
-        "Fisheye Calibration",
-        "Skylight Navigation",
-        "Mueller Matrix"
+        "Social Navigation",
+        "Sim-to-Real Transfer",
+        "NVIDIA Isaac Gym",
+        "3D Scene Graphs"
       ],
-      "research_theme": "Polarization Vision Calibration",
-      "why_this_matters": "Understanding how to calibrate polarization sensors in the wild is critical for robust navigation in environments where traditional visual features fail.",
-      "source": "ICRA",
-      "published": "2026-11-06",
-      "source_url": "http://arxiv.org/abs/2611.08911v1",
-      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
+      "research_theme": "Social Navigation Simulation",
+      "why_this_matters": "High-fidelity simulation is critical for training robots to navigate human spaces safely, and this framework provides a standardized benchmark for the community.",
+      "source": "RSS",
+      "published": "2026-10-08",
+      "source_url": "http://arxiv.org/abs/2610.11220v1",
+      "image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Fisheye lenses distort polarized light so severely at the edges that the sky's natural compass becomes useless without accounting for how the glass itself polarizes incoming rays.",
-        "what_it_does": "A calibration method corrects for polarization-dependent transmission variations across the entire field of view of a fisheye camera, enabling accurate skylight-based heading estimation.",
-        "key_idea": "An eight-parameter unified model jointly estimates analyzer gains, angular offsets, and incidence-dependent lens transmission (the change in polarization state caused by the lens optics at varying angles of incidence).",
-        "core_challenge": "Standard polarization calibration ignores the lens, causing significant measurement errors in peripheral image regions where light hits the glass at oblique angles.",
-        "key_assumption": "Removes the assumption that polarization distortion is uniform across the image, instead treating the lens as an active optical element that modifies the polarization state.",
-        "result": "Reduced residual Angle of Linear Polarization (AoLP) errors to a standard deviation of 0.41\u00b0\u20130.72\u00b0 across the entire fisheye field of view.",
-        "what_it_enables": "Robotic navigation systems can now utilize the full sky dome for heading estimation, even when the camera is tilted or the sun is obscured.",
+        "hook": "Researchers can now bypass the notoriously steep learning curve of Isaac Sim by using high-level wrappers that turn text prompts into fully navigable, photorealistic 3D human-centric environments.",
+        "what_it_does": "A simulation platform generates complex, human-populated indoor environments and provides a ROS2 interface for testing social navigation algorithms in photorealistic settings.",
+        "key_idea": "It wraps NVIDIA Isaac Gym within a modular abstraction layer that uses Large Language Models (LLMs) to transform text descriptions into 3D Scene Graphs (3DSGs) for automated environment generation.",
+        "core_challenge": "Existing social navigation simulators often rely on legacy software like ROS1 or overly simplified physics, creating a massive gap between simulation performance and real-world deployment.",
+        "key_assumption": "Relaxes the requirement for manual 3D modeling by automating the generation of floor plans and asset placement from text inputs.",
+        "result": "User feedback indicated that participants previously unable to navigate the complexity of Isaac Sim successfully generated and benchmarked navigation scenarios using the new Arena 5.0 wrappers.",
+        "what_it_enables": "Standardized, reproducible benchmarking of social navigation agents across diverse, photorealistic indoor settings without requiring deep expertise in high-fidelity physics engines.",
         "open_source": null,
-        "tldr": "Jointly modeling lens transmission and analyzer errors allows fisheye cameras to use the full sky for accurate heading."
+        "tldr": "Arena 5.0 provides a ROS2-compatible wrapper for Isaac Gym that automates photorealistic environment generation for social navigation."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Calibrating Fisheye Polarization Cameras for Accurate Skylight Navigation",
+        "flow_title": "Bridging the Gap Between Robot Simulation and Reality",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Fisheye Polarization Distortion",
-            "body": "Robots use skylight polarization as a natural compass, but fisheye lenses distort these signals at the edges of the image. Current calibration methods only fix sensor errors, leaving significant inaccuracies in peripheral regions.",
-            "detail": "Standard methods assume a flat, zenith-centered view, which limits the robot's ability to use the full field of view for navigation.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "method",
-            "heading": "Unified Eight-Parameter Calibration",
-            "body": "The researchers created a model that simultaneously accounts for both the lens's light transmission properties and the sensor's internal analyzer errors. This allows the system to correct polarization data across the entire fisheye field of view.",
-            "detail": "The model uses an eight-parameter formulation to map how light incidence angles affect the measured polarization state.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "result",
-            "heading": "High Precision Residual Errors",
-            "body": "After applying the new calibration, the remaining spatial errors in the Angle of Linear Polarization (AoLP) were reduced to a standard deviation between 0.41 and 0.72 degrees.",
-            "detail": "This level of accuracy ensures that peripheral sky data is now reliable enough to be used for robot heading estimation.",
-            "has_number": true,
-            "number_callout": "0.41\u00b0\u20130.72\u00b0 standard deviation"
-          },
-          {
-            "id": 4,
-            "type": "impact",
-            "heading": "Improved Navigation Robustness",
-            "body": "By enabling the use of the full fisheye field, robots can maintain accurate heading estimates even when the camera is tilted or when only parts of the sky are visible.",
-            "detail": "This reduces sensitivity to platform motion and improves navigation performance in GPS-denied environments.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "A new unified calibration model allows fisheye cameras to accurately measure skylight polarization across their entire field of view, significantly improving robotic navigation.",
-        "prerequisite_concepts": [
-          "Polarization of light",
-          "Fisheye lens geometry",
-          "Mueller matrix",
-          "Angle of Linear Polarization (AoLP)"
-        ]
-      }
-    },
-    {
-      "id": "b3936c09",
-      "headline": "Open-vocabulary 3D object detection using generative captions and visual alignment",
-      "tags": [
-        "Open-Vocabulary 3D Detection",
-        "Multi-modal Distillation",
-        "Visual Alignment",
-        "Generative Captions"
-      ],
-      "research_theme": "Open-Vocabulary 3D Detection",
-      "why_this_matters": "Bridging the gap between 2D VLM semantic richness and 3D geometric precision is essential for robots to operate in unconstrained, novel environments.",
-      "source": "IROS",
-      "published": "2026-11-19",
-      "source_url": "http://arxiv.org/abs/2611.26842v1",
-      "image_url": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of just matching 3D points to 2D images, this system forces the 3D detector to understand objects by reading descriptive captions generated by a large multimodal model.",
-        "what_it_does": "Detects arbitrary objects in outdoor 3D point clouds by aligning 3D geometric proposals with both spatial 2D visual features and descriptive text generated by a multimodal large language model.",
-        "key_idea": "A dual-stream distillation framework that aligns 3D features to both spatially-aware vision-language models (for visual grounding) and generative captions (for fine-grained semantic context).",
-        "core_challenge": "Directly aligning sparse 3D point cloud features with dense 2D image features is inherently noisy and lacks the semantic granularity required to distinguish between similar categories like 'truck' and 'trailer'.",
-        "key_assumption": "Removes the assumption that 3D detectors must rely on a fixed, pre-defined set of categories seen during training.",
-        "result": "Achieved 45.6 performance on the Waymo Open Dataset and nuScenes, exceeding previous methods by better aligning 3D geometry with 2D large-scale pre-trained models.",
-        "what_it_enables": "Autonomous systems can identify and localize novel, long-tail obstacles in real-world driving environments without requiring manual labels for every new object class.",
-        "open_source": null,
-        "tldr": "Aligns 3D features to both visual embeddings and generative text captions to enable zero-shot detection of novel objects."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Bridging 2D Vision Models to 3D Object Detection",
-        "reading_time_seconds": 85,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Closed-Set Detection Limitations",
-            "body": "Standard 3D detectors only recognize objects they were explicitly trained on, making them unreliable when encountering novel obstacles like debris or unconventional vehicles.",
-            "detail": "This limitation poses a significant safety risk for autonomous driving systems that must navigate unpredictable, real-world environments.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "context",
-            "heading": "The 2D-3D Knowledge Gap",
-            "body": "While 2D Vision-Language Models (VLMs) possess vast, open-world knowledge, directly transferring this to sparse 3D data is noisy and often lacks the fine-grained detail needed for accurate classification.",
-            "detail": "3D scenes are cluttered and viewed from varied perspectives, which creates domain gaps when using features trained on general web-scale images.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Dual-Stream Multi-Modal Distillation",
-            "body": "The researchers use a two-part framework that aligns 3D geometric proposals with both spatially-aware 2D visual features and generative text captions.",
-            "detail": "By using class-agnostic geometric clustering, the system identifies potential objects in 3D space without needing manual labels, then refines their identity using descriptive captions.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Improved Detection Performance",
-            "body": "The model achieved a performance score of 45.6 on standard benchmarks, demonstrating its ability to accurately identify objects using only textual descriptions.",
-            "detail": "The approach was validated on the Waymo Open Dataset and nuScenes, confirming it effectively bridges the gap between 3D geometry and 2D semantic knowledge.",
-            "has_number": true,
-            "number_callout": "45.6 performance score"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Enabling Open-World Autonomy",
-            "body": "This method allows autonomous systems to recognize arbitrary objects defined by natural language, significantly increasing safety and flexibility in dynamic environments.",
-            "detail": null,
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By distilling knowledge from both 2D visual models and generative captions, 3D detectors can now identify novel objects without needing specific training labels.",
-        "prerequisite_concepts": [
-          "Vision-Language Models (VLMs)",
-          "3D Object Detection",
-          "Knowledge Distillation",
-          "Point Cloud Processing"
-        ]
-      }
-    },
-    {
-      "id": "db8a8d0b",
-      "headline": "Humanoids push heavy objects by dynamically shifting center-of-mass and whole-body force",
-      "tags": [
-        "Whole-Body Control",
-        "Loco-Manipulation",
-        "Model Predictive Control",
-        "Reinforcement Learning"
-      ],
-      "research_theme": "Whole-Body Loco-Manipulation",
-      "why_this_matters": "Coordinating forceful interaction with heavy objects while maintaining balance is a fundamental challenge for deploying humanoids in real-world logistics.",
-      "source": "ICRA",
-      "published": "2026-10-06",
-      "source_url": "http://arxiv.org/abs/2610.08970v1",
-      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Instead of treating manipulation and walking as separate problems, this robot treats the heavy object as an extension of its own skeletal dynamics to maintain balance while pushing.",
-        "what_it_does": "Enables humanoids to perform heavy-duty logistics tasks in cluttered environments where robots must physically displace obstacles to navigate.",
-        "key_idea": "Uses a hierarchical control structure where a model predictive controller (MPC) generates reference trajectories that a reinforcement learning policy tracks while compensating for the object's mass-induced center-of-mass shift.",
-        "core_challenge": "Existing controllers fail when heavy payloads induce sustained external forces that shift the robot's center of mass beyond the support polygon, causing instability.",
-        "key_assumption": "Removes the assumption that the robot and the manipulated object are decoupled systems, instead modeling the object's inertia as part of the robot's own dynamics.",
-        "result": "The humanoid successfully pushes objects weighing up to 15kg across a 5-meter path while maintaining a walking speed of 0.3 m/s.",
-        "what_it_enables": "",
-        "open_source": null,
-        "tldr": "Humanoid pushes heavy loads by integrating object inertia into its whole-body balance and locomotion controller."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Whole-Body Control for Heavy Object Manipulation",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Balance During Heavy Lifting",
-            "body": "Humanoid robots struggle to move while carrying heavy objects because the weight shifts their center of mass and creates unpredictable forces.",
-            "detail": "Standard controllers often fail because they treat the robot's body and the object as separate systems rather than one combined unit.",
+            "heading": "The Sim-to-Real Gap",
+            "body": "Robots often fail when moving from simulation to the real world because existing simulators are either too simple or too difficult to set up for practical use.",
+            "detail": "Many current platforms rely on outdated software like ROS1, making it hard to deploy research-grade algorithms into industry applications.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Integrated Loco-Manipulation Strategy",
-            "body": "The HULK system combines Model Predictive Control (MPC) with Reinforcement Learning to manage both movement and object interaction simultaneously.",
-            "detail": "MPC provides a mathematical model of the physics, while Reinforcement Learning helps the robot adapt to the specific weight of the payload.",
+            "heading": "Arena 5.0 Simulation Framework",
+            "body": "Arena 5.0 provides a standardized platform for social navigation that integrates NVIDIA Isaac Gym to offer photorealistic environments and efficient training.",
+            "detail": "It uses 3D Scene Graphs to turn text descriptions into floor plans, allowing researchers to quickly generate diverse testing scenarios.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Dual-Teacher Training Process",
-            "body": "The robot is trained using two specialized 'teachers': one focuses on precise arm movements for holding the object, while the other manages whole-body balance.",
-            "detail": "By separating these tasks during training, the robot learns to compensate for the load on its arms by adjusting its legs and torso posture.",
+            "heading": "Generative AI Integration",
+            "body": "The system uses Large Language Models to automatically generate room layouts and asset locations based on simple text inputs.",
+            "detail": "This replaces manual configuration files with an intuitive web-based interface, lowering the barrier for researchers to create complex environments.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "result",
-            "heading": "Improved Payload Handling",
-            "body": "The robot successfully maneuvers while carrying objects weighing up to 15kg, maintaining stability even when the load shifts during movement.",
-            "detail": "This represents a significant increase in the ratio of payload weight to the robot's own body mass compared to previous methods.",
+            "type": "limitation",
+            "heading": "Computational Overhead",
+            "body": "Photorealistic rendering requires more computing power, leading to higher latency compared to lightweight simulators.",
+            "detail": "The platform currently supports only 3 environment types: residential, office, and hospital, though it is designed to be extensible.",
             "has_number": true,
-            "number_callout": "15kg payload capacity"
+            "number_callout": "3 environment types"
           },
           {
             "id": 5,
-            "type": "impact",
-            "heading": "Future of Humanoid Labor",
-            "body": "This approach enables humanoids to perform useful tasks in warehouses or construction sites where they must carry heavy items across uneven terrain.",
-            "detail": "The ability to handle dynamic loads is a key step toward deploying robots in environments designed for humans.",
+            "type": "result",
+            "heading": "User Feedback and Adoption",
+            "body": "Early users reported that the new wrappers made Isaac Gym significantly easier to use, allowing them to benchmark navigation approaches much faster than before.",
+            "detail": "Participants noted that the web-based interface was a major improvement over the previous manual JSON-based configuration method.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "next",
+            "heading": "Future Motion Capture Integration",
+            "body": "The team plans to integrate motion-capture transfer to allow robots to learn more realistic human movement patterns without needing manual 3D modeling.",
+            "detail": "Future updates will also expand the environment generation pipeline to include more diverse settings like warehouses.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By combining predictive physics models with reinforcement learning, humanoids can maintain balance while carrying heavy, shifting loads.",
+        "key_takeaway": "Arena 5.0 simplifies the creation of photorealistic simulation environments, helping researchers bridge the gap between virtual testing and real-world robot deployment.",
         "prerequisite_concepts": [
-          "Model Predictive Control",
-          "Reinforcement Learning",
-          "Center of Mass Dynamics"
+          "ROS2",
+          "Social Navigation",
+          "Sim-to-Real Transfer",
+          "3D Scene Graphs"
         ]
       }
     },
     {
-      "id": "587da6e3",
-      "headline": "Estimating fingertip contact from ego-centric vision and proprioception without tactile hardware",
+      "id": "df8407d4",
+      "headline": "Optimized fine-tuning recipe accelerates vision-language-action model inference and task performance",
       "tags": [
-        "Pseudo-tactile Sensing",
-        "Dexterous Manipulation",
-        "Vision-Proprioception Fusion",
-        "In-Hand Manipulation"
+        "Vision-Language-Action",
+        "Fine-Tuning",
+        "Robot Manipulation",
+        "Action Chunking"
       ],
-      "research_theme": "Vision-Based Tactile Sensing",
-      "why_this_matters": "Learning to infer contact from vision reduces reliance on fragile, specialized tactile hardware, moving us closer to human-like embodied perception.",
-      "source": "IROS",
-      "published": "2026-06-23",
-      "source_url": "http://arxiv.org/abs/2606.24450v2",
+      "research_theme": "VLA Foundation Models",
+      "why_this_matters": "As VLA models become standard, understanding efficient fine-tuning strategies is essential for adapting generalist models to specific robot embodiments.",
+      "source": "RSS",
+      "published": "2025-02-27",
+      "source_url": "http://arxiv.org/abs/2502.19645v2",
       "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Robots can now 'feel' contact by watching their own hands, effectively hallucinating a tactile sense from vision and joint states alone.",
-        "what_it_does": "A transformer-based model predicts binary contact states at each fingertip using only ego-centric RGB-D images and joint configurations during in-hand dexterous manipulation.",
-        "key_idea": "It uses a transformer architecture with cross-attention to fuse visual features with current and commanded joint configurations, capturing temporal dynamics to infer contact without physical touch sensors.",
-        "core_challenge": "Dexterous manipulation requires precise contact feedback, but physical tactile sensors are fragile, expensive, and difficult to scale across different robotic hands.",
-        "key_assumption": "Removes the assumption that tactile sensing requires dedicated hardware, instead treating contact as a latent state inferable from the correlation between visual scene context and proprioceptive movement.",
-        "result": "The predicted contact signal successfully replaces oracle tactile data for in-hand reorientation policies on a LEAP hand, enabling zero-shot transfer to hardware without policy retraining.",
-        "what_it_enables": "",
+        "hook": "Simple L1 regression outperforms complex diffusion-based fine-tuning for robot control, delivering faster training convergence and lower latency without sacrificing task success.",
+        "what_it_does": "A recipe for fine-tuning vision-language-action models (VLAs) that integrates parallel decoding, action chunking, and continuous action representations to control robot manipulators.",
+        "key_idea": "The Optimized Fine-Tuning (OFT) recipe replaces computationally expensive diffusion heads with an L1 regression objective (a loss function that minimizes the absolute difference between predicted and demonstrated actions) to enable single-pass action generation.",
+        "core_challenge": "Existing VLA fine-tuning strategies are computationally inefficient and unclear, often relying on slow diffusion-based methods that struggle with real-time deployment requirements.",
+        "key_assumption": "Removes the assumption that diffusion-based generative modeling is necessary for high-performance robot control, demonstrating that deterministic regression is sufficient for many manipulation tasks.",
+        "result": "OpenVLA-OFT+ achieves a throughput of 77.9 Hz on an NVIDIA A100 GPU, significantly outperforming the original OpenVLA's 1.8 Hz while maintaining competitive task success rates.",
+        "what_it_enables": "Real-time, low-latency robotic control using large-scale foundation models, making them viable for deployment on hardware with strict timing constraints.",
         "open_source": null,
-        "tldr": "Transformers predict fingertip contact from vision and joint states, allowing robots to manipulate objects without physical tactile sensors."
+        "tldr": "L1 regression fine-tuning for VLAs enables faster inference and better performance than diffusion-based methods for robot control."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Estimating Robot Fingertip Contact Using Vision and Proprioception",
-        "reading_time_seconds": 85,
+        "flow_title": "Optimizing Vision-Language-Action Models for Faster Robot Control",
+        "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "The Contact Sensing Bottleneck",
-            "body": "Dexterous robot hands need to know exactly when they touch an object to manipulate it, but specialized tactile sensors are fragile, expensive, and hard to scale.",
-            "detail": "Relying solely on vision is difficult because fingers often block the camera's view of the contact point.",
+            "heading": "VLA Models Require Adaptation",
+            "body": "Vision-Language-Action (VLA) models are powerful, but they often fail when moved to new robot setups or tasks without specific fine-tuning.",
+            "detail": "Fine-tuning is necessary for deployment, but the best way to adjust these large models for specific robot hardware is currently unknown.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Pseudo-Tactile Sensing Concept",
-            "body": "Instead of physical sensors, the robot can infer contact by combining its internal joint state (proprioception) with its visual view of the hand and object.",
-            "detail": "This mimics how humans integrate visual cues with their internal sense of body position to understand physical interactions.",
+            "heading": "Optimized Fine-Tuning Recipe",
+            "body": "The researchers identified three key design choices: using continuous action representations, action chunking (predicting multiple steps at once), and an L1 regression objective.",
+            "detail": "L1 regression is a mathematical method that helps the model predict the median action, which is often more stable than complex diffusion-based methods.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Transformer-Based Sensor Fusion",
-            "body": "The system uses a transformer model to process RGB-D camera images alongside current and commanded joint positions.",
-            "detail": "The model uses cross-attention to link visual features with joint data and causal attention to track how contact changes over time.",
+            "heading": "Introducing OpenVLA-OFT",
+            "body": "The team created OpenVLA-OFT, a recipe that combines these design choices to improve both inference speed and task performance.",
+            "detail": "This approach allows the robot to process commands and execute movements with significantly lower latency than standard VLA fine-tuning.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Hardware Transfer Success",
-            "body": "The model successfully predicts contact on a real LEAP hand, allowing policies trained in simulation to work on physical hardware without needing extra training.",
-            "detail": "The system provides binary contact estimates (touching or not touching) at every frame in real-time.",
+            "heading": "Significant Speed Improvements",
+            "body": "OpenVLA-OFT achieved a throughput of 77.9 Hz, which is a massive increase over the original OpenVLA model's 1.8 Hz.",
+            "detail": "Latency was reduced to 0.321 seconds, making the robot's reaction time much faster for real-world tasks.",
             "has_number": true,
-            "number_callout": "Real-time frame-by-frame estimation"
+            "number_callout": "77.9 Hz throughput vs 1.8 Hz original"
           },
           {
             "id": 5,
-            "type": "impact",
-            "heading": "Simplified Dexterous Manipulation",
-            "body": "This approach removes the need for specialized tactile hardware, making it easier to deploy dexterous hands in varied, real-world environments.",
-            "detail": "It also allows existing control policies to be upgraded with contact feedback without requiring expensive policy retraining.",
+            "type": "insight",
+            "heading": "Regression vs Diffusion",
+            "body": "The study found that simple L1 regression performs similarly to complex diffusion models while being much faster to train and run.",
+            "detail": "However, diffusion models might still be better if the robot needs to choose between multiple valid ways to complete a task.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "next",
+            "heading": "Future Research Directions",
+            "body": "Future work will explore how to handle tasks where multiple valid actions exist and whether these optimization techniques help during initial model pretraining.",
+            "detail": "The team also aims to address issues with inconsistent language grounding in complex environments.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots can accurately infer fingertip contact by fusing visual data and joint states, eliminating the need for dedicated tactile sensors.",
+        "key_takeaway": "By using action chunking and L1 regression, robot VLA models can be fine-tuned to run significantly faster without sacrificing performance.",
         "prerequisite_concepts": [
-          "Proprioception",
-          "Transformer architecture",
-          "Cross-attention",
-          "Dexterous manipulation"
+          "Vision-Language-Action models",
+          "Inference latency",
+          "Regression analysis",
+          "Robot control policies"
         ]
       }
     },
     {
-      "id": "e977da9c",
-      "headline": "Point transformer segments outdoor LiDAR scenes using only open-vocabulary text supervision",
+      "id": "2aafa354",
+      "headline": "Flow matching enables ergodic trajectory generation using arbitrary statistical divergence metrics",
       "tags": [
-        "Open-Vocabulary 3D Segmentation",
-        "Point Transformers",
-        "LiDAR",
-        "Autonomous Driving"
+        "Ergodic Coverage",
+        "Flow Matching",
+        "Trajectory Optimization",
+        "Statistical Inference"
       ],
-      "research_theme": "Open-Vocabulary 3D Segmentation",
-      "why_this_matters": "Moving beyond closed-set taxonomies allows robots to understand and interact with arbitrary objects without the prohibitive cost of manual point-cloud labeling.",
-      "source": "ICRA",
-      "published": "2026-10-01",
-      "source_url": "http://arxiv.org/abs/2610.00855v1",
-      "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
+      "research_theme": "Ergodic Coverage Control",
+      "why_this_matters": "Expanding the mathematical foundations of ergodic coverage allows for more flexible exploration strategies in complex, high-dimensional state spaces.",
+      "source": "RSS",
+      "published": "2025-04-24",
+      "source_url": "http://arxiv.org/abs/2504.17872v1",
+      "image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "This system learns to segment 3D LiDAR point clouds from scratch without a single human-annotated label, relying entirely on distilling 2D vision-language models.",
-        "what_it_does": "Enables real-time, label-free semantic perception for robots operating in novel environments where predefined object taxonomies are unavailable.",
-        "key_idea": "It replaces traditional voxel-based sparse convolutions with a point transformer architecture trained directly on open-vocabulary supervision (distilling 2D vision-language model outputs into 3D point features).",
-        "core_challenge": "Existing open-vocabulary 3D methods rely on heavy voxelization or iterative retraining, which struggle with the sparse, unstructured nature of outdoor LiDAR data.",
-        "key_assumption": "Removes the requirement for manual point-wise annotation and self-supervised pre-training, allowing the model to learn semantic categories directly from 2D-to-3D distillation.",
-        "result": "Achieved 52.8% mIoU on the nuScenes validation set and 41.4% on SemanticKITTI sequence 08 with a 50ms inference latency.",
-        "what_it_enables": "",
+        "hook": "By reframing ergodic coverage as a flow matching problem, we can now use sophisticated statistical tools like Sinkhorn divergence to guide robots, even though those metrics were previously considered incompatible with control synthesis.",
+        "what_it_does": "A Franka Emika Panda robot generates complex, coverage-optimized trajectories to draw and erase specific shapes on a whiteboard by aligning its motion with target spatial distributions.",
+        "key_idea": "The work derives a formal equivalence between the ergodic coverage objective and the flow matching problem (a generative modeling technique that learns a vector field to transform a simple distribution into a target one), allowing the use of arbitrary reference flows for trajectory optimization.",
+        "core_challenge": "Existing ergodic coverage methods rely on a narrow set of metrics, which prevents the use of more robust or expressive statistical measures for complex, non-smooth, or irregular target distributions.",
+        "key_assumption": "Removes the requirement that the ergodic metric must be analytically tractable for direct control synthesis, instead allowing any differentiable statistical divergence to define the reference flow.",
+        "result": "Validated on a Franka Emika Panda robot performing drawing and erasing tasks across five distinct stock icon distributions using Sinkhorn divergence flow.",
+        "what_it_enables": "Robotic exploration and coverage tasks can now leverage advanced generative modeling metrics, facilitating better performance on irregular or non-smooth spatial distributions.",
         "open_source": null,
-        "tldr": "A point transformer learns open-vocabulary 3D segmentation from scratch using only 2D vision-language distillation."
+        "tldr": "Reframing ergodic coverage as flow matching allows robots to use arbitrary statistical divergences for complex spatial exploration tasks."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Annotation-Free 3D Semantic Segmentation for Autonomous Driving",
+        "flow_title": "Improving Robot Exploration Through Flow Matching Optimization",
         "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "High Cost of Manual Annotation",
-            "body": "Training robots to recognize 3D objects usually requires humans to manually label every point in a LiDAR scan, which is slow and expensive.",
-            "detail": "Existing methods are also limited to a fixed set of categories, making it difficult for robots to adapt to new environments.",
+            "heading": "Limitations in Robot Exploration",
+            "body": "Robots exploring environments like search and rescue zones must visit high-density areas while still checking low-density spots. Current methods for planning these paths are restricted by a limited set of mathematical metrics used to measure coverage.",
+            "detail": "These metrics often struggle with complex, non-smooth, or unnormalized target distributions, leading to inefficient exploration.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
-            "type": "context",
-            "heading": "Limitations of Current 3D Backbones",
-            "body": "Most current 3D perception systems rely on voxel-based methods (dividing space into small cubes) which struggle to capture fine details.",
-            "detail": "While point transformers are powerful, they have historically been restricted to indoor settings rather than complex outdoor driving scenes.",
+            "type": "idea",
+            "heading": "Applying Flow Matching",
+            "body": "The researchers apply flow matching\u2014a technique from generative AI\u2014to robot trajectory planning. This allows the robot to use a wider variety of statistical measures to define what a 'good' exploration path looks like.",
+            "detail": "By treating the trajectory as a flow, the robot can adapt to more complex target distributions than previously possible.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "The Lang3DSeg Approach",
-            "body": "This method uses a point transformer that learns directly from 2D vision-language models without needing any human-labeled 3D data.",
-            "detail": "It projects information from 2D images into 3D space, allowing the robot to understand objects based on natural language descriptions.",
+            "heading": "Mathematical Equivalence to LQR",
+            "body": "The team proved that their flow matching approach is mathematically equivalent to a Linear Quadratic Regulator (LQR) problem. This allows them to use efficient, closed-form iterative algorithms to generate paths.",
+            "detail": "This equivalence ensures that the complex flow matching process does not add extra computational overhead to the robot's controller.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "High Performance on Benchmarks",
-            "body": "The system achieved 52.8% mIoU (mean Intersection over Union, a measure of segmentation accuracy) on the nuScenes dataset and 41.4% on SemanticKITTI.",
-            "detail": "These results were achieved without needing complex pre-training or iterative retraining steps.",
-            "has_number": true,
-            "number_callout": "52.8% mIoU on nuScenes"
+            "heading": "Improved Performance and Robustness",
+            "body": "Using new reference flows, the method improved performance on non-smooth distributions and increased robustness when dealing with unnormalized target data.",
+            "detail": "The approach was successfully validated on a Franka robotic arm, demonstrating its effectiveness in real-world hardware scenarios.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 5,
-            "type": "experiment",
-            "heading": "Real-Time Processing Capability",
-            "body": "The model processes a full 360-degree LiDAR scan in approximately 50ms, making it suitable for real-time autonomous navigation.",
-            "detail": "It only requires basic coordinate and intensity data from the LiDAR sensor to function.",
-            "has_number": true,
-            "number_callout": "50ms processing time"
-          },
-          {
-            "id": 6,
             "type": "impact",
-            "heading": "Scalable Open-World Perception",
-            "body": "By removing the need for manual labels, this approach allows robots to learn new object categories simply by using language, significantly lowering the barrier for deploying autonomous vehicles.",
-            "detail": null,
+            "heading": "Bridging Inference and Control",
+            "body": "This work connects statistical inference with robot decision-making, allowing robots to treat their own motion as a way to infer and cover complex spatial distributions.",
+            "detail": "This provides a flexible framework for future exploration tasks in environmental monitoring and active learning.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Lang3DSeg enables robots to perform accurate 3D segmentation in outdoor environments using language-based learning, eliminating the need for expensive manual data labeling.",
+        "key_takeaway": "By using flow matching, robots can now use advanced statistical metrics to plan more efficient and robust exploration paths.",
         "prerequisite_concepts": [
-          "LiDAR point clouds",
-          "Semantic segmentation",
-          "Vision-language models",
-          "Point transformers"
+          "Ergodic theory",
+          "Trajectory optimization",
+          "Linear Quadratic Regulator (LQR)",
+          "Probability distributions"
         ]
       }
     },
     {
-      "id": "cab30a63",
-      "headline": "Residual stiffening layer enables visuomotor policies to overcome unobserved physical resistance",
+      "id": "69a2114a",
+      "headline": "Layered safety filtering prevents multi-agent collisions during reinforcement learning navigation",
       "tags": [
-        "Visuomotor Policy",
-        "Variable Impedance Control",
-        "Contact-Rich Manipulation",
-        "Residual Stiffening"
+        "Multi-Agent Reinforcement Learning",
+        "Control Barrier Functions",
+        "Safety-Critical Control",
+        "Curriculum Learning"
       ],
-      "research_theme": "Visuomotor Policy Impedance",
-      "why_this_matters": "Standard policies often ignore the physical authority required for contact-rich tasks; learning to adapt impedance is key to successful manipulation in constrained environments.",
-      "source": "ICRA",
-      "published": "2026-10-13",
-      "source_url": "http://arxiv.org/abs/2610.18386v1",
+      "research_theme": "Multi-Agent Safety",
+      "why_this_matters": "Bridging the gap between learning-based multi-agent coordination and formal safety guarantees is a prerequisite for deploying autonomous fleets in shared environments.",
+      "source": "RSS",
+      "published": "2025-05-04",
+      "source_url": "http://arxiv.org/abs/2505.02293v1",
       "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Standard visuomotor policies fail when they hit an unexpected obstacle because they lack the physical authority to push through, not because they lack the intelligence to plan the path.",
-        "what_it_does": "A residual stiffening layer dynamically modulates robot impedance in real-time to overcome physical resistance during contact-rich manipulation tasks like unscrewing caps or sliding parts.",
-        "key_idea": "A four-mode supervisor detects resistance via tracking error and injects stiffness exclusively along the policy's inferred directional intent, gated by an energy-tank constraint to prevent unstable oscillations.",
-        "core_challenge": "Generative visuomotor policies operate under fixed compliance, causing task failure when physical resistance exceeds the robot's nominal force capabilities.",
-        "key_assumption": "Removes the assumption that a fixed-impedance controller is sufficient for contact-rich tasks where resistance levels are unknown or non-homogeneous.",
-        "result": "Reduced task completion time for unscrewing a bottle cap to 26.6 seconds under high resistance, successfully recovering from stalls that caused baseline policy failure.",
-        "what_it_enables": "Deployment of visuomotor policies in unstructured environments where contact forces are unpredictable and require active, intent-aware stiffening.",
+        "hook": "Standard reinforcement learning agents often ignore safety until they crash, but this architecture forces the policy to respect control barrier functions even while it is still learning.",
+        "what_it_does": "A multi-agent navigation system uses a safety filter based on Control Barrier Functions (CBF) to constrain the actions of a reinforcement learning policy during both training and execution.",
+        "key_idea": "The system implements a layered architecture where a CBF-based safety filter acts as a differentiable projection layer, mapping unsafe policy outputs to the nearest safe control input while providing safety-informed reward signals to the agent.",
+        "core_challenge": "Existing multi-agent reinforcement learning methods lack formal safety guarantees, leading to frequent collisions when agents face conflicting constraints in dense environments.",
+        "key_assumption": "Removes the assumption that safety must be handled post-hoc, instead integrating safety constraints directly into the policy optimization loop via curriculum learning.",
+        "result": "Reduced collision-related conflict events to 0% in simulation across multiple scenarios involving up to 6 agents, while maintaining higher waypoint completion rates than unconstrained baselines.",
+        "what_it_enables": "Deployment of learning-based navigation policies in safety-critical multi-agent systems where formal collision avoidance is mandatory.",
         "open_source": null,
-        "tldr": "A residual layer dynamically stiffens the robot along its intended path to push through unexpected physical resistance."
+        "tldr": "Layered safety filtering forces reinforcement learning agents to respect control barrier constraints during training and execution."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Adaptive Robot Stiffness for Overcoming Unknown Physical Resistance",
-        "reading_time_seconds": 75,
+        "flow_title": "Ensuring Robot Safety in Multi-Agent Reinforcement Learning",
+        "reading_time_seconds": 85,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Robot Failure Under Resistance",
-            "body": "Robots using standard motion policies often fail when they encounter unexpected physical resistance, such as a tight bottle cap or high-friction surface.",
-            "detail": "The robot's underlying impedance controller (a system that manages how much a robot resists or yields to external forces) is often too compliant to overcome these forces, causing the task to stall.",
+            "heading": "Safety in Multi-Agent Navigation",
+            "body": "Multi-agent reinforcement learning (MARL) allows robots to learn complex tasks, but these systems often lack formal safety guarantees, leading to potential collisions.",
+            "detail": "Traditional control methods like control barrier functions ensure safety but struggle when many robots interact simultaneously.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Residual Stiffening Layer",
-            "body": "The researchers added a software layer beneath the robot's motion policy that detects when the robot is struggling by measuring the gap between commanded and actual movement.",
-            "detail": "This layer dynamically adjusts the robot's stiffness only in the specific direction the robot is trying to move, rather than making the whole arm rigid.",
+            "heading": "Layered Safety Architecture",
+            "body": "The researchers combined a safety filtering mechanism with a learning-based policy to ensure robots remain safe while still performing efficiently.",
+            "detail": "This approach uses a safety filter during training to guide the robot away from dangerous states.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Four-Mode Supervisor",
-            "body": "A supervisor system manages the stiffness adjustments using a four-mode logic to ensure the robot remains stable while applying extra force.",
-            "detail": "It includes an energy-tank gate, which acts as a safety mechanism to prevent the robot from injecting too much energy into the system and becoming unstable.",
+            "heading": "Curriculum Learning Approach",
+            "body": "The robots were trained using a curriculum, starting with simple navigation tasks and gradually increasing the complexity of the environment.",
+            "detail": "This helps the agent learn safe behaviors incrementally before facing more difficult multi-agent interactions.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Improved Task Success",
-            "body": "In tests involving unscrewing bottle caps and pushing parts against friction, the system successfully completed tasks that caused the baseline robot to fail.",
-            "detail": "The system effectively recovered from resistance levels that were never seen during the robot's initial training phase.",
+            "heading": "Improved Navigation Performance",
+            "body": "Compared to standard methods, the layered approach resulted in shorter travel times and more waypoints reached while maintaining zero safety violations in simulation.",
+            "detail": "The safety filter successfully prevented collisions even as the number of agents increased in the test scenarios.",
             "has_number": true,
-            "number_callout": "100% recovery from baseline failure"
-          },
-          {
-            "id": 5,
-            "type": "impact",
-            "heading": "Robust Contact-Rich Manipulation",
-            "body": "This approach allows robots to handle unpredictable environments without needing to be programmed for every possible level of resistance.",
-            "detail": "It bridges the gap between high-level motion planning and low-level force control, making robots more reliable for real-world assembly and household tasks.",
-            "has_number": false,
-            "number_callout": null
-          }
-        ],
-        "key_takeaway": "By dynamically increasing stiffness only in the direction of intent, robots can overcome unexpected physical resistance that would otherwise cause them to stall.",
-        "prerequisite_concepts": [
-          "Impedance control",
-          "Visuomotor policy",
-          "Robot kinematics"
-        ]
-      }
-    },
-    {
-      "id": "f42c0502",
-      "headline": "Semantic zone-based memory management for dense 3D mapping on edge devices",
-      "tags": [
-        "Dense Mapping",
-        "Semantic Mapping",
-        "Memory Management",
-        "Edge Robotics"
-      ],
-      "research_theme": "Memory-Efficient Mapping",
-      "why_this_matters": "As robots integrate larger language models, managing the memory footprint of dense maps becomes a critical bottleneck for on-device deployment.",
-      "source": "ICRA",
-      "published": "2026-10-24",
-      "source_url": "http://arxiv.org/abs/2610.33574v1",
-      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
-      "image_is_fallback": true,
-      "breakthrough": false,
-      "breakthrough_reason": null,
-      "summary": {
-        "hook": "Counting keyframes to manage memory is a trap because a single keyframe's size varies wildly, causing robots to crash when they hit a complex room.",
-        "what_it_does": "A robot dynamically loads and unloads 3D dense map segments into RAM based on semantic room boundaries rather than fixed spatial radii or keyframe counts.",
-        "key_idea": "The system treats the map as a collection of semantic zones (rooms and corridors) and enforces a memory budget by keeping only the current and adjacent zones resident in memory while offloading the rest.",
-        "core_challenge": "Existing map systems fail when high-capacity 3D maps and large language models compete for the same finite RAM, leading to unpredictable out-of-memory crashes.",
-        "key_assumption": "Removes the assumption that map memory usage is uniform across space, instead treating memory as a variable cost tied to semantic room geometry.",
-        "result": "Maintains stable 3D dense map utilization under strict memory constraints by dynamically swapping map zones in real-time during navigation.",
-        "what_it_enables": "Long-duration autonomous navigation in large-scale indoor environments using dense maps alongside compute-heavy AI models on resource-constrained hardware.",
-        "open_source": null,
-        "tldr": "Manage map memory by semantic zones instead of keyframe counts to prevent crashes when running heavy AI models."
-      },
-      "flow": {
-        "article_type": "research",
-        "flow_title": "Managing Robot Memory for Dense Mapping and AI",
-        "reading_time_seconds": 75,
-        "blocks": [
-          {
-            "id": 1,
-            "type": "problem",
-            "heading": "Memory Conflicts on Robots",
-            "body": "Robots running both large AI models and 3D mapping systems often crash because they share the same limited memory. Traditional systems limit map size by counting keyframes, but this fails because different keyframes consume vastly different amounts of memory.",
-            "detail": "A single keyframe can range from tens of kilobytes to several megabytes, making a simple count an unreliable way to manage hardware resources.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 2,
-            "type": "idea",
-            "heading": "Semantic Zone-Based Management",
-            "body": "Instead of managing individual keyframes, the system divides the map into semantically meaningful units like rooms and corridors. The robot only keeps the current zone and immediate neighbors in active memory.",
-            "detail": "This approach dynamically adjusts the map size based on the memory remaining after the AI model has claimed its required space.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 3,
-            "type": "method",
-            "heading": "Dynamic Memory Allocation",
-            "body": "The system monitors the memory footprint of the AI model in real-time and releases map data for zones the robot has already passed. This ensures the total memory usage never exceeds the hardware limit.",
-            "detail": "By treating the building layout as a set of zones, the robot can intelligently swap map data in and out of memory as it moves through the environment.",
-            "has_number": false,
-            "number_callout": null
-          },
-          {
-            "id": 4,
-            "type": "result",
-            "heading": "Stable Operation Under Constraints",
-            "body": "The approach successfully maintains a consistent 3D map while running AI models on resource-constrained hardware. It prevents out-of-memory failures that typically occur when mapping large indoor environments.",
-            "detail": "Validation was performed using the Nvidia Isaac simulation environment to test performance across various large-scale indoor layouts.",
-            "has_number": false,
-            "number_callout": null
+            "number_callout": "0 safety violations in simulation"
           },
           {
             "id": 5,
             "type": "next",
-            "heading": "Future Integration with Scene Graphs",
-            "body": "Future work aims to integrate this with scene-graph systems that automatically partition buildings into rooms during the mapping process. This would allow the robot to build and manage its memory map simultaneously.",
-            "detail": "This would eliminate the need for pre-defined partitions and allow for more autonomous, long-term operation in unknown environments.",
+            "heading": "Future Research Directions",
+            "body": "Current safety guarantees are limited to pairwise interactions and rely on external motion capture systems rather than onboard sensors.",
+            "detail": "Future work will focus on extending these safety guarantees to complex multi-agent engagements and integrating onboard sensing for real-world deployment.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "By managing 3D maps in semantic zones rather than individual keyframes, robots can reliably run memory-intensive AI models without crashing.",
+        "key_takeaway": "By layering a safety filter over reinforcement learning, robots can learn to navigate efficiently while maintaining strict collision avoidance.",
         "prerequisite_concepts": [
-          "Simultaneous Localization and Mapping (SLAM)",
-          "Memory management in embedded systems",
-          "Semantic segmentation"
+          "Multi-Agent Reinforcement Learning",
+          "Control Barrier Functions",
+          "Curriculum Learning"
         ]
       }
     },
     {
-      "id": "13d25035",
-      "headline": "Distributed robots push unknown objects to goals without prior geometry models",
+      "id": "c40f04ca",
+      "headline": "Autonomous robot motion adapts to human intent by re-weighting Riemannian Motion Policies",
       "tags": [
-        "Multi-Agent Systems",
-        "Cooperative Transport",
-        "Non-prehensile Manipulation",
-        "Distributed Control"
+        "Riemannian Motion Policies",
+        "Human-Robot Interaction",
+        "Task Adaptation",
+        "Motion Planning"
       ],
-      "research_theme": "Multi-Agent Cooperative Transport",
-      "why_this_matters": "Developing decentralized strategies for unknown objects is essential for scalable, robust multi-robot systems in unstructured field settings.",
-      "source": "ICRA",
-      "published": "2026-11-15",
-      "source_url": "http://arxiv.org/abs/2611.19731v1",
+      "research_theme": "Human-Robot Collaboration",
+      "why_this_matters": "Developing motion policies that adapt to human intent is key to moving robots from isolated cages into dynamic, collaborative industrial workspaces.",
+      "source": "RSS",
+      "published": "2024-06-25",
+      "source_url": "http://arxiv.org/abs/2406.17333v1",
       "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Robots can move a heavy, irregularly shaped object to a specific location without ever knowing what the object is, how much it weighs, or even how many other robots are helping them push.",
-        "what_it_does": "Enables scalable, ad-hoc multi-robot teams to perform logistics tasks in unstructured environments where object properties are completely unknown.",
-        "key_idea": "A heading-error-driven effort regulation method (a control law that adjusts pushing force based on the deviation between the object's current orientation and the target trajectory) allows decentralized agents to synchronize without explicit communication or object modeling.",
-        "core_challenge": "Existing multi-robot transport methods fail when they lack precise prior knowledge of object geometry, mass distribution, or when they rely on computationally expensive centralized optimization.",
-        "key_assumption": "Removes the requirement for prior object geometry, mass distribution models, or explicit inter-robot communication protocols during the transport process.",
-        "result": "Validated robust transport of arbitrary geometries under non-uniform surface friction and sudden center-of-mass shifts in both simulation and physical experiments.",
-        "what_it_enables": "",
+        "hook": "Human manual control actually slows down a robot's ability to learn what you want it to do.",
+        "what_it_does": "A robot autonomously adjusts its motion trajectory in industrial settings by interpreting human operator commands as dynamic re-weightings of local task policies.",
+        "key_idea": "It uses Riemannian Motion Policies (modular motion controllers defined on manifolds) to represent tasks, then infers user intent by dynamically adjusting the metric weights of these policies to align with human reward gradients.",
+        "core_challenge": "Existing industrial systems often force a trade-off between manual control and autonomous planning, where human intervention frequently introduces jitter or delays in task convergence.",
+        "key_assumption": "Removes the assumption that human operators must manually steer the robot to communicate intent, instead treating human input as a signal to optimize the robot's internal policy hierarchy.",
+        "result": "Quantitative experiments indicate that autonomous adaptation converges to the correct task faster than systems requiring manual 2D or 3D user control inputs.",
+        "what_it_enables": "Seamless human-robot collaboration where the robot interprets high-level intent without requiring the operator to manage low-level joint or end-effector trajectories.",
         "open_source": null,
-        "tldr": "Decentralized robots coordinate pushing forces using only heading error to transport unknown objects without any prior geometry models."
+        "tldr": "Robots adapt to human intent faster by autonomously re-weighting Riemannian Motion Policies rather than accepting manual control inputs."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Cooperative Pushing of Unknown Objects by Multi-Robot Teams",
-        "reading_time_seconds": 75,
+        "flow_title": "Autonomous Motion Planning for Human-Robot Industrial Collaboration",
+        "reading_time_seconds": 85,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Difficulty Moving Unknown Objects",
-            "body": "Moving large or irregular objects with multiple robots is hard because most systems require knowing the object's exact shape, mass, and center of gravity beforehand.",
-            "detail": "Existing methods often rely on centralized control or rigid formations, which fail if the object's properties change or if the robots cannot communicate perfectly.",
+            "heading": "Inefficient Human-Robot Collaboration",
+            "body": "Industrial robots often require constant manual guidance from human operators to adjust tasks, which slows down production and complicates operations.",
+            "detail": "Manual control creates a bottleneck where the robot cannot adapt its motion autonomously to changing human intentions.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
-            "type": "idea",
-            "heading": "Distributed Effort Regulation",
-            "body": "Instead of a central brain, each robot independently follows the object's boundary and adjusts its pushing force based on its own heading error.",
-            "detail": "This allows the team to move an object toward a goal without needing a shared model of the object's geometry or mass distribution.",
+            "type": "method",
+            "heading": "Riemannian Motion Policies",
+            "body": "The researchers use Riemannian Motion Policies (mathematical rules that define robot movement based on the geometry of the workspace) to allow the robot to plan its own path.",
+            "detail": "This approach lets the robot combine different task requirements, like reaching a goal while avoiding obstacles, in a single, consistent mathematical space.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Model-Free Pushing Strategy",
-            "body": "Robots use a finite-state machine (a logic system that switches between specific behaviors) to identify viable pushing points on the fly.",
-            "detail": "By regulating pushing effort based on the direction of travel, the robots collectively steer the object even when they don't know what it is.",
+            "heading": "Inferring Human Intent",
+            "body": "Instead of direct manual control, the robot observes human commands and automatically adjusts the weight of its motion policies to match the operator's goal.",
+            "detail": "By re-weighting these policies, the robot interprets the human's intent and shifts its behavior without needing a human to steer it.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "result",
-            "heading": "Robustness to Real-World Conditions",
-            "body": "The system successfully transported objects despite non-uniform surface friction, wheel slip, and sudden shifts in the object's center of mass.",
-            "detail": "The team confirmed these results through both physical hardware experiments and computer simulations.",
+            "heading": "Faster Task Convergence",
+            "body": "Experiments show that the autonomous system reaches the correct task state faster than systems relying on human manual control.",
+            "detail": "Manual control was found to increase the time it takes for the robot to adapt to a new task compared to this autonomous framework.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 5,
             "type": "impact",
-            "heading": "Flexible Logistics and Rescue",
-            "body": "This approach enables teams of robots to clear paths or move heavy items in unpredictable environments like disaster zones or warehouses without prior mapping.",
-            "detail": null,
+            "heading": "Streamlined Industrial Interaction",
+            "body": "This method simplifies the user interface for industrial robots, allowing humans to provide high-level goals rather than low-level movement commands.",
+            "detail": "This shift reduces the cognitive load on human operators and improves the overall efficiency of human-robot teams.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 6,
             "type": "next",
-            "heading": "Future Improvements",
-            "body": "Future work will focus on adding anti-slip awareness to the control laws and extending the system to handle 3D manipulation tasks.",
-            "detail": "Researchers also plan to adapt the system for heterogeneous teams, where robots have different sizes or capabilities.",
+            "heading": "Handling Uncertain Environments",
+            "body": "Future work will focus on making the robot more robust to inaccuracies in task features when working in unpredictable or changing environments.",
+            "detail": "The team plans to enable the robot to identify new task features on-the-fly as it encounters them.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Multi-robot teams can cooperatively push unknown objects by independently adjusting their force based on heading errors, eliminating the need for pre-programmed object models.",
+        "key_takeaway": "By using Riemannian Motion Policies, robots can autonomously interpret human intent and adapt their motion, outperforming manual control in speed and efficiency.",
         "prerequisite_concepts": [
-          "Distributed control",
-          "Non-prehensile manipulation",
-          "Finite-state machines",
-          "Robot kinematics"
+          "Motion planning",
+          "Manifold geometry",
+          "Human-robot interaction"
         ]
       }
     },
     {
-      "id": "6d6e97e7",
-      "headline": "HeadIO tracks head motion using body-frame IMU signal decomposition",
+      "id": "d54168b5",
+      "headline": "Classifying traffic accidents by aligning scene graphs with vision-language embeddings",
       "tags": [
-        "Inertial Odometry",
-        "Yaw Equivariance",
-        "Mamba Backbone",
-        "Head-Mounted Devices"
+        "Scene Graphs",
+        "Vision-Language-Action",
+        "Autonomous Driving",
+        "Traffic Anomaly Detection"
       ],
-      "research_theme": "Robotic Needle Intervention",
-      "why_this_matters": "Automating the acquisition of diagnostic material is the next frontier in making robotic medical interventions safer and more efficient.",
-      "source": "ICRA",
-      "published": "2026-11-11",
-      "source_url": "http://arxiv.org/abs/2611.14895v1",
-      "image_url": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
+      "research_theme": "Autonomous Driving Perception",
+      "why_this_matters": "Representing complex traffic scenes as graphs improves the interpretability and reasoning capabilities of vision models for safety-critical driving tasks.",
+      "source": "RSS",
+      "published": "2024-07-08",
+      "source_url": "http://arxiv.org/abs/2407.05910v3",
+      "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "Standard inertial odometry fails because it tries to track yaw in a world frame that isn't yaw-equivariant, but separating gravity from horizontal motion makes the math naturally rotation-invariant.",
-        "what_it_does": "A lightweight neural inertial odometry system tracks head pose on AR/VR devices using only IMU data by decomposing signals into gravity-aligned and horizontal components before processing.",
-        "key_idea": "HeadIO uses a body-frame heading decomposition (an analytical preprocessing step that splits IMU signals into tilt and horizontal components) paired with a bidirectional Mamba backbone to achieve yaw equivariance without expensive learned layers.",
-        "core_challenge": "Prior inertial odometry methods rely on gravity-aligned world frames that lack yaw equivariance, forcing models to learn rotational invariance through heavy data augmentation or complex equivariant architectures.",
-        "key_assumption": "Removes the requirement for learned equivariant layers or architectural constraints to achieve yaw equivariance, relying instead on geometric signal decomposition.",
-        "result": "Achieves superior tracking performance while using 7\u20138\u00d7 fewer parameters than TLIO and EqNIO at a 3-second window, while outperforming standard ResNet-based world-frame models.",
-        "what_it_enables": "Low-power, camera-free head tracking for AR/VR and egocentric robot learning, where visual drift or motion blur previously compromised trajectory accuracy.",
+        "hook": "Standard vision-language models often ignore the spatial geometry of a crash, but explicitly encoding the relative positions of cars as a graph allows the system to 'see' the accident's cause.",
+        "what_it_does": "A multi-stage pipeline classifies traffic accident types from video clips by transforming spatial relationships between vehicles into graph-based embeddings aligned with CLIP-style vision-language representations.",
+        "key_idea": "The system uses a Scene Graph (SG) encoder to map spatial vehicle configurations into a latent space, which is then contrastively aligned with video and text encoders to improve accident type classification.",
+        "core_challenge": "Existing vision-language models struggle to interpret complex traffic accidents because they lack an explicit representation of the spatial interactions and relative distances between road agents.",
+        "key_assumption": "Relies on the assumption that traffic accident semantics are better captured by structured spatial relationships (graphs) than by raw pixel-level video features alone.",
+        "result": "The TSGi pipeline achieves improved classification accuracy on the DoTA (Detection of Traffic Anomaly) dataset by integrating graph-based spatial priors into the multi-modal embedding space.",
+        "what_it_enables": "Enables more robust accident analysis for autonomous vehicle safety systems by providing a structured, interpretable way to reason about multi-agent collision dynamics.",
         "open_source": null,
-        "tldr": "Decomposing IMU signals into gravity and horizontal components enables yaw-equivariant head tracking with 8x fewer parameters."
+        "tldr": "Aligning spatial scene graphs with vision-language embeddings improves the classification of complex traffic accident scenarios."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "HeadIO: Efficient Head Tracking Using Inertial Sensors",
-        "reading_time_seconds": 110,
+        "flow_title": "Using Scene Graphs to Identify Traffic Accidents",
+        "reading_time_seconds": 85,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Drift in Inertial Tracking",
-            "body": "Tracking head movement using only Inertial Measurement Units (IMUs) is difficult because small sensor errors accumulate over time, leading to significant position drift.",
-            "detail": "Visual-inertial systems use cameras to fix this, but cameras consume high power, raise privacy concerns, and fail during fast motion.",
+            "heading": "Difficulty Detecting Traffic Accidents",
+            "body": "Autonomous vehicles struggle to identify and categorize traffic accidents because these events occur in many unpredictable forms.",
+            "detail": "Accurate classification is necessary for road safety systems to prevent future accidents, but current models often fail to interpret complex spatial relationships.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Representing Scenes as Graphs",
+            "body": "The researchers represent traffic scenes as scene graphs, where vehicles and pedestrians are nodes and their spatial relationships are edges.",
+            "detail": "This structure explicitly models the relative distance and direction between objects, which is more descriptive than raw pixel data.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Multi-Modal Alignment Pipeline",
+            "body": "The system, called TSGi, aligns these scene graphs with visual and language data from foundation models to improve classification accuracy.",
+            "detail": "By training the video encoder, text encoder, and graph encoder together, the model learns to associate specific graph structures with accident descriptions.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "data",
+            "heading": "Using the DoTA Dataset",
+            "body": "The model was trained and evaluated using the Detection of Traffic Anomaly (DoTA) dataset, which contains video clips of real-world traffic incidents.",
+            "detail": "The DoTA dataset provides the diverse scenarios needed to teach the model how to distinguish between different accident types.",
+            "has_number": true,
+            "number_callout": "DoTA dataset"
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "Improved Classification Performance",
+            "body": "Aligning the graph representations with vision and language models significantly improves the system's ability to classify accident types.",
+            "detail": "The results show that increasing batch size and training time during the alignment phase leads to better classification scores.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Safer Autonomous Driving Systems",
+            "body": "This approach provides a more robust way for autonomous vehicles to understand their environment and react to dangerous traffic situations.",
+            "detail": "By moving beyond simple object detection to structural scene understanding, vehicles can better predict and avoid potential collisions.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "By converting traffic scenes into structured graphs and aligning them with vision-language models, robots can more accurately classify and understand complex traffic accidents.",
+        "prerequisite_concepts": [
+          "Scene graphs",
+          "Multi-modal learning",
+          "Autonomous driving systems",
+          "Contrastive learning"
+        ]
+      }
+    },
+    {
+      "id": "234b7eb1",
+      "headline": "Accelerating sequential derivative computation by reusing historical function evaluation data",
+      "tags": [
+        "Optimization",
+        "Model Predictive Control",
+        "Numerical Differentiation",
+        "Kinematics"
+      ],
+      "research_theme": "Optimization and Control",
+      "why_this_matters": "Efficiently computing sequences of derivatives is a fundamental bottleneck in real-time control, and this approach offers a new way to leverage temporal coherence.",
+      "source": "RSS",
+      "published": "2025-04-26",
+      "source_url": "http://arxiv.org/abs/2504.18790v1",
+      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "Instead of recomputing gradients from scratch at every optimization step, this method treats the sequence of derivatives as a coherent stream that can be solved by intersecting past affine spaces.",
+        "what_it_does": "Computes approximate derivatives for high-dimensional functions in robotics optimization loops by identifying a point that satisfies both current constraints and historical derivative information.",
+        "key_idea": "Web of Affine Spaces (WASP) Optimization, which constructs a geometric intersection of affine spaces derived from previous function evaluations to constrain the current derivative estimate.",
+        "core_challenge": "Standard derivative methods like finite differencing scale poorly with input dimensions, creating computational bottlenecks in real-time control loops like Model Predictive Control.",
+        "key_assumption": "Relies on the assumption that derivatives computed in a sequence (e.g., during iterative optimization) exhibit temporal coherence that allows for information reuse.",
+        "result": "Outperforms automatic differentiation and finite differencing in computational efficiency while maintaining higher accuracy than standard derivative approximation methods across robot kinematics tasks.",
+        "what_it_enables": "Faster, real-time reactive control for high-degree-of-freedom robots where traditional gradient computation latency prevents high-frequency updates.",
+        "open_source": null,
+        "tldr": "Reuse past derivative data to approximate current gradients faster by solving for intersections of affine spaces."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Accelerating Robot Derivative Calculations Using Coherence-Based Optimization",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Expensive Derivative Computations",
+            "body": "Robotics tasks like balance control require constant derivative calculations to navigate function landscapes. Standard methods become too slow as the number of inputs or outputs increases.",
+            "detail": "Calculating derivatives via finite differencing requires repeatedly evaluating functions with small input changes, which scales poorly with system complexity.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "context",
-            "heading": "The Yaw Equivariance Challenge",
-            "body": "Most tracking systems struggle to handle rotation around the vertical axis (yaw) consistently, often requiring expensive, complex neural network layers to fix.",
-            "detail": "Yaw equivariance means that if the user turns their head, the system's internal representation of that rotation should change in a predictable, consistent way.",
+            "heading": "Sequential Nature of Optimization",
+            "body": "In many robotics applications, derivatives are not computed in isolation but as a sequence where inputs change only slightly between steps.",
+            "detail": "This temporal coherence means that information from a previous derivative calculation is often highly relevant to the next one.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
-            "type": "method",
-            "heading": "Body-Frame Heading Decomposition",
-            "body": "Instead of using complex neural layers, this method uses a simple mathematical step to separate IMU signals into gravity-aligned and horizontal components.",
-            "detail": "This approach achieves heading equivariance without needing learned layers, making it compatible with any neural network backbone.",
+            "type": "idea",
+            "heading": "Web of Affine Spaces",
+            "body": "The researchers created a method called Web of Affine Spaces (WASP) to reuse past calculations to speed up current ones.",
+            "detail": "It identifies a point that is guaranteed to lie on an affine space (a flat geometric subset) containing the true derivative while staying consistent with prior data.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
-            "type": "method",
-            "heading": "Bidirectional Mamba Backbone",
-            "body": "The researchers paired their decomposition method with a Mamba backbone, a type of sequence model that is highly efficient for processing sensor data.",
-            "detail": "This architecture uses 7\u20138 times fewer parameters than previous state-of-the-art methods like TLIO and EqNIO.",
-            "has_number": true,
-            "number_callout": "7\u20138x fewer parameters"
+            "type": "result",
+            "heading": "Efficiency and Accuracy Gains",
+            "body": "WASP outperforms standard automatic differentiation and finite differencing in speed while providing better accuracy than other approximation methods.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 5,
-            "type": "result",
-            "heading": "Performance and Efficiency Gains",
-            "body": "The system achieves state-of-the-art tracking performance while using 3 times fewer floating-point operations (FLOPs) than previous equivariant methods.",
-            "detail": "When using the new decomposition, the Mamba backbone outperformed standard world-frame models that previously struggled with this input type.",
-            "has_number": true,
-            "number_callout": "3x fewer FLOPs"
+            "type": "impact",
+            "heading": "Real-Time Control Improvements",
+            "body": "By reducing the computational cost of derivatives, this method allows robots to perform complex reactive tasks, like maintaining balance, more reliably in real-time.",
+            "detail": "This is particularly useful for Model Predictive Control (MPC) where rapid, iterative optimization is essential for stability.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 6,
-            "type": "impact",
-            "heading": "Enabling Lightweight Wearables",
-            "body": "By reducing computational requirements, this method makes high-quality, camera-free head tracking feasible for low-power devices like earbuds and smart glasses.",
-            "detail": "This also improves the quality of data collection for robot learning, where stable head tracking is essential for recording human demonstrations.",
+            "type": "next",
+            "heading": "Addressing Approximation Limits",
+            "body": "Future research will focus on refining the approximation quality, as the current method provides estimates rather than exact analytical derivatives.",
+            "detail": null,
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "HeadIO uses a simple mathematical signal decomposition to achieve efficient, high-accuracy head tracking without the need for power-hungry cameras or complex neural layers.",
+        "key_takeaway": "By reusing information from previous steps, the WASP method computes derivatives faster and more accurately than standard approaches, enabling better real-time robot control.",
         "prerequisite_concepts": [
-          "Inertial Measurement Units (IMUs)",
-          "Odometry",
-          "Sequence modeling",
-          "Equivariance"
+          "Numerical optimization",
+          "Model Predictive Control (MPC)",
+          "Affine spaces",
+          "Automatic differentiation"
         ]
       }
     },
     {
-      "id": "e8cba78f",
-      "headline": "Radar-based vehicle localization against satellite imagery using learned cross-modal feature alignment",
+      "id": "94ea60b6",
+      "headline": "Berkeley Humanoid Lite: A 3D-printed humanoid using custom cycloidal actuators",
       "tags": [
-        "Radar Geolocalization",
-        "Particle Filtering",
-        "Cross-View Localization",
-        "Representation Learning"
+        "Humanoid Robotics",
+        "Cycloidal Actuators",
+        "Open-source Hardware",
+        "Teleoperation"
       ],
-      "research_theme": "Radar-Based Geolocalization",
-      "why_this_matters": "Radar provides a robust alternative to GNSS in challenging weather or GPS-denied environments, making it vital for reliable autonomous field robotics.",
-      "source": "ICRA",
-      "published": "2026-10-19",
-      "source_url": "http://arxiv.org/abs/2610.27310v1",
-      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800",
+      "research_theme": "Humanoid Robotics Hardware",
+      "why_this_matters": "Democratizing access to humanoid hardware is essential for accelerating research in whole-body control and locomotion beyond well-funded labs.",
+      "source": "RSS",
+      "published": "2025-04-24",
+      "source_url": "http://arxiv.org/abs/2504.17249v1",
+      "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
       "image_is_fallback": true,
       "breakthrough": false,
       "breakthrough_reason": null,
       "summary": {
-        "hook": "The system localizes a vehicle by matching radar returns to satellite photos, effectively turning a global map into a real-time sensor measurement.",
-        "what_it_does": "A mobile robot estimates its global position by matching spinning radar sweeps against overhead RGB satellite orthophotos using a particle filter.",
-        "key_idea": "A radar encoder trained via masked reconstruction aligns radar features with satellite image features through a contrastive objective, creating a shared metric grid for likelihood scoring.",
-        "core_challenge": "Existing localization methods rely on pre-built maps that scale poorly or fail in GPS-denied environments, while cross-view camera matching suffers from severe perspective distortion.",
-        "key_assumption": "Removes the requirement for custom-built local maps by assuming that radar-derived geometric structure is sufficiently invariant to match against static, overhead satellite imagery.",
-        "result": "Achieved a median absolute trajectory error (ATE) of 2.9 meters in urban environments and 5.17 meters on off-road routes using the Boreas dataset.",
-        "what_it_enables": "Autonomous vehicles can achieve global localization in GPS-denied or weather-degraded conditions using only widely available, pre-existing satellite data.",
+        "hook": "You can now build a fully functional humanoid robot using 3D-printed cycloidal actuators and off-the-shelf parts instead of expensive proprietary hardware.",
+        "what_it_does": "A mid-scale humanoid robot executes locomotion and teleoperation tasks using a fully open-source hardware and software stack.",
+        "key_idea": "Integration of 3D-printed cycloidal actuators (high-torque, compact gear mechanisms) with a modular, accessible hardware design to replace costly industrial-grade components.",
+        "core_challenge": "High-performance humanoid hardware remains prohibitively expensive and closed-source, creating a significant barrier to entry for researchers and educators.",
+        "key_assumption": "Removes the assumption that high-fidelity humanoid performance requires proprietary, precision-machined metal components.",
+        "result": "The platform successfully performs locomotion and teleoperation, providing a complete open-source blueprint for researchers to replicate and modify.",
+        "what_it_enables": "Rapid iteration of humanoid morphologies and control algorithms in academic settings without the financial burden of commercial platforms.",
         "open_source": null,
-        "tldr": "Aligns radar sweeps to satellite imagery using learned features to enable global localization without pre-built local maps."
+        "tldr": "A low-cost, 3D-printed humanoid platform that democratizes access to research-grade hardware through open-source design."
       },
       "flow": {
         "article_type": "research",
-        "flow_title": "Radar-Based Robot Localization Using Satellite Map Matching",
-        "reading_time_seconds": 85,
+        "flow_title": "Democratizing Humanoid Robotics with Berkeley Humanoid Lite",
+        "reading_time_seconds": 75,
         "blocks": [
           {
             "id": 1,
             "type": "problem",
-            "heading": "Unreliable GPS Navigation",
-            "body": "Autonomous robots often struggle to find their location in environments where GPS signals are blocked or inaccurate. Relying on pre-built maps is difficult because they are expensive to create and change over time.",
-            "detail": "Satellite imagery is a better alternative because it is globally available and consistent, but matching ground-level sensor data to top-down satellite views is a major technical challenge.",
+            "heading": "High Barrier to Entry",
+            "body": "Most humanoid robots are expensive, closed-source, and proprietary, which prevents researchers and students from easily accessing or modifying them.",
+            "detail": "This lack of transparency and high cost limits the growth of the field and restricts innovation to well-funded labs.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 2,
             "type": "idea",
-            "heading": "Radar for Robust Sensing",
-            "body": "Radar sensors are used because they provide reliable geometric data regardless of weather conditions or lighting. This allows the robot to 'see' structural features that remain consistent even if the environment changes.",
-            "detail": null,
+            "heading": "Open-Source Humanoid Design",
+            "body": "The researchers created Berkeley Humanoid Lite, a mid-scale robot built using 3D-printed parts and off-the-shelf components to keep costs low.",
+            "detail": "The project provides all hardware design files, manufacturing instructions, and software control stacks to the public.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 3,
             "type": "method",
-            "heading": "Learned Representation Matching",
-            "body": "The system uses a neural network to convert radar data and satellite images into a shared format. It then calculates how well a candidate location matches the actual radar reading.",
-            "detail": "The model is trained to recognize structural patterns in both the radar sweep and the satellite orthophoto (a geometrically corrected aerial map).",
+            "heading": "Custom Cycloidal Actuators",
+            "body": "The robot uses 3D-printed cycloidal actuators (a type of gear system that provides high torque in a compact space) to drive its joints.",
+            "detail": "These actuators are designed to be manufactured easily while maintaining the strength required for humanoid movement.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "experiment",
+            "heading": "Locomotion and Teleoperation Tests",
+            "body": "The team verified the robot's capabilities by performing walking tasks and teleoperation (controlling the robot remotely via human input).",
+            "detail": "These tests confirmed that the low-cost, 3D-printed design is robust enough for functional research tasks.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "limitation",
+            "heading": "Thermal and Structural Concerns",
+            "body": "The current design has not been fully tested for thermal effects, which could weaken the 3D-printed parts during long periods of operation.",
+            "detail": "Future versions will focus on rigorous heat testing and structural refinements to improve long-term reliability.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "impact",
+            "heading": "Accelerating Robotics Research",
+            "body": "By providing an accessible platform, this project allows educators and hobbyists to conduct hands-on experiments with motion planning and learning algorithms.",
+            "detail": "This open-source approach aims to lower the cost of entry and foster a more collaborative community in humanoid robotics.",
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Berkeley Humanoid Lite provides an affordable, open-source humanoid platform that enables researchers and students to build and experiment without expensive proprietary hardware.",
+        "prerequisite_concepts": [
+          "Actuators",
+          "Teleoperation",
+          "Inverse kinematics",
+          "Open-source hardware"
+        ]
+      }
+    },
+    {
+      "id": "f12c5172",
+      "headline": "Mixture-of-Experts quadruped controller predicts real-world success using RoboGauge simulation metrics",
+      "tags": [
+        "Mixture-of-Experts",
+        "Sim-to-Real Transfer",
+        "Quadrupedal Locomotion",
+        "Proprioceptive Control"
+      ],
+      "research_theme": "Legged Locomotion",
+      "why_this_matters": "Improving the predictability of sim-to-real transfer for complex terrains is the primary hurdle for deploying agile quadrupeds in unstructured outdoor environments.",
+      "source": "RSS",
+      "published": "2026-01-31",
+      "source_url": "http://arxiv.org/abs/2602.00678v4",
+      "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "High training rewards in simulation are often a trap, masking policies that are destined to fail the moment they touch real-world ground.",
+        "what_it_does": "A quadruped robot uses a Mixture-of-Experts (MoE) policy to navigate diverse terrains using only proprioceptive feedback, while a predictive assessment suite called RoboGauge estimates real-world stability before deployment.",
+        "key_idea": "RoboGauge acts as a quantitative proxy for sim-to-real transfer by measuring the consistency of policy performance across varied simulated dynamics, effectively filtering out reward-overfitted models.",
+        "core_challenge": "High training rewards in simulation frequently correlate with policy overfitting, leading to catastrophic failures when transferring to real-world hardware.",
+        "key_assumption": "Removes the reliance on exteroceptive sensors like cameras or LiDAR, assuming that proprioceptive MoE gating can sufficiently encode complex terrain dynamics.",
+        "result": "The MoE policy achieves stable locomotion at peak velocities of 3.9 m/s while RoboGauge provides a reliable ranking of policy transferability that avoids risky physical trial-and-error.",
+        "what_it_enables": "Automated, reliable pre-deployment assessment of locomotion policies, reducing the need for dangerous and time-consuming physical testing cycles.",
+        "open_source": null,
+        "tldr": "RoboGauge predicts real-world quadruped stability by ranking MoE policies based on their consistency across diverse simulated dynamics."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Improving Quadruped Robot Reliability Using Mixture-of-Experts",
+        "reading_time_seconds": 110,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "The Sim-to-Real Gap",
+            "body": "Quadruped robots trained in simulation often fail in the real world because they overfit to simulated physics. This makes physical testing risky and time-consuming.",
+            "detail": "High rewards in simulation do not guarantee stability on real-world terrain, creating a disconnect between virtual performance and physical reality.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "context",
+            "heading": "Reliance on Proprioception",
+            "body": "Current robots often rely on external sensors like cameras or LiDAR to navigate. This research focuses on using only proprioception (internal sensors like joint encoders and IMUs) to keep the system simple and robust.",
+            "detail": "By avoiding external sensors, the robot becomes less sensitive to lighting conditions or sensor noise.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Mixture-of-Experts Architecture",
+            "body": "The team uses a Mixture-of-Experts (MoE) model, where different 'expert' neural networks specialize in handling specific terrains or movement commands.",
+            "detail": "A gating mechanism decides which expert is best suited for the current environment, allowing the robot to switch behaviors seamlessly.",
             "has_number": false,
             "number_callout": null
           },
           {
             "id": 4,
             "type": "method",
-            "heading": "Particle Filter Tracking",
-            "body": "A particle filter (an algorithm that tracks a robot's position by maintaining a set of possible locations) uses the matching score to update the robot's estimated position.",
-            "detail": "The filter uses radar odometry to move the particles, and the observation model scores them based on the satellite map alignment.",
-            "has_number": true,
-            "number_callout": "128 particles"
+            "heading": "RoboGauge Assessment Suite",
+            "body": "To solve the lack of reliable metrics, the researchers created RoboGauge, a tool that predicts how well a simulated policy will perform on real hardware.",
+            "detail": "This provides a quantitative proxy for success before the robot ever touches the ground, reducing the need for dangerous physical trials.",
+            "has_number": false,
+            "number_callout": null
           },
           {
             "id": 5,
             "type": "result",
-            "heading": "High Accuracy Localization",
-            "body": "The system achieved a median error of 2.9 meters in urban areas and 5.17 meters in off-road environments. This demonstrates that radar can effectively bridge the gap between ground and satellite views.",
-            "detail": null,
+            "heading": "High-Speed Performance",
+            "body": "The resulting system enables the robot to achieve peak velocities of 3.9 m/s while maintaining stability across diverse, unseen terrains.",
+            "detail": "This speed is achieved without the need for external vision sensors, proving that internal state estimation is sufficient for agile locomotion.",
             "has_number": true,
-            "number_callout": "2.9m urban error, 5.17m off-road error"
+            "number_callout": "3.9 m/s peak velocity"
           },
           {
             "id": 6,
-            "type": "next",
-            "heading": "Improving Odometry Dependency",
-            "body": "The current system relies on the accuracy of the robot's movement tracking (odometry). Future work will focus on global relocalization methods that do not depend on previous pose guesses.",
-            "detail": "Researchers are also exploring fixed-lag smoothers to refine past location estimates and improve overall stability.",
+            "type": "impact",
+            "heading": "Safer Robot Development",
+            "body": "This approach reduces the reliance on trial-and-error physical testing, making it faster and safer to deploy quadruped robots in complex environments.",
+            "detail": "By bridging the gap between simulation and reality, researchers can iterate on locomotion policies with higher confidence.",
             "has_number": false,
             "number_callout": null
           }
         ],
-        "key_takeaway": "Robots can accurately determine their location in GPS-denied areas by matching radar sensor data to existing satellite imagery using learned feature representations.",
+        "key_takeaway": "Combining Mixture-of-Experts policies with predictive assessment tools allows quadruped robots to navigate complex terrain reliably using only internal sensors.",
         "prerequisite_concepts": [
-          "Particle filter",
-          "Radar sensing",
-          "Neural network representation learning",
-          "Odometry"
+          "Reinforcement learning",
+          "Proprioception",
+          "Neural network gating",
+          "Sim-to-real transfer"
+        ]
+      }
+    },
+    {
+      "id": "854370e8",
+      "headline": "Dexterous manipulation planning using closed-form contact dynamics instead of complementarity constraints",
+      "tags": [
+        "Dexterous Manipulation",
+        "Contact-Implicit MPC",
+        "Multi-Contact Dynamics",
+        "Optimization-Based Control"
+      ],
+      "research_theme": "Dexterous Manipulation",
+      "why_this_matters": "Removing the need for complementarity constraints simplifies the optimization landscape for contact-rich tasks, enabling more robust manipulation planning.",
+      "source": "RSS",
+      "published": "2024-08-14",
+      "source_url": "http://arxiv.org/abs/2408.07855v4",
+      "image_url": "https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?w=800",
+      "image_is_fallback": true,
+      "breakthrough": false,
+      "breakthrough_reason": null,
+      "summary": {
+        "hook": "By removing the non-smooth complementarity constraints that usually plague contact physics, this method turns complex multi-contact dynamics into a smooth, differentiable optimization problem.",
+        "what_it_does": "A model predictive controller executes high-accuracy in-hand manipulation tasks, including fingertip 3D object rotation and on-palm reorientation, using a simplified contact model.",
+        "key_idea": "The system replaces traditional complementarity constraints (which enforce non-penetration and friction laws via non-smooth logic) with a closed-form, differentiable contact formulation derived from optimization duality.",
+        "core_challenge": "Standard contact-implicit planning suffers from combinatorial complexity and non-smoothness, making real-time optimization for dexterous hands computationally intractable.",
+        "key_assumption": "Relaxes the requirement for explicit complementarity solvers by reformulating contact physics into a smooth, time-stepping explicit model that maintains Coulomb friction compliance.",
+        "result": "Successfully performed complex in-hand manipulation tasks on the TriFinger and Allegro hand platforms, maintaining real-time control loops despite high-dimensional contact states.",
+        "what_it_enables": "",
+        "open_source": null,
+        "tldr": "Replaces non-smooth complementarity constraints with closed-form contact dynamics to enable real-time dexterous manipulation planning."
+      },
+      "flow": {
+        "article_type": "research",
+        "flow_title": "Simplifying Multi-Contact Dynamics for Dexterous Robotic Manipulation",
+        "reading_time_seconds": 85,
+        "blocks": [
+          {
+            "id": 1,
+            "type": "problem",
+            "heading": "Complexity of Multi-Contact Dynamics",
+            "body": "Modeling how a robot hand touches and moves objects is mathematically difficult because contact events are non-smooth and create combinatorial complexity.",
+            "detail": "Traditional methods use complementarity models, which are sets of equations that describe contact but are computationally expensive to solve in real-time.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 2,
+            "type": "idea",
+            "heading": "Removing Complementarity Constraints",
+            "body": "The researchers replaced complex complementarity equations with a simplified, closed-form model that fits directly into optimization-based control.",
+            "detail": "This approach reformulates the contact physics to be differentiable and explicit, which makes it easier for optimization algorithms to solve.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 3,
+            "type": "method",
+            "heading": "Contact-Implicit Model Predictive Control",
+            "body": "The team used this new model within a Model Predictive Control (MPC) framework to plan robot hand movements in real-time.",
+            "detail": "The method handles Coulomb friction laws automatically and requires fewer hyperparameters, making it more robust for different tasks.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 4,
+            "type": "experiment",
+            "heading": "Testing Dexterous Manipulation Tasks",
+            "body": "The system was tested on complex tasks including in-air fingertip manipulation, TriFinger in-hand tasks, and palm reorientation with an Allegro hand.",
+            "detail": "These tasks involve diverse objects and require high-accuracy contact reasoning to succeed.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 5,
+            "type": "result",
+            "heading": "State-of-the-Art Performance",
+            "body": "The new model consistently achieved high-accuracy, real-time performance across all tested dexterous manipulation scenarios.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 6,
+            "type": "limitation",
+            "heading": "Local Geometry Constraints",
+            "body": "The current model relies on local linearized geometry, which means it struggles with tasks requiring global contact reasoning, such as inserting asymmetrical objects into slots.",
+            "detail": "Because the controller uses local approximations, it may fail to plan long-term contact strategies needed for complex geometric puzzles.",
+            "has_number": false,
+            "number_callout": null
+          },
+          {
+            "id": 7,
+            "type": "impact",
+            "heading": "Advancing Real-Time Dexterity",
+            "body": "By removing the computational bottleneck of complementarity models, this work enables more responsive and capable robotic hands for complex manipulation.",
+            "detail": null,
+            "has_number": false,
+            "number_callout": null
+          }
+        ],
+        "key_takeaway": "Replacing complex contact equations with a simplified, differentiable model allows robots to perform dexterous manipulation tasks in real-time.",
+        "prerequisite_concepts": [
+          "Model Predictive Control (MPC)",
+          "Coulomb friction",
+          "Jacobian matrices",
+          "Optimization theory"
         ]
       }
     }
